@@ -1,7 +1,8 @@
 import { Component ,ViewChild,ElementRef} from '@angular/core';
 import { NavController, NavParams,ModalController } from 'ionic-angular';
-import { LocationSelectPage } from '../location-select/location-select';
-import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
+import { Geolocation } from '@ionic-native/geolocation';
+import { LoadingController } from 'ionic-angular';
+import { Http,Headers, RequestOptions } from '@angular/http';
 
 @Component({
   selector: 'page-add-market',
@@ -10,38 +11,158 @@ import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 export class AddMarketPage {
 
   @ViewChild('map') mapElement: ElementRef;
-  @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
   
-  selectedItem: any;
-  icons: string[];
-  items: Array<{title: string, note: string, icon: string}>;
+  position:any;
+  map:any;
+  autocompleteService: any;
+  placesService: any;
+  places: any = [];
+  query: string = '';
+  searchDisabled:boolean = true;
+  name:string = ''
+  description:string = ''
+  date:string = ''
+
   constructor(
       public navCtrl: NavController,
       public navParams: NavParams,
-      public modalCtrl: ModalController,
-      public maps: GoogleMapsProvider,
+      public geolocation: Geolocation,
+      public http: Http,
+      public loading: LoadingController
   ) {
 
   }
 
-    launchLocationPage(){
-
-        let modal = this.modalCtrl.create(LocationSelectPage);
-
-        modal.onDidDismiss((location) => {
-            if(location){
-                let mapLoaded = this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then(() => {                
-                    this.maps.setLocation(location);
-                    this.maps.map.setCenter(location);
-                  });    
+  ionViewDidLoad(): void {
+    
+      this.geolocation.getCurrentPosition().then((position) => {
+                  console.log(position);
+                  this.position = position;
+    
+              window['mapInit'] = () => {
+                this.initMap();
+              }
+    
+              let script = document.createElement("script");
+              script.id = "googleMaps";
+     
+    
+              script.src = 'http://maps.google.com/maps/api/js?key=AIzaSyDlRrMhhZXm-uhLM6XYAa4EWKdqgDSPPQk&callback=mapInit&libraries=places';
+    
+     
+              document.body.appendChild(script); 
+     
+          }).catch((error) => {
+            console.log(error);
+          });
+      }
+    
+      initMap(){
+         if(google || google.maps){
+                    let latLng = new google.maps.LatLng(this.position.coords.latitude, this.position.coords.longitude);
+     
+                    let mapOptions = {
+                      center: latLng,
+                      zoom: 15,
+                      mapTypeId: google.maps.MapTypeId.ROADMAP
+                    }
+                    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+    
+                    var marker = new google.maps.Marker({
+                      position: latLng,
+                      map: this.map,
+                      title: ''
+                    });
+    
+                    marker.bindTo('position', this.map, 'center');
+    
+                    this.autocompleteService = new google.maps.places.AutocompleteService();
+                    this.placesService = new google.maps.places.PlacesService(this.map);
+                    this.searchDisabled = false;
+         }
+      }
+    
+      searchPlace(){
+            if(this.query.length > 0 && !this.searchDisabled) {
+     
+                let config = {
+                    types: ['geocode'],
+                    input: this.query
+                }
+     
+                this.autocompleteService.getPlacePredictions(config, (predictions, status) => {
+     
+                    if(status == google.maps.places.PlacesServiceStatus.OK && predictions){
+     
+                        this.places = [];
+     
+                        predictions.forEach((prediction) => {
+                            this.places.push(prediction);
+                        });
+                    }
+     
+                });
+     
+            } else {
+                this.places = [];
             }
-        });
+     
+        }
+    
+    
+        selectPlace(place){
+     
+            this.places = [];
+     
+            let location = {
+                lat: null,
+                lng: null,
+                name: place.name
+            };
+     
+            this.placesService.getDetails({placeId: place.place_id}, (details) => {
+     
+                    location.name = details.name;
+                    location.lat = details.geometry.location.lat();
+                    location.lng = details.geometry.location.lng();
+     
+                    this.map.setCenter({lat: location.lat, lng: location.lng});
+            });
+     
+        }
 
-        modal.present();
+        saveMarket() : void{
 
-    }
+            let loader = this.loading.create({
+                content: '',
+              });
+          
+              var headers = new Headers();
+              headers.append("Accept", 'application/json');
+              headers.append('Content-Type', 'application/json' );
+              let options = new RequestOptions({ headers: headers });
+             
+             let postParams = {
+                name: this.name,
+                description: this.description,
+                startdate: this.date,
+                lat:this.map.center.lat(),
+                lon:this.map.center.lng(),
+              }
 
-
-
+              loader.present().then(() => {
+                this.http.post(
+                    'http://mimercadillo.com/market/create?token=1234567890',
+                    postParams,
+                    options
+                    )
+                    .subscribe(res => {
+                      loader.dismiss();
+                    }, (err) => {
+                      console.log(err);
+                      loader.dismiss();
+                    });
+              });
+        }
 
 }

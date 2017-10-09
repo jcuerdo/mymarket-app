@@ -17,17 +17,17 @@ import { HttpClientModule, HttpClient} from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { ConnectivityService } from '../providers/connectivity-service/connectivity-service';
 
-import { LocationSelectPage } from '../pages/location-select/location-select';
-import { GoogleMapsProvider } from '../providers/google-maps/google-maps';
 import { Network } from '@ionic-native/network';
 import { Geolocation } from '@ionic-native/geolocation';
+
+import { HTTP } from '@ionic-native/http';
+
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     AddMarketPage,
-    LocationSelectPage
   ],
   imports: [
     BrowserModule,
@@ -47,15 +47,14 @@ import { Geolocation } from '@ionic-native/geolocation';
     MyApp,
     HomePage,
     AddMarketPage,
-    LocationSelectPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     ConnectivityService,
-    GoogleMapsProvider,
     Network,
     Geolocation,
+    HTTP,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
