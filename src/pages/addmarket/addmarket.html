@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{"New market" | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-item>
+      <ion-label color="primary" fixed>{{"Name" | translate}}</ion-label>
+      <ion-input type="text" placeholder='{{"Name" | translate}}'></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary" fixed>{{"Description" | translate}}</ion-label>
+      <ion-textarea placeholder='{{"Description" | translate}}'></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Date</ion-label>
+      <ion-datetime displayFormat="YYYY/MM/DD h:m:00" [(ngModel)]="myDate"></ion-datetime>
+    </ion-item>
+
+      <button ion-button (click)="launchLocationPage()">{{"Set address" | translate}}</button>
+ 
+      <div #pleaseConnect id="please-connect">
+        <p>No se ha seleccionado ninguna ubicación</p>
+      </div>
+      <div style="height:300px; width:100%;" #map id="map">
+
+      </div>
+
+  </ion-list>
+
+</ion-content>
