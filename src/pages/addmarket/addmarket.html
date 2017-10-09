@@ -32,7 +32,9 @@
   <ion-list>
       <ion-item *ngFor="let place of places" (click)="selectPlace(place)">{{place.description}}</ion-item>
   </ion-list>
-
+  <ion-item>
+    <div #loading id="loading">{{"Getting location" | translate}}</div>
+  </ion-item>
   <div style="height: 300px;width: 100%" #map id="map"></div>
 
   </ion-list>
