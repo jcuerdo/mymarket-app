@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, NavParams, ModalController } from 'ionic-angular';
+import { NavController, NavParams, ModalController,AlertController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LoadingController } from 'ionic-angular';
 import { Http, Headers, RequestOptions } from '@angular/http';
@@ -29,7 +29,8 @@ export class AddMarketPage {
         public navParams: NavParams,
         public geolocation: Geolocation,
         public http: Http,
-        public loading: LoadingController
+        public loading: LoadingController,
+        public alertCtrl: AlertController 
     ) {
 
     }
@@ -57,7 +58,7 @@ export class AddMarketPage {
             }
 
         }).catch((error) => {
-            console.log(error);
+            this
         });
     }
 
@@ -162,7 +163,7 @@ export class AddMarketPage {
 
         loader.present().then(() => {
             this.http.post(
-                'http://mimercadillo.com/market/create?token=1234567890',
+                'http://192.168.1.128.com/market/create?token=1234567890',
                 postParams,
                 options
             )
@@ -174,5 +175,14 @@ export class AddMarketPage {
                 });
         });
     }
+
+    presentAlert(title : string, content: string) {
+        const alert = this.alertCtrl.create({
+          title: title,
+          subTitle: content,
+          buttons: ['Ok']
+        });
+        alert.present();
+      }
 
 }

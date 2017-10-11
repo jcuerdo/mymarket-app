@@ -4,13 +4,16 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>{{"New market" | translate}}</ion-title>
+    <ion-buttons end>
+      <button ion-button  color="primary" (click)="saveMarket()">{{"Save and upload photos" | translate}}</button>      
+      </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
 
   <ion-list>
-    <ion-item>
+    <ion-item style="height:30%">
       <ion-label color="primary" fixed>{{"Name" | translate}}</ion-label>
       <ion-input [(ngModel)]="name" type="text"  placeholder='{{"Name" | translate}}'></ion-input>
     </ion-item>
@@ -35,7 +38,7 @@
   <ion-item>
     <div #loading id="loading">{{"Getting location" | translate}}</div>
   </ion-item>
-  <div style="height: 300px;width: 100%" #map id="map"></div>
+  <div style="height: 250px;width: 100%" #map id="map"></div>
 
   </ion-list>
 

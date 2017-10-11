@@ -17,7 +17,12 @@ export class MyApp {
   pages: Array<{title: string, component: any}>;
 
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,public translate: TranslateService) {
+  constructor(
+    public platform: Platform,
+    public statusBar: StatusBar,
+    public splashScreen: SplashScreen,
+    public translate: TranslateService
+  ) {
     this.initializeApp();
     this.translate = translate;
 
@@ -27,7 +32,6 @@ export class MyApp {
     ];
 
   }
-
   initializeApp() {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
