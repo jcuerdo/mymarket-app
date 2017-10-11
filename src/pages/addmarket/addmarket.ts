@@ -12,7 +12,7 @@ export class AddMarketPage {
 
     @ViewChild('map') mapElement: ElementRef;
     @ViewChild('loading') loadingElement: ElementRef;
-    
+
     position: any;
     map: any;
     autocompleteService: any;
@@ -34,7 +34,7 @@ export class AddMarketPage {
 
     }
 
-    ionViewDidLoad(): void {
+    private ionViewDidLoad(): void {
 
         window['mapInit'] = () => {
             this.initMap();
@@ -44,7 +44,6 @@ export class AddMarketPage {
         script.id = "googleMaps";
 
         script.src = 'http://maps.google.com/maps/api/js?key=AIzaSyDlRrMhhZXm-uhLM6XYAa4EWKdqgDSPPQk&callback=mapInit&libraries=places';
-
 
         document.body.appendChild(script);
 
@@ -67,7 +66,7 @@ export class AddMarketPage {
             if (this.position) {
                 var latLng = new google.maps.LatLng(this.position.coords.latitude, this.position.coords.longitude);
                 var zoom = 15;
-            } else {    
+            } else {
                 var latLng = new google.maps.LatLng(40.423504, -3.689432);
                 var zoom = 10;
             }
