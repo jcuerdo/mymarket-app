@@ -186,7 +186,6 @@ export class AddMarketPage {
                             .subscribe(res => {
                                 loader.dismiss();
                                 let imgData = res.json();
-                                //REDIRECTION
                                 
                             }, (err) => {
                                 this.presentAlert('Error', 'Image upload fail');

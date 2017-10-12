@@ -23,6 +23,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { HTTP } from '@ionic-native/http';
 
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { ApiServiceProvider } from '../providers/api-service/api-service';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
     Geolocation,
     HTTP,
     Camera,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    ApiServiceProvider
   ]
 })
 export class AppModule {}
