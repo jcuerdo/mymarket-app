@@ -20,6 +20,7 @@
         "@angular/http": "4.4.3",
         "@angular/platform-browser": "4.4.3",
         "@angular/platform-browser-dynamic": "4.4.3",
+        "@ionic-native/camera": "^4.3.1",
         "@ionic-native/core": "4.3.0",
         "@ionic-native/geolocation": "^4.3.1",
         "@ionic-native/google-maps": "^4.3.1",
@@ -32,8 +33,10 @@
         "@ngx-translate/http-loader": "^2.0.0",
         "@types/google-maps": "^3.2.0",
         "cordova-android": "^6.2.3",
+        "cordova-browser": "^4.1.0",
         "cordova-ios": "^4.5.1",
         "cordova-plugin-advanced-http": "^1.6.1",
+        "cordova-plugin-camera": "^2.4.1",
         "cordova-plugin-compat": "^1.2.0",
         "cordova-plugin-device": "^1.1.4",
         "cordova-plugin-file": "^4.3.3",
@@ -60,6 +63,7 @@
     "cordova": {
         "platforms": [
             "android",
+            "browser",
             "ios"
         ],
         "plugins": {
@@ -69,7 +73,8 @@
             "cordova-plugin-statusbar": {},
             "cordova-plugin-whitelist": {},
             "ionic-plugin-keyboard": {},
-            "cordova-plugin-advanced-http": {}
+            "cordova-plugin-advanced-http": {},
+            "cordova-plugin-camera": {}
         }
     }
 }

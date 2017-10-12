@@ -22,6 +22,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 
 import { HTTP } from '@ionic-native/http';
 
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { HTTP } from '@ionic-native/http';
     Network,
     Geolocation,
     HTTP,
+    Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

@@ -5,12 +5,19 @@
     </button>
     <ion-title>{{"New market" | translate}}</ion-title>
     <ion-buttons end>
-      <button ion-button  color="primary" (click)="saveMarket()">{{"Save and upload photos" | translate}}</button>      
+      <button ion-button color="primary" (click)="saveMarket()">{{"Save and upload photos" | translate}}</button>      
       </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
+
+  <ion-item>
+      <img src="../../assets/img/camera.png"  class="photoInput" (click)="uploadPhoto($event,0)"/>
+      <img src="../../assets/img/camera.png"  class="photoInput" (click)="uploadPhoto($event,1)"/>
+      <img src="../../assets/img/camera.png"  class="photoInput" (click)="uploadPhoto($event,2)"/>
+      <img src="../../assets/img/camera.png"  class="photoInput" (click)="uploadPhoto($event,3)"/>
+  </ion-item>
 
   <ion-list>
     <ion-item style="height:30%">
@@ -27,21 +34,13 @@
       <ion-label>Date</ion-label>
       <ion-datetime [(ngModel)]="date"  displayFormat="YYYY/MM/DD h:m:00" [(ngModel)]="myDate"></ion-datetime>
     </ion-item>
-
     <ion-toolbar>
       <ion-searchbar [disabled]="searchDisabled" [(ngModel)]="query" (ionInput)="searchPlace()" placeholder='{{"Address" | translate}}'></ion-searchbar>
   </ion-toolbar>
-
   <ion-list>
       <ion-item *ngFor="let place of places" (click)="selectPlace(place)">{{place.description}}</ion-item>
   </ion-list>
-  <ion-item>
-    <div #loading id="loading">{{"Getting location" | translate}}</div>
-  </ion-item>
   <div style="height: 250px;width: 100%" #map id="map"></div>
 
   </ion-list>
-
-  <button ion-button block color="primary" (click)="saveMarket()"><ion-icon >{{"Save and upload photos" | translate}}</ion-icon></button>
-
 </ion-content>

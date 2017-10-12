@@ -3,6 +3,7 @@ import { NavController, NavParams, ModalController,AlertController } from 'ionic
 import { Geolocation } from '@ionic-native/geolocation';
 import { LoadingController } from 'ionic-angular';
 import { Http, Headers, RequestOptions } from '@angular/http';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 @Component({
     selector: 'page-add-market',
@@ -11,7 +12,6 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 export class AddMarketPage {
 
     @ViewChild('map') mapElement: ElementRef;
-    @ViewChild('loading') loadingElement: ElementRef;
 
     position: any;
     map: any;
@@ -20,17 +20,21 @@ export class AddMarketPage {
     places: any = [];
     query: string = '';
     searchDisabled: boolean = true;
+    
     name: string = ''
     description: string = ''
     date: string = ''
-
+    id: number;
+    images : any = ['','','',''];
+    
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
         public geolocation: Geolocation,
         public http: Http,
         public loading: LoadingController,
-        public alertCtrl: AlertController 
+        public alertCtrl: AlertController,
+        private camera: Camera
     ) {
 
     }
@@ -51,14 +55,12 @@ export class AddMarketPage {
         this.geolocation.getCurrentPosition().then((position) => {
             this.position = position;
             if (this.map) {
-                this.loadingElement.nativeElement.style.display = 'none';
                 var latLng = new google.maps.LatLng(this.position.coords.latitude, this.position.coords.longitude);
                 this.map.setCenter(latLng);
                 this.map.setZoom(15);
             }
-
         }).catch((error) => {
-            this
+            this.presentAlert('Error', error.message);            
         });
     }
 
@@ -153,25 +155,45 @@ export class AddMarketPage {
         headers.append('Content-Type', 'application/json');
         let options = new RequestOptions({ headers: headers });
 
-        let postParams = {
-            name: this.name,
-            description: this.description,
-            startdate: this.date,
-            lat: this.map.center.lat(),
-            lon: this.map.center.lng(),
-        }
-
         loader.present().then(() => {
+
+            let postParams = {
+                name: this.name,
+                description: this.description,
+                startdate: this.date,
+                lat: this.map.center.lat(),
+                lon: this.map.center.lng(),
+            }
+
             this.http.post(
-                'http://192.168.1.128.com/market/create?token=1234567890',
+                'http://192.168.1.128/market/create?token=1234567890',
                 postParams,
                 options
             )
                 .subscribe(res => {
-                    loader.dismiss();
+                    let data = res.json();
+                    this.id = data.id;
+
+                        let postParams = {
+                            id: this.id,
+                            content: this.images[0],
+                        }
+                        this.http.post(
+                            'http://192.168.1.128/market/photo/create?token=1234567890',
+                            postParams,
+                            options
+                        )
+                            .subscribe(res => {
+                                loader.dismiss();
+                                let imgData = res.json();
+                                //REDIRECTION
+                                
+                            }, (err) => {
+                                this.presentAlert('Error', 'Image upload fail');
+                            });
                 }, (err) => {
-                    console.log(err);
                     loader.dismiss();
+                    this.presentAlert('Error', 'Connection errorppp');
                 });
         });
     }
@@ -184,5 +206,24 @@ export class AddMarketPage {
         });
         alert.present();
       }
+
+    uploadPhoto(element,index) : void {
+
+        const options: CameraOptions = {
+            quality: 50,
+            destinationType: this.camera.DestinationType.DATA_URL,
+            encodingType: this.camera.EncodingType.JPEG,
+            mediaType: this.camera.MediaType.PICTURE,
+            correctOrientation: true
+          }
+
+          this.camera.getPicture(options).then((imageData) => {
+           let base64ImageUrl = 'data:image/jpeg;base64,' + imageData;
+           this.images[index] = base64ImageUrl;
+           element.srcElement.src = base64ImageUrl;
+          }, (err) => {
+           console.log(err);
+          });
+    }
 
 }
