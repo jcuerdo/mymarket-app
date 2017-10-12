@@ -11,77 +11,65 @@ export class Market {
     private photos: Photo[] = [];
 
 
-	constructor($id: number, $name: string, $description: string, $date: string, $lat: string, $lng: string, $photos: Photo[] ) {
-		this.id = $id;
-		this.name = $name;
-		this.description = $description;
-		this.date = $date;
-		this.lat = $lat;
-		this.lng = $lng;
-		this.photos = $photos;
+	constructor() {
+		this.photos = [];
 	}
     
 
-    public get $id(): number {
+    public getId(): number {
 		return this.id;
 	}
 
-	public set $id(value: number) {
+	public setId(value: number) {
 		this.id = value;
 	}
     
-    public get $name(): string {
+    public getName(): string {
         return this.name;
     }
 
-    public set $name(value: string) {
+    public setName(value: string) {
         this.name = value;
     }
 
 
-    public get $description(): string {
+    public getDescription(): string {
         return this.description;
     }
 
-    public set $description(value: string) {
+    public setDescription(value: string) {
         this.description = value;
     }
 
-	public get $date(): string {
+	public getDate(): string {
 		return this.date;
 	}
 
-	public set $date(value: string) {
+	public setDate(value: string) {
 		this.date = value;
 	}
 
-	public get $lat(): string {
+	public getLat(): string {
 		return this.lat;
 	}
 
-	public set $lat(value: string) {
+	public setLat(value: string) {
 		this.lat = value;
 	}
 
-	public get $lng(): string {
+	public getLng(): string {
 		return this.lng;
 	}
 
-	public set $lng(value: string) {
+	public setLng(value: string) {
 		this.lng = value;
 	}
 
-
-	public get $photos(): any  {
+	public getPhotos(): Photo[]  {
 		return this.photos;
 	}
 
 	public addPhoto(photo: Photo, index: number ) {
-		this.photos.push(photo);
+		this.photos[index] = photo;
 	}
-    
-
-
-    
-
 }

@@ -3,30 +3,21 @@
 export class Photo {
     private id: number;
     private content: string;
-
-	constructor($id: number, $content: string) {
-		this.id = $id;
-		this.content = $content;
-    }
     
-    public get $id(): number {
+    public getId(): number {
 		return this.id;
 	}
 
-	public set $id(value: number) {
+	public setId(value: number) {
 		this.id = value;
 	}
     
 
-	public get $content(): string {
+	public getContent(): string {
 		return this.content;
 	}
 
-	public set $content(value: string) {
+	public setContent(value: string) {
 		this.content = value;
 	}
-
-
-
-
 }

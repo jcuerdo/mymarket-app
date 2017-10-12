@@ -4,6 +4,8 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { LoadingController } from 'ionic-angular';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import {Market} from '../../models/market';
+import {Photo} from '../../models/photo';
 
 @Component({
     selector: 'page-add-market',
@@ -21,11 +23,7 @@ export class AddMarketPage {
     query: string = '';
     searchDisabled: boolean = true;
     
-    name: string = ''
-    description: string = ''
-    date: string = ''
-    id: number;
-    images : any = ['','','',''];
+    market: Market;
     
     constructor(
         public navCtrl: NavController,
@@ -36,7 +34,7 @@ export class AddMarketPage {
         public alertCtrl: AlertController,
         private camera: Camera
     ) {
-
+        this.market = new Market();
     }
 
     private ionViewDidLoad(): void {
@@ -157,12 +155,15 @@ export class AddMarketPage {
 
         loader.present().then(() => {
 
+            this.market.setLat(this.map.center.lat());
+            this.market.setLng(this.map.center.lng());
+
             let postParams = {
-                name: this.name,
-                description: this.description,
-                startdate: this.date,
-                lat: this.map.center.lat(),
-                lon: this.map.center.lng(),
+                name: this.market.getName(),
+                description: this.market.getDescription(),
+                startdate: this.market.getDate(),
+                lat: this.market.getLat(),
+                lon: this.market.getLng(),
             }
 
             this.http.post(
@@ -172,27 +173,33 @@ export class AddMarketPage {
             )
                 .subscribe(res => {
                     let data = res.json();
-                    this.id = data.id;
+                    this.market.setId(data.id);
 
-                        let postParams = {
-                            id: this.id,
-                            content: this.images[0],
+                    this.market.getPhotos().forEach(function(element) {
+                        if(element.getContent()){
+                            let postParams = {
+                                id: this.market.getId(),
+                                content: element.getContent(),
+                            }
+                            this.http.post(
+                                'http://192.168.1.128/market/photo/create?token=1234567890',
+                                postParams,
+                                options
+                            )
+                                .subscribe(res => {
+                                    let imgData = res.json();
+                                    element.setId(imgData.id);
+                                    
+                                }, (err) => {
+                                    this.presentAlert('Error', 'Image upload fail');
+                                });                              
                         }
-                        this.http.post(
-                            'http://192.168.1.128/market/photo/create?token=1234567890',
-                            postParams,
-                            options
-                        )
-                            .subscribe(res => {
-                                loader.dismiss();
-                                let imgData = res.json();
-                                
-                            }, (err) => {
-                                this.presentAlert('Error', 'Image upload fail');
-                            });
+
+                    },this);
+                    loader.dismiss();
                 }, (err) => {
                     loader.dismiss();
-                    this.presentAlert('Error', 'Connection errorppp');
+                    this.presentAlert('Error', err);
                 });
         });
     }
@@ -213,12 +220,14 @@ export class AddMarketPage {
             destinationType: this.camera.DestinationType.DATA_URL,
             encodingType: this.camera.EncodingType.JPEG,
             mediaType: this.camera.MediaType.PICTURE,
-            correctOrientation: true
+            correctOrientation: true,
           }
 
-          this.camera.getPicture(options).then((imageData) => {
+           this.camera.getPicture(options).then((imageData) => {
            let base64ImageUrl = 'data:image/jpeg;base64,' + imageData;
-           this.images[index] = base64ImageUrl;
+           let photo = new Photo();
+           photo.setContent(base64ImageUrl);
+           this.market.addPhoto(photo,index);
            element.srcElement.src = base64ImageUrl;
           }, (err) => {
            console.log(err);

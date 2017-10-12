@@ -22,17 +22,17 @@
   <ion-list>
     <ion-item style="height:30%">
       <ion-label color="primary" fixed>{{"Name" | translate}}</ion-label>
-      <ion-input [(ngModel)]="name" type="text"  placeholder='{{"Name" | translate}}'></ion-input>
+      <ion-input [(ngModel)]="market.name" type="text"  placeholder='{{"Name" | translate}}'></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label color="primary" fixed>{{"Description" | translate}}</ion-label>
-      <ion-textarea [(ngModel)]="description"  placeholder='{{"Description" | translate}}'></ion-textarea>
+      <ion-textarea [(ngModel)]="market.description"  placeholder='{{"Description" | translate}}'></ion-textarea>
     </ion-item>
 
     <ion-item>
       <ion-label>Date</ion-label>
-      <ion-datetime [(ngModel)]="date"  displayFormat="YYYY/MM/DD h:m:00" [(ngModel)]="myDate"></ion-datetime>
+      <ion-datetime [(ngModel)]="market.date"  displayFormat="YYYY/MM/DD h:m:00" [(ngModel)]="myDate"></ion-datetime>
     </ion-item>
     <ion-toolbar>
       <ion-searchbar [disabled]="searchDisabled" [(ngModel)]="query" (ionInput)="searchPlace()" placeholder='{{"Address" | translate}}'></ion-searchbar>

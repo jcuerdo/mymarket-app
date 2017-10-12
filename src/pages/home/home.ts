@@ -28,6 +28,23 @@ export class HomePage {
       this.http.get('http://192.168.1.128/market?token=1234567890')
           .subscribe(res => {
             this.lista = res.json();
+
+            this.lista.forEach(element => {
+              this.http.get(
+                'http://192.168.1.128/market/' + element.id + '/photo/first?token=1234567890'
+            )
+                .subscribe(res => {
+                    let photo = res.json();
+                    if(photo){
+                      element.image = photo.content;
+                      
+                    }
+                }, (err) => {
+                });  
+            },this);
+            
+
+            
             loader.dismiss();
           }, (err) => {
             console.log(err);
