@@ -13,28 +13,26 @@
 
   <ion-list>
     <ion-card *ngFor="let item of lista" (click)="view(item)" (load)="loadImage($element)">
-      <ion-card-header>
-          <h2>{{ item.name }}</h2>
-          <div class="marketImage">
-              <img  src='{{item.image}}'/>
-          </div>
-
-      </ion-card-header>
+      <div class="marketImage">
+        <img src='{{item.image}}' />
+      </div>
       <ion-card-content>
-          <ion-item>
-            <p>{{ item.description }} </p>
-          </ion-item>
-          <ion-item>
-              <ion-icon name="calendar"></ion-icon>
-              <span>{{item.startDate | date:'dd-MM-yyyy'}}</span>        
-          </ion-item>
+        <ion-card-title>
+          <h2>{{ item.name }}</h2>
+        </ion-card-title>
+
+        <p>{{ item.description }} </p>
+        <ion-icon name="calendar"></ion-icon>
+        <span>{{item.startDate | date:'dd-MM-yyyy'}}</span>
 
 
       </ion-card-content>
     </ion-card>
   </ion-list>
 
-    <ion-fab right bottom>
-      <button (click)="add()" ion-fab  color="primary"><ion-icon name="add"></ion-icon></button>
-    </ion-fab>
+  <ion-fab right bottom>
+    <button (click)="add()" ion-fab color="primary">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>
