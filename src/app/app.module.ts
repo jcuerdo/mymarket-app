@@ -5,6 +5,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { AddMarketPage } from '../pages/addmarket/addmarket';
+import { ViewMarketPage } from '../pages/view-market/view-market';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -30,6 +31,7 @@ import { ApiServiceProvider } from '../providers/api-service/api-service';
     MyApp,
     HomePage,
     AddMarketPage,
+    ViewMarketPage
   ],
   imports: [
     BrowserModule,
@@ -49,6 +51,7 @@ import { ApiServiceProvider } from '../providers/api-service/api-service';
     MyApp,
     HomePage,
     AddMarketPage,
+    ViewMarketPage,
   ],
   providers: [
     StatusBar,

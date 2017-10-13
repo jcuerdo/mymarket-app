@@ -3,6 +3,7 @@ import { NavController, AlertController} from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { AddMarketPage } from '../addmarket/addmarket';
+import { ViewMarketPage } from '../view-market/view-market';
 
 
 @Component({
@@ -43,9 +44,6 @@ export class HomePage {
                 }, (err) => {
                 });  
             },this);
-            
-
-            
             loader.dismiss();
           }, (err) => {
             console.log(err);
@@ -64,8 +62,8 @@ export class HomePage {
     alert.present();
   }
 
-  public view (item){
-    this.navCtrl.push(AddMarketPage);
+  public view (market){
+    this.navCtrl.push(ViewMarketPage,{market:market});
   }
 
   public add (){

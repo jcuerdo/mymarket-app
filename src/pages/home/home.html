@@ -12,7 +12,7 @@
   {{ aviso }}
 
   <ion-list>
-    <ion-card *ngFor="let item of lista" (click)="view(item)" (load)="loadImage($element)">
+    <ion-card *ngFor="let item of lista" (click)="view(item)">
       <div class="marketImage">
         <img src='{{item.image}}' />
       </div>
