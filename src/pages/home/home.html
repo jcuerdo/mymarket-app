@@ -20,11 +20,9 @@
         <ion-card-title>
           <h2>{{ item.name }}</h2>
         </ion-card-title>
-
-        <p>{{ item.description }} </p>
         <ion-icon name="calendar"></ion-icon>
-        <span>{{item.startDate | date:'dd-MM-yyyy'}}</span>
-
+        <span>{{item.startDate | date:'dd-MM-yyyy hh:mm'}}</span>
+        <p>{{ item.description | slice:0:200}} </p>
 
       </ion-card-content>
     </ion-card>

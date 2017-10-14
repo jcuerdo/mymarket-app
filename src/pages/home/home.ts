@@ -30,6 +30,7 @@ export class HomePage {
           .subscribe(res => {
             this.lista = res.json();
             this.lista.forEach(element => {
+              element.image = '../../assets/img/image.png';
               this.http.get(
                 'http://192.168.1.128/market/' + element.id + '/photo/first?token=1234567890'
             )
@@ -37,9 +38,6 @@ export class HomePage {
                     let photo = res.json();
                     if(photo){
                       element.image = photo.content;
-                    }
-                    else{
-                      element.image = '../../assets/img/image.png';
                     }
                 }, (err) => {
                 });  
