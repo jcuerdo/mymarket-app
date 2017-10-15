@@ -40,6 +40,8 @@ export class MyApp {
       this.splashScreen.hide();
 
       this.translate.setDefaultLang('es');
+
+      
     });
   }
 

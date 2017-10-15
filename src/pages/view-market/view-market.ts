@@ -37,26 +37,26 @@ export class ViewMarketPage {
   }
 
    ngOnInit(): void {
-    this.http.get(
-      'http://192.168.1.128/market/' + this.market.getId() + '/photo/?token=1234567890'
-  )
-      .subscribe(res => {
-          let photos = res.json();
-          if(photos){
-            this.market.clearPhotos();
-            photos.forEach((photo,index) => {
-              let photoEntity = new Photo();
-              photoEntity.setId(photo.id);
-              photoEntity.setContent(photo.content);
-              this.market.addPhoto(photoEntity, index);
-            },this);
-          }
-          else{
-
-          }
-      }, (err) => {
-
-      });  
+       this.loadPhotos();
     }
 
+
+    private loadPhotos() {
+        this.http.get('http://192.168.1.128/market/' + this.market.getId() + '/photo/?token=1234567890')
+            .subscribe(res => {
+                let photos = res.json();
+                if (photos) {
+                    this.market.clearPhotos();
+                    photos.forEach((photo, index) => {
+                        let photoEntity = new Photo();
+                        photoEntity.setId(photo.id);
+                        photoEntity.setContent(photo.content);
+                        this.market.addPhoto(photoEntity, index);
+                    }, this);
+                }
+                else {
+                }
+            }, (err) => {
+            });
+    }
 }

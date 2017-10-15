@@ -1,6 +1,6 @@
 {
-  "name": "Ionic",
-  "short_name": "Ionic",
+  "name": "My Market",
+  "short_name": "My Market",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{
