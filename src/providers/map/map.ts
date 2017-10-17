@@ -85,28 +85,20 @@ export class MapProvider {
 
   public searchPlace(query, places) {
     if (query.length > 0 && this.loaded) {
-      
-                  let config = {
-                      types: ['geocode'],
-                      input: query
-                  }
-      
-                  this.autocompleteService.getPlacePredictions(config, (predictions, status) => {
-      
-                      if (status == google.maps.places.PlacesServiceStatus.OK && predictions) {
-      
-                          places = [];
-      
-                          predictions.forEach((prediction) => {
-                              places.push(prediction);
-                          });
-                      }
-      
-                  });
-      
-              } else {
-                  places = [];
-              }
+      let config = {
+        types: ['geocode'],
+        input: query
+      }
+
+      this.autocompleteService.getPlacePredictions(config, (predictions, status) => {
+        if (status == google.maps.places.PlacesServiceStatus.OK && predictions) {
+          places = [];
+          predictions.forEach((prediction) => {
+            places.push(prediction);
+          });
+        }
+      });
+    }
   }
 
   public selectPlace(place) {
