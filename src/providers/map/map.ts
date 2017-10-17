@@ -84,14 +84,13 @@ export class MapProvider {
     return this.geolocation.getCurrentPosition();
   }
 
-  public searchPlace(query,places) {
+  public searchPlace(query, places) {
     if (query.length > 0 && this.loaded) {
 
       let config = {
         types: ['geocode'],
         input: query
       }
-
       this.autocompleteService.getPlacePredictions(config, (predictions, status) => {
 
         if (status == google.maps.places.PlacesServiceStatus.OK && predictions) {
@@ -101,8 +100,8 @@ export class MapProvider {
         }
 
       });
-      return places;
     }
+    places = [];
   }
 
   public selectPlace(place) {

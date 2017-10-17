@@ -51,11 +51,12 @@ export class AddMarketPage {
     }
 
     searchPlace() {
-        this.mapProvider.searchPlace(this.query,this.places);
+        this.mapProvider.searchPlace(this.query, this.places);
     }
 
     selectPlace(place) {
         this.mapProvider.selectPlace(place);
+        this.places = [];
     }
 
     saveMarket(): void {
