@@ -92,9 +92,9 @@ export class MapProvider {
 
       this.autocompleteService.getPlacePredictions(config, (predictions, status) => {
         if (status == google.maps.places.PlacesServiceStatus.OK && predictions) {
-          places = [];
+          //places = [];
           predictions.forEach((prediction) => {
-            places.push(prediction);
+            //places.push(prediction);
           });
         }
       });

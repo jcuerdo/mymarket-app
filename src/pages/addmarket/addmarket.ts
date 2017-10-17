@@ -51,6 +51,7 @@ export class AddMarketPage {
 
     searchPlace() {
         this.mapProvider.searchPlace(this.query, this.places);
+        //mandarle un callback y pista
     }
 
     selectPlace(place) {
