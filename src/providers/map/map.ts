@@ -91,17 +91,19 @@ export class MapProvider {
         types: ['geocode'],
         input: query
       }
+      places = [];
       this.autocompleteService.getPlacePredictions(config, (predictions, status) => {
 
         if (status == google.maps.places.PlacesServiceStatus.OK && predictions) {
+          places = [];
           predictions.forEach((prediction) => {
             places.push(prediction);
           });
         }
-
       });
     }
     places = [];
+    return places;
   }
 
   public selectPlace(place) {
