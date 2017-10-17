@@ -23,7 +23,6 @@ export class AddMarketPage {
     placesService: any;
     places: any = [];
     query: string = '';
-    searchDisabled: boolean = true;
     
     market: Market;
     
