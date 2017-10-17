@@ -1,57 +1,58 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController} from 'ionic-angular';
-import { LoadingController,Loading } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
+import { LoadingController, Loading } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { AddMarketPage } from '../addmarket/addmarket';
 import { ViewMarketPage } from '../view-market/view-market';
+import { ApiServiceProvider } from '../../providers/api-service/api-service';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  public lista = [];
+  public markets = [];
   public aviso = "";
-  
+
   constructor(
     public navCtrl: NavController,
     public http: Http,
     public loading: LoadingController,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    private apiProvider: ApiServiceProvider,
   ) {
-    this.lista = [];
     let loader = this.loading.create({
       content: '',
     });
 
     loader.present().then(() => {
-        this.loadMarkets(loader);
+      this.loadMarkets(loader);
     });
   }
 
-    private loadMarkets(loader: Loading) {
-        this.http.get('http://192.168.1.128/market?token=1234567890')
+  private loadMarkets(loader: Loading) {
+    this.apiProvider.getMarkets()
+      .subscribe(res => {
+        this.markets = res.json();
+        this.markets.forEach(element => {
+          element.image = '../../assets/img/image.png';
+          this.apiProvider.getMarketFirstPhoto(element.id)
             .subscribe(res => {
-                this.lista = res.json();
-                this.lista.forEach(element => {
-                    element.image = '../../assets/img/image.png';
-                    this.http.get('http://192.168.1.128/market/' + element.id + '/photo/first?token=1234567890')
-                        .subscribe(res => {
-                            let photo = res.json();
-                            if (photo) {
-                                element.image = photo.content;
-                            }
-                        }, (err) => {
-                        });
-                }, this);
-                loader.dismiss();
+              let photo = res.json();
+              if (photo) {
+                element.image = photo.content;
+              }
             }, (err) => {
-                loader.dismiss();
-                this.presentAlert('Error', 'Connection Error');
             });
-    }
+        }, this);
+        loader.dismiss();
+      }, (err) => {
+        loader.dismiss();
+        this.presentAlert('Error', 'Connection Error');
+      });
+  }
 
-  presentAlert(title : string, content: string) {
+  presentAlert(title: string, content: string) {
     const alert = this.alertCtrl.create({
       title: title,
       subTitle: content,
@@ -60,11 +61,11 @@ export class HomePage {
     alert.present();
   }
 
-  public view (market){
-    this.navCtrl.push(ViewMarketPage,{market:market});
+  public view(market) {
+    this.navCtrl.push(ViewMarketPage, { market: market });
   }
 
-  public add (){
+  public add() {
     this.navCtrl.push(AddMarketPage);
   }
 

@@ -12,17 +12,17 @@
   {{ aviso }}
 
   <ion-list>
-    <ion-card *ngFor="let item of lista" (click)="view(item)">
+    <ion-card *ngFor="let market of markets" (click)="view(market)">
       <div class="marketImage">
-        <img src='{{item.image}}' />
+        <img src='{{market.image}}' />
       </div>
       <ion-card-content>
         <ion-card-title>
-          <h2>{{ item.name }}</h2>
+          <h2>{{ market.name }}</h2>
         </ion-card-title>
         <ion-icon name="calendar"></ion-icon>
-        <span>{{item.startDate | date:'dd-MM-yyyy hh:mm'}}</span>
-        <p>{{ item.description | slice:0:200}} </p>
+        <span>{{market.startDate | date:'dd-MM-yyyy hh:mm'}}</span>
+        <p>{{ market.description | slice:0:200}} </p>
 
       </ion-card-content>
     </ion-card>
