@@ -1,5 +1,4 @@
 import { Injectable, ElementRef } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Geolocation } from '@ionic-native/geolocation';
 
@@ -91,7 +90,6 @@ export class MapProvider {
         types: ['geocode'],
         input: query
       }
-      places = [];
       this.autocompleteService.getPlacePredictions(config, (predictions, status) => {
 
         if (status == google.maps.places.PlacesServiceStatus.OK && predictions) {
@@ -102,8 +100,6 @@ export class MapProvider {
         }
       });
     }
-    places = [];
-    return places;
   }
 
   public selectPlace(place) {
