@@ -84,7 +84,7 @@ export class MapProvider {
     return this.geolocation.getCurrentPosition();
   }
 
-  public searchPlace(query) {
+  public searchPlace(query,places) {
     if (query.length > 0 && this.loaded) {
 
       let config = {
@@ -95,20 +95,14 @@ export class MapProvider {
       this.autocompleteService.getPlacePredictions(config, (predictions, status) => {
 
         if (status == google.maps.places.PlacesServiceStatus.OK && predictions) {
-
-          let places = [];
-
           predictions.forEach((prediction) => {
             places.push(prediction);
           });
-
-          return places;
         }
 
       });
-
+      return places;
     }
-    return [];
   }
 
   public selectPlace(place) {
