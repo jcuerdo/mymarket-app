@@ -35,7 +35,7 @@
       <ion-datetime [(ngModel)]="market.date"  displayFormat="YYYY/MM/DD h:m:00" [(ngModel)]="myDate"></ion-datetime>
     </ion-item>
     <ion-toolbar>
-      <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()" placeholder='{{"Address" | translate}}'></ion-searchbar>
+      <ion-searchbar [disabled]="searchDisabled" [(ngModel)]="query" (ionInput)="searchPlace()" placeholder='{{"Address" | translate}}'></ion-searchbar>
   </ion-toolbar>
   <ion-list>
       <ion-item *ngFor="let place of places" (click)="selectPlace(place)">{{place.description}}</ion-item>
