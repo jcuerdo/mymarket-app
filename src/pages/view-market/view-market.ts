@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Market } from '../../models/market';
 import { Http } from '@angular/http';
@@ -13,6 +13,9 @@ import { ApiServiceProvider } from '../../providers/api-service/api-service';
 export class ViewMarketPage {
 
     market: Market;
+    map: any;
+    @ViewChild('map') mapElement: ElementRef;
+
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
@@ -25,6 +28,9 @@ export class ViewMarketPage {
         this.market.setName(marketData.name);
         this.market.setDescription(marketData.description);
         this.market.setDate(marketData.startDate);
+        this.market.setLat(marketData.lat);
+        this.market.setLng(marketData.lon);
+        
 
         let photoEntity = new Photo();
         photoEntity.setContent('../../assets/img/image.png');
@@ -33,6 +39,44 @@ export class ViewMarketPage {
 
     ngOnInit(): void {
         this.loadPhotos();
+    }
+
+    private ionViewDidLoad(): void {
+        window['mapInit'] = () => {
+            this.initMap();
+        }
+
+        let script = document.createElement("script");
+        script.id = "googleMaps";
+
+        script.src = 'http://maps.google.com/maps/api/js?key=AIzaSyDlRrMhhZXm-uhLM6XYAa4EWKdqgDSPPQk&callback=mapInit&libraries=places';
+
+        document.body.appendChild(script);
+    }
+
+
+    initMap() {
+        if (google || google.maps) {
+
+            var latLng = new google.maps.LatLng(Number(this.market.getLat()), Number(this.market.getLng()));
+            
+            var zoom = 10;
+
+            let mapOptions = {
+                center: latLng,
+                zoom: zoom,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+
+            var marker = new google.maps.Marker({
+                position: latLng,
+                map: this.map,
+                title: ''
+            });
+
+            marker.bindTo('position', this.map, 'center');
+        }
     }
 
 

@@ -49,7 +49,7 @@ export class ApiServiceProvider {
 
   }
 
-  public savePhoto(market: Market, photo: Photo) {
+  public saveMarketPhoto(market: Market, photo: Photo) {
     let postParams = {
       id: market.getId(),
       content: photo.getContent(),
