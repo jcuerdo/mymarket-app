@@ -84,7 +84,7 @@ export class ViewMarketPage {
         this.apiProvider.getMarketPhotos(this.market.getId())
             .subscribe(res => {
                 let photos = res.json();
-                if (photos) {
+                if (photos.length > 0) {
                     this.market.clearPhotos();
                     photos.forEach((photo, index) => {
                         let photoEntity = new Photo();

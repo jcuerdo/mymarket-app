@@ -7,6 +7,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import {Market} from '../../models/market';
 import {Photo} from '../../models/photo';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
+import { ViewMarketPage } from '../view-market/view-market';
 
 
 @Component({
@@ -173,13 +174,13 @@ export class AddMarketPage {
                                 .subscribe(res => {
                                     let imgData = res.json();
                                     element.setId(imgData.id);
-                                    
                                 }, (err) => {
                                     this.presentAlert('Error', 'Image upload fail');
                                 });                              
                         }
 
                     },this);
+                    this.navCtrl.push(ViewMarketPage, { market: data });                    
                     loader.dismiss();
                 }, (err) => {
                     loader.dismiss();
