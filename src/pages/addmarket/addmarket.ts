@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, NavParams, ModalController,AlertController } from 'ionic-angular';
+import { NavController, NavParams, ModalController,AlertController,ActionSheetController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LoadingController } from 'ionic-angular';
 import { Http, Headers, RequestOptions } from '@angular/http';
@@ -37,6 +37,7 @@ export class AddMarketPage {
         public alertCtrl: AlertController,
         private camera: Camera,
         private apiProvider: ApiServiceProvider,
+        public actionSheetCtrl: ActionSheetController
         
     ) {
         this.market = new Market();
@@ -180,7 +181,7 @@ export class AddMarketPage {
                         }
 
                     },this);
-                    this.navCtrl.push(ViewMarketPage, { market: data });                    
+                    this.navCtrl.push(ViewMarketPage, { market: this.market });                    
                     loader.dismiss();
                 }, (err) => {
                     loader.dismiss();
@@ -198,14 +199,38 @@ export class AddMarketPage {
         alert.present();
       }
 
-    uploadPhoto(element,index) : void {
+    uploadPhotoAlert(element,index) {
+        let actionSheet = this.actionSheetCtrl.create({
+          title: 'Select origin',
+          buttons: [
+            {
+              text: 'Camera',
+              handler: () => {
+                this.uploadPhoto(element,index);
+              }
+            },{
+              text: 'Gallery',
+              handler: () => {
+                this.uploadPhoto(element,index,this.camera.PictureSourceType.PHOTOLIBRARY);
+              }
+            }
+          ]
+        });
+        actionSheet.present();
+      }
+    
+
+
+    uploadPhoto(element,index,source = this.camera.PictureSourceType.CAMERA) : void {
 
         const options: CameraOptions = {
+            sourceType: source,
             quality: 50,
             destinationType: this.camera.DestinationType.DATA_URL,
             encodingType: this.camera.EncodingType.JPEG,
             mediaType: this.camera.MediaType.PICTURE,
             correctOrientation: true,
+            targetWidth : 600
           }
 
            this.camera.getPicture(options).then((imageData) => {

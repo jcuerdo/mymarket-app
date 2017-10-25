@@ -5,7 +5,6 @@ import { Http } from '@angular/http';
 import { Photo } from '../../models/photo';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 
-@IonicPage()
 @Component({
     selector: 'page-view-market',
     templateUrl: 'view-market.html',
@@ -22,19 +21,12 @@ export class ViewMarketPage {
         public http: Http,
         private apiProvider: ApiServiceProvider,
     ) {
-        let marketData = navParams.get("market");
-        this.market = new Market();
-        this.market.setId(marketData.id);
-        this.market.setName(marketData.name);
-        this.market.setDescription(marketData.description);
-        this.market.setDate(marketData.startDate);
-        this.market.setLat(marketData.lat);
-        this.market.setLng(marketData.lon);
-        
-
-        let photoEntity = new Photo();
-        photoEntity.setContent('../../assets/img/image.png');
-        this.market.addPhoto(photoEntity, null);
+        this.market =  navParams.get("market");
+        if(this.market.getPhotos().length == 0){
+            let photoEntity = new Photo();
+            photoEntity.setContent('assets/img/image.png');
+            this.market.addPhoto(photoEntity, null);
+        }
     }
 
     ngOnInit(): void {
@@ -93,7 +85,9 @@ export class ViewMarketPage {
                         this.market.addPhoto(photoEntity, index);
                     }, this);
                 }
+
             }, (err) => {
+                console.log(err)
             });
     }
 }

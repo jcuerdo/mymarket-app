@@ -5,6 +5,8 @@ import { Http } from '@angular/http';
 import { AddMarketPage } from '../addmarket/addmarket';
 import { ViewMarketPage } from '../view-market/view-market';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
+import {Market} from '../../models/market';
+
 
 @Component({
   selector: 'page-home',
@@ -35,7 +37,7 @@ export class HomePage {
       .subscribe(res => {
         this.markets = res.json();
         this.markets.forEach(element => {
-          element.image = '../../assets/img/image.png';
+          element.image = 'assets/img/image.png';
           this.apiProvider.getMarketFirstPhoto(element.id)
             .subscribe(res => {
               let photo = res.json();
@@ -61,7 +63,15 @@ export class HomePage {
     alert.present();
   }
 
-  public view(market) {
+  public view(marketData) {
+    let market = new Market();
+    market.setId(marketData.id);
+    market.setName(marketData.name);
+    market.setDescription(marketData.description);
+    market.setDate(marketData.startDate);
+    market.setLat(marketData.lat);
+    market.setLng(marketData.lon);
+
     this.navCtrl.push(ViewMarketPage, { market: market });
   }
 
