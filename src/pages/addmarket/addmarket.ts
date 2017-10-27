@@ -8,6 +8,7 @@ import {Market} from '../../models/market';
 import {Photo} from '../../models/photo';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { ViewMarketPage } from '../view-market/view-market';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -25,6 +26,9 @@ export class AddMarketPage {
     places: any = [];
     query: string = '';
     searchDisabled: boolean = true;
+    cameratext = "Camera"
+    gallerytext = "Gallery"
+    selecttext = "Select origin"
     
     market: Market;
     
@@ -37,10 +41,31 @@ export class AddMarketPage {
         public alertCtrl: AlertController,
         private camera: Camera,
         private apiProvider: ApiServiceProvider,
-        public actionSheetCtrl: ActionSheetController
+        public actionSheetCtrl: ActionSheetController,
+        public translate: TranslateService,
+        
         
     ) {
         this.market = new Market();
+        this.translate.get('Camera').subscribe(
+            value => {
+              this.cameratext = value;
+            }
+          );
+        
+          this.translate.get('Gallery').subscribe(
+            value => {
+              this.gallerytext = value;
+            }
+          );
+
+          this.translate.get('Select origin').subscribe(
+            value => {
+              this.selecttext = value;
+            }
+          );
+        
+        
     }
 
     private ionViewDidLoad(): void {
@@ -201,15 +226,15 @@ export class AddMarketPage {
 
     uploadPhotoAlert(element,index) {
         let actionSheet = this.actionSheetCtrl.create({
-          title: 'Select origin',
+          title: this.selecttext,
           buttons: [
             {
-              text: 'Camera',
+              text: this.cameratext,
               handler: () => {
                 this.uploadPhoto(element,index);
               }
             },{
-              text: 'Gallery',
+              text: this.gallerytext,
               handler: () => {
                 this.uploadPhoto(element,index,this.camera.PictureSourceType.PHOTOLIBRARY);
               }

@@ -1,3 +1,14 @@
 {
-  "Main": "Principal"
+  "Main": "Principal",
+  "Nearest markets": "Mercados cercanos",
+  "Markets" : "Mercados",
+  "Camera": "Camara",
+  "Gallery": "Galeria",
+  "Name": "Nombre",
+  "Description": "Descripcion",  
+  "Date": "Fecha",
+  "Details of" : "Detalles de",
+  "Save" : "Guardar",
+  "Address" : "Direccion",
+  "Select origin": "Selecciona un origen"  
 }

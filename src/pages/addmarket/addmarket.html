@@ -5,23 +5,12 @@
     </button>
     <ion-title>{{"New market" | translate}}</ion-title>
     <ion-buttons end>
-      <button ion-button color="primary" (click)="saveMarket()">{{"Save and upload photos" | translate}}</button>      
+      <button ion-button color="primary" (click)="saveMarket()">{{"Save" | translate}}</button>      
       </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-
-    <ion-tabs>
-        
-         <ion-tab title="Home" icon-on="ion-ios7-filing" icon-off="ion-ios7-filing-outline">
-ALGO         </ion-tab>
-        
-         <ion-tab title="Settings" icon="ion-ios7-gear">
-ALGO MAS         </ion-tab>
-        
-        </ion-tabs>
-
   <ion-item>
       <img src="assets/img/camera.png"  class="photoInput" (click)="uploadPhotoAlert($event,0)"/>
       <img src="assets/img/camera.png"  class="photoInput" (click)="uploadPhotoAlert($event,1)"/>
@@ -41,7 +30,7 @@ ALGO MAS         </ion-tab>
     </ion-item>
 
     <ion-item>
-      <ion-label>Date</ion-label>
+      <ion-label>{{"Date" | translate}}</ion-label>
       <ion-datetime [(ngModel)]="market.date"  displayFormat="YYYY/MM/DD h:m:00" [(ngModel)]="myDate"></ion-datetime>
     </ion-item>
     <ion-toolbar>
