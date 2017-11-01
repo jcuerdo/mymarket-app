@@ -6,7 +6,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { AddMarketPage } from '../pages/addmarket/addmarket';
 import { ViewMarketPage } from '../pages/view-market/view-market';
-
+import { MarketmapPage } from '../pages/marketmap/marketmap';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -32,7 +32,8 @@ import { ApiServiceProvider } from '../providers/api-service/api-service';
     MyApp,
     HomePage,
     AddMarketPage,
-    ViewMarketPage
+    ViewMarketPage,
+    MarketmapPage
   ],
   imports: [
     BrowserModule,
@@ -53,6 +54,7 @@ import { ApiServiceProvider } from '../providers/api-service/api-service';
     HomePage,
     AddMarketPage,
     ViewMarketPage,
+    MarketmapPage
   ],
   providers: [
     StatusBar,

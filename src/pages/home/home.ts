@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController, AlertController,ModalController } from 'ionic-angular';
 import { LoadingController, Loading } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { AddMarketPage } from '../addmarket/addmarket';
 import { ViewMarketPage } from '../view-market/view-market';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import {Market} from '../../models/market';
+import {MarketmapPage} from '../marketmap/marketmap';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class HomePage {
 
   constructor(
     public navCtrl: NavController,
+    public modCtrl: ModalController,    
     public http: Http,
     public loading: LoadingController,
     public alertCtrl: AlertController,
@@ -79,4 +81,10 @@ export class HomePage {
     this.navCtrl.push(AddMarketPage);
   }
 
+  private showMap(){
+    let profileModal = this.modCtrl.create(MarketmapPage, { markets: this.markets });
+    profileModal.onDidDismiss(data => {
+    });
+    profileModal.present();
+  }
 }

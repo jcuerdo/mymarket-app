@@ -64,8 +64,13 @@ export class ViewMarketPage {
             var marker = new google.maps.Marker({
                 position: latLng,
                 map: this.map,
-                title: ''
-            });
+                title: '',
+                icon : {
+                    url: "assets/img/market.png",
+                    scaledSize: new google.maps.Size(32, 32)
+                }
+            }
+            );
 
             marker.bindTo('position', this.map, 'center');
         }
