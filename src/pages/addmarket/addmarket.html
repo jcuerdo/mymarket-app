@@ -31,7 +31,7 @@
 
     <ion-item>
       <ion-label>{{"Date" | translate}}</ion-label>
-      <ion-datetime [(ngModel)]="market.date"  displayFormat="YYYY/MM/DD h:m:00" [(ngModel)]="myDate"></ion-datetime>
+      <ion-datetime [(ngModel)]="market.date" pickerFormat="YYYY/MM/DD HH:m" displayFormat="YYYY/MM/DD HH:m"></ion-datetime>
     </ion-item>
     <ion-toolbar>
       <ion-searchbar [disabled]="searchDisabled" [(ngModel)]="query" (ionInput)="searchPlace()" placeholder='{{"Address" | translate}}'></ion-searchbar>

@@ -7,7 +7,9 @@ import { Photo } from '../../models/photo';
 @Injectable()
 export class ApiServiceProvider {
 
-  baseUrl: string = 'http://ec2-34-215-191-148.us-west-2.compute.amazonaws.com';
+  //baseUrl: string = 'http://ec2-34-215-191-148.us-west-2.compute.amazonaws.com';
+  baseUrl: string = 'http://localhost:8080';
+  
   constructor(public http: Http) {
 
   }
@@ -20,16 +22,16 @@ export class ApiServiceProvider {
   }
 
   public getMarkets() {
-    return this.http.get(this.baseUrl + '/market?token=1234567890');
+    return this.http.get(this.baseUrl + '/public/market?token=1234567890');
   }
 
   public getMarketFirstPhoto(id: number) {
-    return this.http.get(this.baseUrl + '/market/' + id + '/photo/first?token=1234567890')
+    return this.http.get(this.baseUrl + '/public/market/' + id + '/photo?token=1234567890')
 
   }
 
   public getMarketPhotos(id: number){
-    return this.http.get(this.baseUrl + '/market/' + id + '/photo/?token=1234567890')
+    return this.http.get(this.baseUrl + '/public/market/' + id + '/photos?token=1234567890')
   }
 
   public saveMarket(market: Market) {
@@ -42,7 +44,7 @@ export class ApiServiceProvider {
     }
 
     return this.http.post(
-      this.baseUrl + '/market/create?token=1234567890',
+      this.baseUrl + '/private/market?token=1234567890',
       postParams,
       this.getOptions()
     );
@@ -55,10 +57,9 @@ export class ApiServiceProvider {
       content: photo.getContent(),
     }
     return this.http.post(
-      this.baseUrl + '/market/photo/create?token=1234567890',
+      this.baseUrl + '/private/market/photo?token=1234567890',
       postParams,
       this.getOptions()
     )
   }
-
 }

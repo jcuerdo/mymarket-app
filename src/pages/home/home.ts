@@ -37,12 +37,12 @@ export class HomePage {
   private loadMarkets(loader: Loading) {
     this.apiProvider.getMarkets()
       .subscribe(res => {
-        this.markets = res.json();
+        this.markets = res.json().result;
         this.markets.forEach(element => {
           element.image = 'assets/img/image.png';
           this.apiProvider.getMarketFirstPhoto(element.id)
             .subscribe(res => {
-              let photo = res.json();
+              let photo = res.json().result;
               if (photo) {
                 element.image = photo.content;
               }

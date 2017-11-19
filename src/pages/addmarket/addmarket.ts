@@ -195,14 +195,14 @@ export class AddMarketPage {
 
             this.apiProvider.saveMarket(this.market)
                 .subscribe(res => {
-                    let data = res.json();
+                    let data = res.json().result;
                     this.market.setId(data.id);
 
                     this.market.getPhotos().forEach(function(element) {
                         if(element.getContent()){
                             this.apiProvider.saveMarketPhoto(this.market,element)
                                 .subscribe(res => {
-                                    let imgData = res.json();
+                                    let imgData = res.json().result;
                                     element.setId(imgData.id);
                                 }, (err) => {
                                     this.presentAlert('Error', 'Image upload fail');
