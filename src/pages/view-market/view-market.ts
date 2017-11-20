@@ -22,6 +22,7 @@ export class ViewMarketPage {
         private apiProvider: ApiServiceProvider,
     ) {
         this.market =  navParams.get("market");
+
         if(this.market.getPhotos().length == 0){
             let photoEntity = new Photo();
             photoEntity.setContent('assets/img/image.png');
@@ -80,8 +81,10 @@ export class ViewMarketPage {
     private loadPhotos() {
         this.apiProvider.getMarketPhotos(this.market.getId())
             .subscribe(res => {
-                let photos = res.json();
-                if (photos.length > 0) {
+                let data = res.json();
+                let photos = data.result
+                let length = data.count
+                if (length > 0) {
                     this.market.clearPhotos();
                     photos.forEach((photo, index) => {
                         let photoEntity = new Photo();
