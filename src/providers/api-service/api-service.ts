@@ -7,7 +7,7 @@ import { Photo } from '../../models/photo';
 @Injectable()
 export class ApiServiceProvider {
 
-  baseUrl: string = 'http://ec2-52-36-15-56.us-west-2.compute.amazonaws.com:8080';
+  baseUrl: string = 'http://ec2-18-195-137-171.eu-central-1.compute.amazonaws.com:8080/';
   
   constructor(public http: Http) {
 
