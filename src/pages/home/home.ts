@@ -7,7 +7,9 @@ import { ViewMarketPage } from '../view-market/view-market';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import {Market} from '../../models/market';
 import {MarketmapPage} from '../marketmap/marketmap';
-
+import { CookieXSRFStrategy } from '@angular/http/src/backends/xhr_backend';
+import { ConfigToken } from 'ionic-angular/config/config';
+import { Geolocation } from '@ionic-native/geolocation';
 
 @Component({
   selector: 'page-home',
@@ -24,17 +26,40 @@ export class HomePage {
     public loading: LoadingController,
     public alertCtrl: AlertController,
     private apiProvider: ApiServiceProvider,
+    public geolocation: Geolocation,
   ) {
     let loader = this.loading.create({
       content: '',
     });
 
     loader.present().then(() => {
-      this.loadMarkets(loader);
+      loader.setContent("Getting location")
+      this.loadLocation(loader)      
     });
   }
 
+  private loadLocation(loader: Loading){
+    this.geolocation.getCurrentPosition().then((position) => {
+      localStorage.setItem("lat", position.coords.latitude.toString())
+      localStorage.setItem("lon", position.coords.longitude.toString())
+      this.loadMarkets(loader)
+  }).catch((error) => {
+      loader.dismiss();
+      this.presentAlert('Error, location not available', error.message);            
+  });
+
+  let watch = this.geolocation.watchPosition();
+    watch.subscribe((position) => {
+      if(position.coords){
+        localStorage.setItem("lat", position.coords.latitude.toString())
+        localStorage.setItem("lon", position.coords.longitude.toString())
+      }
+  });
+
+}
+
   private loadMarkets(loader: Loading) {
+    loader.setContent("Getting list of markets")
     this.apiProvider.getMarkets()
       .subscribe(res => {
         this.markets = res.json().result;

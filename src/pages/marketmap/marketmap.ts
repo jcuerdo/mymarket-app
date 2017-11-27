@@ -31,7 +31,6 @@ export class MarketmapPage {
     
             let script = document.createElement("script");
             script.id = "googleMaps";
-    
             script.src = 'http://maps.google.com/maps/api/js?key=AIzaSyDlRrMhhZXm-uhLM6XYAa4EWKdqgDSPPQk&callback=mapInit&libraries=places';
     
             document.body.appendChild(script);
@@ -57,7 +56,7 @@ export class MarketmapPage {
                     });
                 }
             }).catch((error) => {
-                this.presentAlert('Error', error.message);            
+                this.presentAlert('Error, location not available', error.message);            
             });
         }
         initMap() {

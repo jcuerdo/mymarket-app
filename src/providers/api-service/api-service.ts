@@ -8,9 +8,11 @@ import { Photo } from '../../models/photo';
 export class ApiServiceProvider {
 
   baseUrl: string = 'http://ec2-18-195-137-171.eu-central-1.compute.amazonaws.com:8080';
-  
+  private token : string;
+  private radio : number;
   constructor(public http: Http) {
-
+     this.token = localStorage.getItem('token')
+     this.radio = 2000
   }
 
   public getOptions() {
@@ -21,16 +23,19 @@ export class ApiServiceProvider {
   }
 
   public getMarkets() {
-    return this.http.get(this.baseUrl + '/public/market?token=1234567890');
+    let lat = localStorage.getItem('lat')
+    let lon = localStorage.getItem('lon')
+
+    return this.http.get(`${this.baseUrl}/public/market?token=${this.token}&lat=${lat}&lon=${lon}&radio=${this.radio}`);
   }
 
   public getMarketFirstPhoto(id: number) {
-    return this.http.get(this.baseUrl + '/public/market/' + id + '/photo?token=1234567890')
+    return this.http.get(`${this.baseUrl}/public/market/${id}/photo?token=${this.token}`)
 
   }
 
   public getMarketPhotos(id: number){
-    return this.http.get(this.baseUrl + '/public/market/' + id + '/photos?token=1234567890')
+    return this.http.get(`${this.baseUrl}/public/market/${id}/photos?token=${this.token}`)
   }
 
   public saveMarket(market: Market) {
@@ -42,8 +47,7 @@ export class ApiServiceProvider {
       lon: market.getLng(),
     }
 
-    return this.http.post(
-      this.baseUrl + '/private/market?token=1234567890',
+    return this.http.post(`${this.baseUrl}/private/market?token=${this.token}`,
       postParams,
       this.getOptions()
     );
@@ -56,7 +60,7 @@ export class ApiServiceProvider {
       content: photo.getContent(),
     }
     return this.http.post(
-      this.baseUrl + '/private/market/photo?token=1234567890',
+      `${this.baseUrl}/private/market/photo?token=${this.token}`,
       postParams,
       this.getOptions()
     )
