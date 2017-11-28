@@ -38,13 +38,17 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      this.geolocation.getCurrentPosition().then((position) => {
-        localStorage.setItem("lat", position.coords.latitude.toString())
-        localStorage.setItem("lon", position.coords.longitude.toString())
-      }).catch((error) => {
-        //this.presentAlert('Error, location not available', error.message);            
-      });
-  
+      if(!localStorage.getItem('lat') || !localStorage.getItem('lat')){
+        this.geolocation.getCurrentPosition().then((position) => {
+          if(position.coords){
+            localStorage.setItem("lat", position.coords.latitude.toString())
+            localStorage.setItem("lon", position.coords.longitude.toString())
+          }
+        }).catch((error) => {
+          //this.presentAlert('Error, location not available', error.message);            
+        });
+      }
+
     let watch = this.geolocation.watchPosition();
       watch.subscribe((position) => {
         if(position.coords){
