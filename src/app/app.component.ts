@@ -56,13 +56,10 @@ export class MyApp {
           localStorage.setItem("lon", position.coords.longitude.toString())
         }
     });
-      
-      
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-      this.translate.setDefaultLang('es');
-      
-
+    
+  this.statusBar.styleDefault();
+  this.splashScreen.hide();
+  this.translate.setDefaultLang('es');
     });
   }
 
