@@ -11,8 +11,7 @@ export class ApiServiceProvider {
   private token : string;
   private radio : number;
   constructor(public http: Http) {
-     this.token = localStorage.getItem('token')
-     this.radio = 2000
+     this.radio = 100
   }
 
   public getOptions() {
@@ -47,7 +46,7 @@ export class ApiServiceProvider {
       lon: market.getLng(),
     }
 
-    return this.http.post(`${this.baseUrl}/private/market?token=${this.token}`,
+    return this.http.post(`${this.baseUrl}/private/market?token=${this.getToken()}`,
       postParams,
       this.getOptions()
     );
@@ -60,9 +59,13 @@ export class ApiServiceProvider {
       content: photo.getContent(),
     }
     return this.http.post(
-      `${this.baseUrl}/private/market/photo?token=${this.token}`,
+      `${this.baseUrl}/private/market/photo?token=${this.getToken()}`,
       postParams,
       this.getOptions()
     )
+  }
+
+  private getToken(){
+    return localStorage.getItem('token')
   }
 }

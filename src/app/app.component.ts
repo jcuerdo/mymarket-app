@@ -3,6 +3,7 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TranslateService } from '@ngx-translate/core';
+import { Geolocation } from '@ionic-native/geolocation';
 
 import { HomePage } from '../pages/home/home';
 
@@ -21,7 +22,8 @@ export class MyApp {
     public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
-    public translate: TranslateService
+    public translate: TranslateService,
+    public geolocation: Geolocation,
   ) {
     this.initializeApp();
     this.translate = translate;
@@ -36,9 +38,24 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
+      this.geolocation.getCurrentPosition().then((position) => {
+        localStorage.setItem("lat", position.coords.latitude.toString())
+        localStorage.setItem("lon", position.coords.longitude.toString())
+      }).catch((error) => {
+        //this.presentAlert('Error, location not available', error.message);            
+      });
+  
+    let watch = this.geolocation.watchPosition();
+      watch.subscribe((position) => {
+        if(position.coords){
+          localStorage.setItem("lat", position.coords.latitude.toString())
+          localStorage.setItem("lon", position.coords.longitude.toString())
+        }
+    });
+      
+      
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-
       this.translate.setDefaultLang('es');
       
 

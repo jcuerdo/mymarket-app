@@ -1,6 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, NavParams, ModalController,AlertController,ActionSheetController } from 'ionic-angular';
-import { Geolocation } from '@ionic-native/geolocation';
 import { LoadingController } from 'ionic-angular';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -35,7 +34,6 @@ export class AddMarketPage {
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
-        public geolocation: Geolocation,
         public http: Http,
         public loading: LoadingController,
         public alertCtrl: AlertController,
@@ -80,32 +78,17 @@ export class AddMarketPage {
         script.src = 'http://maps.google.com/maps/api/js?key=AIzaSyDlRrMhhZXm-uhLM6XYAa4EWKdqgDSPPQk&callback=mapInit&libraries=places';
 
         document.body.appendChild(script);
-
-        this.geolocation.getCurrentPosition().then((position) => {
-            this.position = position;
-            if (this.map) {
-                var latLng = new google.maps.LatLng(this.position.coords.latitude, this.position.coords.longitude);
-                this.map.setCenter(latLng);
-                this.map.setZoom(15);
-            }
-        }).catch((error) => {
-            this.presentAlert('Error', error.message);            
-        });
     }
 
     initMap() {
         if (google || google.maps) {
-            if (this.position) {
-                var latLng = new google.maps.LatLng(this.position.coords.latitude, this.position.coords.longitude);
-                var zoom = 15;
-            } else {
-                var latLng = new google.maps.LatLng(40.423504, -3.689432);
-                var zoom = 10;
-            }
+            let lat = localStorage.getItem('lat')
+            let lon = localStorage.getItem('lon')
+            var latLng = new google.maps.LatLng(parseFloat(lat), parseFloat(lon))
 
             let mapOptions = {
                 center: latLng,
-                zoom: zoom,
+                zoom: 15,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             }
             this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);

@@ -54,7 +54,7 @@ import { ApiServiceProvider } from '../providers/api-service/api-service';
     HomePage,
     AddMarketPage,
     ViewMarketPage,
-    MarketmapPage
+    MarketmapPage,
   ],
   providers: [
     StatusBar,
