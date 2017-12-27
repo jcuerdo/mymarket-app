@@ -60,15 +60,15 @@ export class MarketmapPage {
               });
 
               var t = this
-
+              var prev_infowindow
               var infowindow = new google.maps.InfoWindow();
               marker.addListener('click', function(this) {
                 var div = document.createElement('div');
+                div.setAttribute('class', 'infomap')
                 div.innerHTML = element.name;
                 div.onclick = function(){t.view(element)};
                 infowindow.setContent(div);
                 infowindow.open(t.map, marker)
-
               });
             });
             }
