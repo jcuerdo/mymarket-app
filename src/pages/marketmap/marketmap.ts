@@ -61,13 +61,14 @@ export class MarketmapPage {
 
               var t = this
 
-              var infowindow = new google.maps.InfoWindow({
-                content: element.name
-              });
-
+              var infowindow = new google.maps.InfoWindow();
               marker.addListener('click', function(this) {
+                var div = document.createElement('div');
+                div.innerHTML = element.name;
+                div.onclick = function(){t.view(element)};
+                infowindow.setContent(div);
                 infowindow.open(t.map, marker)
-                t.view(element)
+
               });
             });
             }
