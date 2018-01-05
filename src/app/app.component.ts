@@ -5,7 +5,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { TranslateService } from '@ngx-translate/core';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
-
 import { HomePage } from '../pages/home/home';
 
 @Component({
@@ -24,7 +23,8 @@ export class MyApp {
     public splashScreen: SplashScreen,
     public translate: TranslateService,
     public geolocation: Geolocation,
-    private locationAccuracy: LocationAccuracy,
+    public locationAccuracy: LocationAccuracy,
+    
   ) {
     this.initializeApp();
     this.translate = translate;
@@ -47,6 +47,7 @@ export class MyApp {
     }).catch((error) => {
       this.requestlocation()
     });
+
 
     let watch = this.geolocation.watchPosition();
       watch.subscribe((position) => {

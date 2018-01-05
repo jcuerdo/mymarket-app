@@ -41,6 +41,7 @@
         "cordova-plugin-compat": "^1.2.0",
         "cordova-plugin-device": "^1.1.6",
         "cordova-plugin-file": "^4.3.3",
+        "cordova-plugin-geolocation": "^2.4.3",
         "cordova-plugin-ionic-webview": "^1.1.16",
         "cordova-plugin-request-location-accuracy": "^2.2.2",
         "cordova-plugin-splashscreen": "^4.0.3",
@@ -76,7 +77,9 @@
             "cordova-plugin-whitelist": {},
             "ionic-plugin-keyboard": {},
             "cordova-plugin-advanced-http": {},
-            "cordova-plugin-camera": {}
+            "cordova-plugin-camera": {},
+            "cordova-plugin-geolocation": {},
+            "cordova-plugin-request-location-accuracy": {}
         }
     }
 }

@@ -25,16 +25,15 @@ export class ApiServiceProvider {
     let lat = localStorage.getItem('lat')
     let lon = localStorage.getItem('lon')
 
-    return this.http.get(`${this.baseUrl}/public/market?token=${this.token}&lat=${lat}&lon=${lon}&radio=${this.radio}`);
+    return this.http.get(`${this.baseUrl}/public/market?token=${this.getToken()}&lat=${lat}&lon=${lon}&radio=${this.radio}`);
   }
 
   public getMarketFirstPhoto(id: number) {
-    return this.http.get(`${this.baseUrl}/public/market/${id}/photo?token=${this.token}`)
-
+    return this.http.get(`${this.baseUrl}/public/market/${id}/photo?token=${this.getToken()}`)
   }
 
   public getMarketPhotos(id: number){
-    return this.http.get(`${this.baseUrl}/public/market/${id}/photos?token=${this.token}`)
+    return this.http.get(`${this.baseUrl}/public/market/${id}/photos?token=${this.getToken()}`)
   }
 
   public saveMarket(market: Market) {
@@ -66,6 +65,6 @@ export class ApiServiceProvider {
   }
 
   private getToken(){
-    return localStorage.getItem('token') ? localStorage.getItem('token') : "1234567890";
+    return localStorage.getItem('token') ? localStorage.getItem('token') : '1234567890';
   }
 }

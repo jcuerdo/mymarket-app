@@ -20,6 +20,7 @@ import { ConnectivityService } from '../providers/connectivity-service/connectiv
 
 import { Network } from '@ionic-native/network';
 import { Geolocation } from '@ionic-native/geolocation';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
 import { HTTP } from '@ionic-native/http';
 
@@ -63,6 +64,7 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy';
     ConnectivityService,
     Network,
     Geolocation,
+    LocationAccuracy,
     HTTP,
     Camera,
     LocationAccuracy,
