@@ -67,7 +67,6 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy';
     LocationAccuracy,
     HTTP,
     Camera,
-    LocationAccuracy,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ApiServiceProvider
   ]
