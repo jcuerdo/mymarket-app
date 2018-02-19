@@ -26,8 +26,6 @@ import { HTTP } from '@ionic-native/http';
 
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ApiServiceProvider } from '../providers/api-service/api-service';
-import { LocationAccuracy } from '@ionic-native/location-accuracy';
-
 
 @NgModule({
   declarations: [
