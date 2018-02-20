@@ -191,11 +191,10 @@ export class AddMarketPage {
                                 }, (err) => {
                                     this.presentAlert('Error', 'Image upload fail');
                                 });                              
-                        }
-
+                        }   
                     },this);
-                    this.navCtrl.push(ViewMarketPage, { market: this.market });                    
                     loader.dismiss();
+                    this.navCtrl.push(ViewMarketPage, { market: this.market });                    
                 }, (err) => {
                     loader.dismiss();
                     this.presentAlert('Error', err);
@@ -250,7 +249,7 @@ export class AddMarketPage {
            let base64ImageUrl = 'data:image/jpeg;base64,' + imageData;
            let photo = new Photo();
            photo.setContent(base64ImageUrl);
-           this.market.addPhoto(photo,index);
+           this.market.addPhoto(photo,null);
            element.srcElement.src = base64ImageUrl;
           }, (err) => {
            console.log(err);

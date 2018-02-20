@@ -14,6 +14,7 @@ export class ApiServiceProvider {
      this.radio = 100
   }
 
+
   public getOptions() {
     var headers = new Headers();
     headers.append("Accept", 'application/json');
@@ -58,7 +59,7 @@ export class ApiServiceProvider {
       content: photo.getContent(),
     }
     return this.http.post(
-      `${this.baseUrl}/private/market/photo?token=${this.getToken()}`,
+      `${this.baseUrl}/private/market/${market.getId()}/photo?token=${this.getToken()}`,
       postParams,
       this.getOptions()
     )
