@@ -75,6 +75,7 @@ export class AddMarketPage {
         let script = document.createElement("script");
         script.id = "googleMaps";
 
+        
         script.src = 'http://maps.google.com/maps/api/js?key=AIzaSyDlRrMhhZXm-uhLM6XYAa4EWKdqgDSPPQk&callback=mapInit&libraries=places';
 
         document.body.appendChild(script);
