@@ -37,10 +37,13 @@ export class MyApp {
   }
   initializeApp() {
     this.platform.ready().then(() => {
+      console.log('Platform is ready')
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
     this.geolocation.getCurrentPosition().then((position) => {
-    if(position.coords){
+      console.log('Gettin current location')
+      console.log(position.coords)
+      if(position.coords){
       localStorage.setItem("lat", position.coords.latitude.toString())
       localStorage.setItem("lon", position.coords.longitude.toString())
     }
@@ -51,6 +54,8 @@ export class MyApp {
 
     let watch = this.geolocation.watchPosition();
       watch.subscribe((position) => {
+        console.log('Subscribing to location')
+        console.log(position.coords)
         if(position.coords){
           localStorage.setItem("lat", position.coords.latitude.toString())
           localStorage.setItem("lon", position.coords.longitude.toString())
@@ -65,6 +70,7 @@ export class MyApp {
   
   requestlocation(){
     this.locationAccuracy.canRequest().then((canRequest: boolean) => {
+      console.log('Requesting location privileges')
       if(canRequest) {
         // the accuracy option will be ignored by iOS
         this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
