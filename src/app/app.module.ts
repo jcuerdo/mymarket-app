@@ -16,7 +16,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClientModule, HttpClient} from '@angular/common/http';
 
 import { HttpModule } from '@angular/http';
-import { ConnectivityService } from '../providers/connectivity-service/connectivity-service';
+import { LocationServiceProvider } from '../providers/location-service/location-service';
 
 import { Network } from '@ionic-native/network';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -59,7 +59,7 @@ import { ApiServiceProvider } from '../providers/api-service/api-service';
   providers: [
     StatusBar,
     SplashScreen,
-    ConnectivityService,
+    LocationServiceProvider,
     Network,
     Geolocation,
     LocationAccuracy,

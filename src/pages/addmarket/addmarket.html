@@ -35,10 +35,10 @@
     </ion-item>
     <ion-toolbar>
       <ion-searchbar [disabled]="searchDisabled" [(ngModel)]="query" (ionInput)="searchPlace()" placeholder='{{"Address" | translate}}'></ion-searchbar>
-  </ion-toolbar>
-  <ion-list>
+    </ion-toolbar>
+    <ion-list>
       <ion-item *ngFor="let place of places" (click)="selectPlace(place)">{{place.description}}</ion-item>
-  </ion-list>
+    </ion-list>
   </ion-list>
   <div style="height: 100%;width: 100%" #map id="map"></div>
 </ion-content>

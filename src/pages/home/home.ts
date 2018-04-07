@@ -5,10 +5,11 @@ import { Http } from '@angular/http';
 import { AddMarketPage } from '../addmarket/addmarket';
 import { ViewMarketPage } from '../view-market/view-market';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
-import {Market} from '../../models/market';
-import {MarketmapPage} from '../marketmap/marketmap';
+import { Market } from '../../models/market';
+import { MarketmapPage } from '../marketmap/marketmap';
 import { CookieXSRFStrategy } from '@angular/http/src/backends/xhr_backend';
 import { ConfigToken } from 'ionic-angular/config/config';
+import { LocationServiceProvider } from '../../providers/location-service/location-service';
 
 @Component({
   selector: 'page-home',
@@ -17,6 +18,13 @@ import { ConfigToken } from 'ionic-angular/config/config';
 export class HomePage {
   public markets = [];
   public aviso = "";
+  private loader;
+  placesService: any;
+  places: any = [];
+  query: string = '';
+  searchDisabled: boolean = true;
+  autocompleteService: any;
+
 
   constructor(
     public navCtrl: NavController,
@@ -24,41 +32,44 @@ export class HomePage {
     public http: Http,
     public loading: LoadingController,
     public alertCtrl: AlertController,
-    private apiProvider: ApiServiceProvider,
-  ) {
-    let loader = this.loading.create({
-      content: '',
-    });
+    public apiProvider: ApiServiceProvider,
+    public locationProvider: LocationServiceProvider,
+  ) {}
 
-    loader.present().then(() => {
-      loader.setContent("Getting location")
-      this.loadMarkets(loader)     
+  ionViewDidLoad(){
+    this.loader = this.loading.create({
+      content: ''
     });
+    this.loader.present();
+    this.locationProvider.requestLocation(this.loadMarkets.bind(this), this.loadEmpty.bind(this));
   }
 
-  private loadMarkets(loader: Loading) {
-    loader.setContent("Getting list of markets")
-    this.apiProvider.getMarkets()
-      .subscribe(res => {
-        if(res.json().count > 0) {
-          this.markets = res.json().result;          
-          this.markets.forEach(element => {
-            element.image = 'assets/img/image.png';
-            this.apiProvider.getMarketFirstPhoto(element.id)
-              .subscribe(res => {
-                let photo = res.json().result;
-                if (photo) {
-                  element.image = photo.content;
-                }
-              }, (err) => {
-              });
-          }, this);
-        }
-        loader.dismiss();
-      }, (err) => {
-        loader.dismiss();
-        this.presentAlert('Error', 'Connection Error');
-      });
+  loadEmpty(error){
+    this.loader.dismiss();
+  }
+
+  loadMarkets() {
+  this.apiProvider.getMarkets()
+    .subscribe(res => {
+      if(res.json().count > 0) {
+        this.markets = res.json().result;          
+        this.markets.forEach(element => {
+          element.image = 'assets/img/image.png';
+          this.apiProvider.getMarketFirstPhoto(element.id)
+            .subscribe(res => {
+              let photo = res.json().result;
+              if (photo) {
+                element.image = photo.content;
+              }
+            }, (err) => {
+            });
+        }, this);
+        this.loader.dismiss();
+      }
+    }, (err) => {
+      this.loader.dismiss();
+      this.presentAlert('Error', 'Connection Error');
+    });
   }
 
   presentAlert(title: string, content: string) {
@@ -70,7 +81,7 @@ export class HomePage {
     alert.present();
   }
 
-  public view(marketData) {
+  view(marketData) {
     let market = new Market();
     market.setId(marketData.id);
     market.setName(marketData.name);
@@ -82,14 +93,15 @@ export class HomePage {
     this.navCtrl.push(ViewMarketPage, { market: market });
   }
 
-  public add() {
-    this.navCtrl.push(AddMarketPage);
+  add() {
+   this.navCtrl.push(AddMarketPage);
   }
 
-  private showMap(){
+  showMap(){
     let profileModal = this.modCtrl.create(MarketmapPage, { markets: this.markets });
     profileModal.onDidDismiss(data => {
     });
     profileModal.present();
   }
+
 }

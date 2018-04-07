@@ -23,7 +23,7 @@ export class MarketmapPage {
     this.markets = navParams.get('markets');
   }
 
-  private ionViewDidLoad(): void {
+  ionViewDidLoad(): void {
     
             window['mapInit'] = () => {
                 this.initMap();
