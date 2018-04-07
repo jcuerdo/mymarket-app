@@ -37,6 +37,19 @@ export class HomePage {
   ) {}
 
   ionViewDidLoad(){
+
+    window['mapInit'] = () => {
+      this.initMap();
+  }
+
+  let script = document.createElement("script");
+  script.id = "googleMaps";
+
+  
+  script.src = 'http://maps.google.com/maps/api/js?key=AIzaSyDlRrMhhZXm-uhLM6XYAa4EWKdqgDSPPQk&callback=mapInit&libraries=places';
+
+  document.body.appendChild(script);
+
     this.loader = this.loading.create({
       content: ''
     });
@@ -103,5 +116,53 @@ export class HomePage {
     });
     profileModal.present();
   }
+
+  initMap() {
+    if (google || google.maps) {
+        this.autocompleteService = new google.maps.places.AutocompleteService();
+        this.placesService = new google.maps.places.PlacesService(document.createElement('div'));
+
+        this.searchDisabled = false;
+    }
+}
+
+  searchPlace() {
+    if (this.query.length > 0 && !this.searchDisabled) {
+
+        let config = {
+            types: ['geocode'],
+            input: this.query
+        }
+
+        this.autocompleteService.getPlacePredictions(config, (predictions, status) => {
+
+            if (status == google.maps.places.PlacesServiceStatus.OK && predictions) {
+
+                this.places = [];
+
+                predictions.forEach((prediction) => {
+                    this.places.push(prediction);
+                });
+            }
+
+        });
+
+    } else {
+        this.places = [];
+    }
+
+}
+
+selectPlace(place) {
+  this.places = [];
+
+  this.placesService.getDetails({ placeId: place.place_id }, (details) => {
+
+      console.log(details)
+      localStorage.setItem("lat", details.geometry.location.lat());
+      localStorage.setItem("lon", details.geometry.location.lng());
+  });
+
+}
 
 }

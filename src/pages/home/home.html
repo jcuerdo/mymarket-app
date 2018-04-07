@@ -14,7 +14,18 @@
 
 <ion-content padding>
   <h3>{{'Nearest markets' | translate }}
-  </h3>  
+  </h3>
+
+  <div id="noLocation">
+    <h2>{{ "Location not available" | translate }}</h2>
+    <ion-toolbar>
+        <ion-searchbar [disabled]="searchDisabled" [(ngModel)]="query" (ionInput)="searchPlace()" placeholder='{{"Address" | translate}}'></ion-searchbar>
+      </ion-toolbar>
+      <ion-list>
+        <ion-item *ngFor="let place of places" (click)="selectPlace(place)">{{place.description}}</ion-item>
+      </ion-list>
+  </div>
+
   <ion-list>
     <ion-card *ngFor="let market of markets" (click)="view(market)">
       <div class="marketImage">

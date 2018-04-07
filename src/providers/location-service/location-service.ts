@@ -17,7 +17,7 @@ export class LocationServiceProvider {
     public geolocation: Geolocation,
 
 ) {
-    this.onDevice = this.platform.is('cordova');
+    this.onDevice = this.platform.is('android') || this.platform.is('ios');
   }
 
   public subscribeToLocation(){
