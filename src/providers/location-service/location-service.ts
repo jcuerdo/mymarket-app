@@ -21,9 +21,10 @@ export class LocationServiceProvider {
   }
 
   public subscribeToLocation(){
+    console.log('Subscribing to location')
     let watch = this.geolocation.watchPosition();
     watch.subscribe((position) => {
-      console.log('Subscribing to location')
+      console.log('Location updated due to subscription')
       console.log(position.coords)
       if(position.coords){
         localStorage.setItem("lat", position.coords.latitude.toString())
@@ -33,12 +34,13 @@ export class LocationServiceProvider {
   }
   
   public requestLocation(callback, errorCallback){
-    console.log('Trying to obtain location')
+    this.subscribeToLocation()
+    console.log('Requesting location')
     if(localStorage.getItem('lat') && localStorage.getItem('lat')){
       console.log('Lacation already set in local storage')
-      this.subscribeToLocation()
       callback()
     } else{
+      console.log('Lacation not set in local storage')
       if(this.onDevice){
         this.locationAccuracy.canRequest().then((canRequest: boolean) => {
           console.log('Requesting location accuracy')
@@ -64,6 +66,8 @@ export class LocationServiceProvider {
   }
 
   private getPosition(callback, errorCallback){
+    console.log('Getting current position')
+
     this.geolocation.getCurrentPosition().then((position) => this.setPosition(position, callback)).catch((error) => {
       console.log('ERROR getting current location', JSON.stringify(error) )
       errorCallback(error)

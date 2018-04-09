@@ -21,6 +21,7 @@ export class HomePage {
   private loader;
   placesService: any;
   places: any = [];
+  place: string = null;
   query: string = '';
   searchDisabled: boolean = true;
   autocompleteService: any;
@@ -38,23 +39,20 @@ export class HomePage {
 
   ionViewDidLoad(){
 
-    window['mapInit'] = () => {
-      this.initMap();
+  window['mapInit'] = () => {
+    this.initMapServices();
   }
-
   let script = document.createElement("script");
   script.id = "googleMaps";
-
-  
   script.src = 'http://maps.google.com/maps/api/js?key=AIzaSyDlRrMhhZXm-uhLM6XYAa4EWKdqgDSPPQk&callback=mapInit&libraries=places';
-
+  
   document.body.appendChild(script);
 
-    this.loader = this.loading.create({
-      content: ''
-    });
-    this.loader.present();
-    this.locationProvider.requestLocation(this.loadMarkets.bind(this), this.loadEmpty.bind(this));
+  this.loader = this.loading.create({
+    content: ''
+  });
+  this.loader.present();
+  this.locationProvider.requestLocation(this.loadMarkets.bind(this), this.loadEmpty.bind(this));
   }
 
   loadEmpty(error){
@@ -62,8 +60,10 @@ export class HomePage {
   }
 
   loadMarkets() {
+  console.log('Trying to load markets')
   this.apiProvider.getMarkets()
     .subscribe(res => {
+      console.log('API getMArkets response')
       if(res.json().count > 0) {
         this.markets = res.json().result;          
         this.markets.forEach(element => {
@@ -77,11 +77,11 @@ export class HomePage {
             }, (err) => {
             });
         }, this);
-        this.loader.dismiss();
       }
+      this.loader.dismiss();
     }, (err) => {
       this.loader.dismiss();
-      this.presentAlert('Error', 'Connection Error');
+      this.presentAlert('Error', '');
     });
   }
 
@@ -117,7 +117,7 @@ export class HomePage {
     profileModal.present();
   }
 
-  initMap() {
+  initMapServices() {
     if (google || google.maps) {
         this.autocompleteService = new google.maps.places.AutocompleteService();
         this.placesService = new google.maps.places.PlacesService(document.createElement('div'));
@@ -154,6 +154,7 @@ export class HomePage {
 }
 
 selectPlace(place) {
+  this.place = place
   this.places = [];
 
   this.placesService.getDetails({ placeId: place.place_id }, (details) => {

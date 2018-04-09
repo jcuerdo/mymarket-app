@@ -17,13 +17,21 @@
   </h3>
 
   <div id="noLocation">
-    <h2>{{ "Location not available" | translate }}</h2>
+    <h4>{{ "Location not available" | translate }}</h4>
     <ion-toolbar>
         <ion-searchbar [disabled]="searchDisabled" [(ngModel)]="query" (ionInput)="searchPlace()" placeholder='{{"Address" | translate}}'></ion-searchbar>
       </ion-toolbar>
       <ion-list>
         <ion-item *ngFor="let place of places" (click)="selectPlace(place)">{{place.description}}</ion-item>
       </ion-list>
+      <div *ngIf="place != null">
+          <h4>{{"Your location" | translate}} : </h4>
+          <strong>{{place.description}}</strong>
+          <button (click)="loadMarkets()" ion-button icon-left>
+              <ion-icon name="shop"></ion-icon> {{ "Load markets" | translate}}
+            </button>
+      </div>
+
   </div>
 
   <ion-list>
