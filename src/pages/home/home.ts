@@ -61,9 +61,10 @@ export class HomePage {
 
   loadMarkets() {
   console.log('Trying to load markets')
+  this.markets = []
   this.apiProvider.getMarkets()
     .subscribe(res => {
-      console.log('API getMArkets response')
+      console.log('API getMarkets response with ' +  res.json().count + " results.")
       if(res.json().count > 0) {
         this.markets = res.json().result;          
         this.markets.forEach(element => {
@@ -154,15 +155,31 @@ export class HomePage {
 }
 
 selectPlace(place) {
+  this.loader = this.loading.create({
+    content: ''
+  });
+  this.loader.present();
   this.place = place
   this.places = [];
 
   this.placesService.getDetails({ placeId: place.place_id }, (details) => {
-
       console.log(details)
       localStorage.setItem("lat", details.geometry.location.lat());
       localStorage.setItem("lon", details.geometry.location.lng());
+      this.loadMarkets()
   });
+}
+
+loadCurrentPosition(){
+  this.loader = this.loading.create({
+    content: ''
+  });
+  this.loader.present();
+  
+  localStorage.setItem("lat", localStorage.getItem('currentlat'))
+  localStorage.setItem("lon", localStorage.getItem('currentlon'))
+
+  this.loadMarkets()
 
 }
 

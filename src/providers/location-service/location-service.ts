@@ -27,8 +27,8 @@ export class LocationServiceProvider {
       console.log('Location updated due to subscription')
       console.log(position.coords)
       if(position.coords){
-        localStorage.setItem("lat", position.coords.latitude.toString())
-        localStorage.setItem("lon", position.coords.longitude.toString())
+        localStorage.setItem("currentlat", position.coords.latitude.toString())
+        localStorage.setItem("currentlon", position.coords.longitude.toString())
       }
   });
   }
@@ -78,6 +78,9 @@ export class LocationServiceProvider {
   private setPosition(position,callback){
     console.log('Storing location on local storage')
     console.log(position.coords)
+    localStorage.setItem("currentlat", position.coords.latitude.toString())
+    localStorage.setItem("currentlon", position.coords.longitude.toString())
+
     localStorage.setItem("lat", position.coords.latitude.toString())
     localStorage.setItem("lon", position.coords.longitude.toString())
 

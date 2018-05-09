@@ -26,6 +26,8 @@ export class ApiServiceProvider {
     let lat = localStorage.getItem('lat')
     let lon = localStorage.getItem('lon')
 
+    console.log('Getting markets lat:' + lat + ' lon: ' + lon);
+
     return this.http.get(`${this.baseUrl}/public/market?token=${this.getToken()}&lat=${lat}&lon=${lon}&radio=${this.radio}`);
   }
 

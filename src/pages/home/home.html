@@ -3,7 +3,10 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>{{'Markets' | translate }}</ion-title>
+    <ion-title>{{'Markets' | translate }} 
+      <strong *ngIf="place != null">in {{place.description}}</strong> 
+      <strong *ngIf="place == null">in your current location</strong> 
+    </ion-title>
     <ion-buttons end>
     <button (click)="showMap()" ion-button icon-left>
         <ion-icon name="map"></ion-icon> {{ "Map" | translate}}
@@ -13,24 +16,21 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>{{'Nearest markets' | translate }}
-  </h3>
-
   <div id="noLocation">
-    <h4>{{ "Location not available" | translate }}</h4>
-    <ion-toolbar>
-        <ion-searchbar [disabled]="searchDisabled" [(ngModel)]="query" (ionInput)="searchPlace()" placeholder='{{"Address" | translate}}'></ion-searchbar>
-      </ion-toolbar>
-      <ion-list>
-        <ion-item *ngFor="let place of places" (click)="selectPlace(place)">{{place.description}}</ion-item>
-      </ion-list>
-      <div *ngIf="place != null">
-          <h4>{{"Your location" | translate}} : </h4>
-          <strong>{{place.description}}</strong>
-          <button (click)="loadMarkets()" ion-button icon-left>
-              <ion-icon name="shop"></ion-icon> {{ "Load markets" | translate}}
-            </button>
-      </div>
+    <ion-toolbar class="searchLocation">
+        <ion-searchbar class="" [disabled]="searchDisabled" [(ngModel)]="query" (ionInput)="searchPlace()" placeholder='{{"Change address" | translate}}'>
+        </ion-searchbar>
+    </ion-toolbar>
+    <ion-toolbar class="buttonSelectLocation">
+        <button  (click)="loadCurrentPosition()" ion-button icon-right>
+            <ion-icon name="locate"></ion-icon>
+        </button>
+    </ion-toolbar>
+
+    <ion-list>
+      <ion-item *ngFor="let place of places" (click)="selectPlace(place)">{{place.description}}</ion-item>
+    </ion-list>
+
 
   </div>
 
