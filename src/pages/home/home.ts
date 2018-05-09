@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController,ModalController } from 'ionic-angular';
-import { LoadingController, Loading } from 'ionic-angular';
+import { LoadingController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { AddMarketPage } from '../addmarket/addmarket';
 import { ViewMarketPage } from '../view-market/view-market';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { Market } from '../../models/market';
 import { MarketmapPage } from '../marketmap/marketmap';
-import { CookieXSRFStrategy } from '@angular/http/src/backends/xhr_backend';
-import { ConfigToken } from 'ionic-angular/config/config';
 import { LocationServiceProvider } from '../../providers/location-service/location-service';
 
 @Component({
