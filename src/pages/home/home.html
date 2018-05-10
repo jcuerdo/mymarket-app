@@ -35,6 +35,7 @@
   </div>
 
   <ion-list>
+    <h3 *ngIf="markets.length == 0">{{'Sorry we cannot find markets in this location' | translate }} </h3>
     <ion-card *ngFor="let market of markets" (click)="view(market)">
       <div class="marketImage">
         <img src='{{market.image}}' />
