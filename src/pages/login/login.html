@@ -17,19 +17,15 @@
 
     <ion-item>
         <ion-label color="primary" stacked>{{"Email" | translate}}</ion-label>
-        <ion-input type="email" placeholder=""></ion-input>
+        <ion-input required [(ngModel)]="email" type="email" placeholder=""></ion-input>
       </ion-item>
     
       <ion-item>
         <ion-label color="primary" stacked>{{"Password" | translate}}</ion-label>
-        <ion-input type="password" placeholder=""></ion-input>
+        <ion-input required [(ngModel)]="password" type="password" placeholder=""></ion-input>
       </ion-item>
 
-      <button ion-button block>{{"Login" | translate}}</button>
+      <button (click)="login()" ion-button block>{{"Login" | translate}}</button>
 
       <button ion-button block>{{"Register" | translate}}</button>
-
-
-
-
 </ion-content>
