@@ -36,7 +36,7 @@ export class HomePage {
   ) {}
 
   ionViewDidLoad(){
-
+  console.log("Loading home page")
   window['mapInit'] = () => {
     this.initMapServices();
   }
