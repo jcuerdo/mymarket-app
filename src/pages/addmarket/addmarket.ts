@@ -209,7 +209,7 @@ export class AddMarketPage {
           buttons: ['Ok']
         });
         alert.present();
-      }
+    }
 
     uploadPhotoAlert(element,index) {
         let actionSheet = this.actionSheetCtrl.create({

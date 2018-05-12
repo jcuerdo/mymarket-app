@@ -55,6 +55,18 @@ export class ApiServiceProvider {
 
   }
 
+  public loginUser(email: string, password: string) {
+    let postParams = {
+      email: email,
+      password: password,
+    }
+    return this.http.post(
+      `${this.baseUrl}/public/user/login`,
+      postParams,
+      this.getOptions()
+    )
+  }
+
   public saveMarketPhoto(market: Market, photo: Photo) {
     let postParams = {
       id: market.getId(),
