@@ -27,6 +27,7 @@ import { HTTP } from '@ionic-native/http';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ApiServiceProvider } from '../providers/api-service/api-service';
 import { LoginPage } from '../pages/login/login';
+import { AlertProvider } from '../providers/alert/alert';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { LoginPage } from '../pages/login/login';
     HTTP,
     Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ApiServiceProvider
+    ApiServiceProvider,
+    AlertProvider
   ]
 })
 export class AppModule {}

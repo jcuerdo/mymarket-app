@@ -2,6 +2,7 @@
   "Main": "Principal",
   "Nearest markets": "Mercados cercanos",
   "Markets" : "Mercados",
+  "Market" : "Mercado",
   "Camera": "Camara",
   "Gallery": "Galeria",
   "Name": "Nombre",
@@ -10,5 +11,10 @@
   "Details of" : "Detalles de",
   "Save" : "Guardar",
   "Address" : "Direccion",
-  "Select origin": "Selecciona un origen"  
+  "Select origin": "Selecciona un origen",
+  "Password" : "Contraseña" ,
+  "Login" : "Iniciar sesion",
+  "Register" : "Registrarse",
+  "Email and passowrd are mandtory parameters" : "Email y contraseña son campos obligatorios",
+  "Invald email or/and password" : "Email y/o contraseña incorrectos"
 }
