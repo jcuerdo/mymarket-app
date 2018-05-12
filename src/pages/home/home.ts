@@ -8,6 +8,8 @@ import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { Market } from '../../models/market';
 import { MarketmapPage } from '../marketmap/marketmap';
 import { LocationServiceProvider } from '../../providers/location-service/location-service';
+import { TranslateService } from '@ngx-translate/core';
+import { AlertProvider } from '../../providers/alert/alert';
 
 @Component({
   selector: 'page-home',
@@ -33,6 +35,8 @@ export class HomePage {
     public alertCtrl: AlertController,
     public apiProvider: ApiServiceProvider,
     public locationProvider: LocationServiceProvider,
+    public alertProvier : AlertProvider,
+    public translate : TranslateService
   ) {}
 
   ionViewDidLoad(){
@@ -80,17 +84,8 @@ export class HomePage {
       this.loader.dismiss();
     }, (err) => {
       this.loader.dismiss();
-      this.presentAlert('Error', '');
+      this.alertProvier.presentAlert(this.translate.instant("Error"), err)
     });
-  }
-
-  presentAlert(title: string, content: string) {
-    const alert = this.alertCtrl.create({
-      title: title,
-      subTitle: content,
-      buttons: ['Ok']
-    });
-    alert.present();
   }
 
   view(marketData) {

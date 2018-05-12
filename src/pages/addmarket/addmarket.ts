@@ -25,9 +25,6 @@ export class AddMarketPage {
     places: any = [];
     query: string = '';
     searchDisabled: boolean = true;
-    cameratext = "Camera"
-    gallerytext = "Gallery"
-    selecttext = "Select origin"
     
     market: Market;
     
@@ -45,25 +42,6 @@ export class AddMarketPage {
         
     ) {
         this.market = new Market();
-        this.translate.get('Camera').subscribe(
-            value => {
-              this.cameratext = value;
-            }
-          );
-        
-          this.translate.get('Gallery').subscribe(
-            value => {
-              this.gallerytext = value;
-            }
-          );
-
-          this.translate.get('Select origin').subscribe(
-            value => {
-              this.selecttext = value;
-            }
-          );
-        
-        
     }
 
     private ionViewDidLoad(): void {
@@ -213,15 +191,15 @@ export class AddMarketPage {
 
     uploadPhotoAlert(element,index) {
         let actionSheet = this.actionSheetCtrl.create({
-          title: this.selecttext,
+          title: this.translate.instant("Select origin"),
           buttons: [
             {
-              text: this.cameratext,
+              text: this.translate.instant("Camera"),
               handler: () => {
                 this.uploadPhoto(element,index);
               }
             },{
-              text: this.gallerytext,
+              text: this.translate.instant("Gallery"),
               handler: () => {
                 this.uploadPhoto(element,index,this.camera.PictureSourceType.PHOTOLIBRARY);
               }
