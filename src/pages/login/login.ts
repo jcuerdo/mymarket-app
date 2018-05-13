@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App, Events } from 'ionic-angular';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { HomePage } from '../home/home';
 import { AlertProvider } from '../../providers/alert/alert';
@@ -27,7 +27,8 @@ export class LoginPage {
     public navParams: NavParams,
     public apiProvider : ApiServiceProvider,
     public alertProvier : AlertProvider,
-    public translate : TranslateService
+    public translate : TranslateService,
+    public events : Events
     ) {
     }
 
@@ -45,6 +46,7 @@ export class LoginPage {
           if (data.result) {
              localStorage.setItem('token', data.result)
           }
+          this.events.publish('user:login');
           this.navCtrl.setRoot(HomePage)
       }, (err) => {
         this.alertProvier.presentAlert(this.translate.instant("Error"), this.translate.instant("Invald email or/and password"))

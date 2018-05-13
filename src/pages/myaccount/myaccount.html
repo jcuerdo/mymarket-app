@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{'My account' | translate }} 
+    </ion-title>
+    <ion-buttons end>
+    </ion-buttons>  
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <h2>{{"Details" | translate}}</h2>
+   <ion-item>
+      <ion-label color="primary" stacked>{{"Email" | translate}}</ion-label>
+      <ion-input required [(ngModel)]="email" type="email" placeholder=""></ion-input>
+    </ion-item>
+  
+  <ion-item>
+    <ion-label color="primary" stacked>{{"Name" | translate}}</ion-label>
+    <ion-input required [(ngModel)]="name" type="text" placeholder=""></ion-input>
+   </ion-item>
+
+   <ion-item>
+    <ion-label color="primary" stacked>{{"Description" | translate}}</ion-label>
+    <ion-input required [(ngModel)]="description" type="text" placeholder=""></ion-input>
+   </ion-item>
+   <button (click)="saveDetails()" ion-button block>{{"Save" | translate}}</button>
+
+
+   <h2>{{"Change password" | translate}}</h2>
+    <ion-item>
+      <ion-label color="primary" stacked>{{"New Password" | translate}}</ion-label>
+      <ion-input required [(ngModel)]="password" type="password" placeholder=""></ion-input>
+    </ion-item>
+    <button (click)="savePassword()" ion-button block>{{"Save" | translate}}</button>
+</ion-content>

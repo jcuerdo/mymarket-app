@@ -28,6 +28,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ApiServiceProvider } from '../providers/api-service/api-service';
 import { LoginPage } from '../pages/login/login';
 import { AlertProvider } from '../providers/alert/alert';
+import { MyaccountPage } from '../pages/myaccount/myaccount';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AlertProvider } from '../providers/alert/alert';
     LoginPage,
     AddMarketPage,
     ViewMarketPage,
-    MarketmapPage
+    MarketmapPage,
+    MyaccountPage
   ],
   imports: [
     BrowserModule,
@@ -59,6 +61,7 @@ import { AlertProvider } from '../providers/alert/alert';
     AddMarketPage,
     ViewMarketPage,
     MarketmapPage,
+    MyaccountPage
   ],
   providers: [
     StatusBar,
