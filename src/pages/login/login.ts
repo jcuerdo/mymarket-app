@@ -4,6 +4,7 @@ import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { HomePage } from '../home/home';
 import { AlertProvider } from '../../providers/alert/alert';
 import { TranslateService } from '@ngx-translate/core';
+import { Http } from '@angular/http';
 
 /**
  * Generated class for the LoginPage page.
@@ -58,8 +59,23 @@ export class LoginPage {
   }
 
   register(){
-
-    
+    if (this.email != null && this.email != "" && this.password && this.password != "") {
+      this.apiProvider.addUser(this.email, this.password).subscribe(
+        res =>{
+          console.log(res)
+          if(res.status == 201) {
+            this.login()
+          }
+        }, (err) => {
+          console.log(err);          
+          if(err.status == 409) {
+            this.alertProvier.presentAlert(this.translate.instant("Error"), this.translate.instant("This email is alrady in use, try with another one"))
+          }
+        }
+      );
+    } else{
+      this.alertProvier.presentAlert(this.translate.instant("Error"), this.translate.instant("Email and passowrd are mandtory parameters"))
+    }
   }
 
 }
