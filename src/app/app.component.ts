@@ -43,7 +43,6 @@ export class MyApp {
       this.pages = this.publicPages;
     } else{
       this.pages = this.publicPages.concat(this.privatePages);
-
     }
 
     events.subscribe('user:login', () => {

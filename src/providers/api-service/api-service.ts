@@ -79,6 +79,12 @@ export class ApiServiceProvider {
     )
   }
 
+  public getUser() {
+    return this.http.get(
+      `${this.baseUrl}/private/user?token=${this.getToken()}`
+    )
+  }
+
   public saveMarketPhoto(market: Market, photo: Photo) {
     let postParams = {
       id: market.getId(),
