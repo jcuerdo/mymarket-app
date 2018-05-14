@@ -1,10 +1,10 @@
+import { LoginPage } from './../pages/login/login';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TranslateService } from '@ngx-translate/core';
 import { HomePage } from '../pages/home/home';
-import { LoginPage } from '../pages/login/login';
 import { MyaccountPage } from '../pages/myaccount/myaccount';
 
 @Component({
@@ -31,7 +31,7 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.publicPages = [
-      { title: this.translate.instant('Home'), component: HomePage },
+      { title: this.translate.instant('Markets'), component: HomePage },
     ];
 
     this.privatePages = [
@@ -39,8 +39,8 @@ export class MyApp {
     ];
 
     if(!localStorage.getItem("token")){
-      this.rootPage = LoginPage
-      this.pages = this.publicPages;
+      this.pages = this.publicPages.concat({ title: this.translate.instant('Login/Register'), component: LoginPage });
+
     } else{
       this.pages = this.publicPages.concat(this.privatePages);
     }

@@ -21,7 +21,7 @@ export class HomePage {
   private loader;
   placesService: any;
   places: any = [];
-  place: string = null;
+  place: any = null;
   query: string = '';
   searchDisabled: boolean = true;
   autocompleteService: any;

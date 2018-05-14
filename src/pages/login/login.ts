@@ -1,3 +1,4 @@
+import { MyaccountPage } from './../myaccount/myaccount';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, App, Events } from 'ionic-angular';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
@@ -37,7 +38,7 @@ export class LoginPage {
     console.log('ionViewDidLoad LoginPage');
   }
 
-  login(){
+  login(fromRegister : boolean = false){
 
     if (this.email != null && this.email != "" && this.password && this.password != "") {
       this.apiProvider.loginUser(this.email, this.password)
@@ -48,7 +49,11 @@ export class LoginPage {
              localStorage.setItem('token', data.result)
           }
           this.events.publish('user:login');
-          this.navCtrl.setRoot(HomePage)
+          if(fromRegister){
+            this.navCtrl.setRoot(MyaccountPage)
+          } else{
+            this.navCtrl.setRoot(HomePage)
+          }
       }, (err) => {
         this.alertProvier.presentAlert(this.translate.instant("Error"), this.translate.instant("Invald email or/and password"))
           console.log(err)
@@ -64,7 +69,7 @@ export class LoginPage {
         res =>{
           console.log(res)
           if(res.status == 201) {
-            this.login()
+            this.login(true)
           }
         }, (err) => {
           console.log(err);          
