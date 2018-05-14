@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { TranslateService } from '@ngx-translate/core';
 import { HomePage } from '../pages/home/home';
 import { MyaccountPage } from '../pages/myaccount/myaccount';
+import { createTranslateLoader } from './app.module';
 
 @Component({
   templateUrl: 'app.html'
@@ -26,41 +27,44 @@ export class MyApp {
     public translate: TranslateService,
     public events: Events
   ) {
-    this.initializeApp();
     this.translate = translate;
-
-    // used for an example of ngFor and navigation
-    this.publicPages = [
-      { title: this.translate.instant('Markets'), component: HomePage },
-    ];
-
-    this.privatePages = [
-      { title: this.translate.instant('My account'), component: MyaccountPage },
-    ];
-
-    if(!localStorage.getItem("token")){
-      this.pages = this.publicPages.concat({ title: this.translate.instant('Login/Register'), component: LoginPage });
-
-    } else{
-      this.pages = this.publicPages.concat(this.privatePages);
-    }
-
-    events.subscribe('user:login', () => {
-      this.pages = this.publicPages.concat(this.privatePages);
-    });
-
-    events.subscribe('user:logout', () => {
-      this.pages = this.publicPages;
-    });
+    this.initializeApp();
   }
   initializeApp() {
     this.platform.ready().then(() => {
       console.log('Platform is ready')
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
+
     this.statusBar.styleDefault();
     this.splashScreen.hide();
+
+    this.translate.onDefaultLangChange.subscribe(res => {
+      this.loadMenu();
+    });
     this.translate.setDefaultLang('es');
+    });
+  }
+
+  private loadMenu() {
+    this.publicPages = [
+      { title: this.translate.instant('Markets'), component: HomePage },
+    ];
+    this.privatePages = [
+      { title: this.translate.instant('My account'), component: MyaccountPage },
+    ];
+    if (!localStorage.getItem("token")) {
+      this.pages = this.publicPages.concat({ title: this.translate.instant('Login'), component: LoginPage });
+    }
+    else {
+      this.pages = this.publicPages.concat(this.privatePages);
+    }
+    this.events.subscribe('user:login', () => {
+      console.log(this.translate.instant('Login'));
+      this.pages = this.publicPages.concat(this.privatePages);
+    });
+    this.events.subscribe('user:logout', () => {
+      this.pages = this.publicPages;
     });
   }
 

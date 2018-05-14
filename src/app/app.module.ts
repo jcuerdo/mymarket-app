@@ -80,5 +80,6 @@ import { MyaccountPage } from '../pages/myaccount/myaccount';
 export class AppModule {}
 
 export function createTranslateLoader(http: HttpClient) {
+  console.log("Loading translations")
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
