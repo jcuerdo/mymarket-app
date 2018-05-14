@@ -3,6 +3,8 @@
   "Nearest markets": "Mercados cercanos",
   "Markets" : "Mercados",
   "Market" : "Mercado",
+  "New market" : "Crear nuevo mercado",
+  "Menu" : "Menu",
   "Camera": "Camara",
   "Gallery": "Galeria",
   "Name": "Nombre",
@@ -15,6 +17,12 @@
   "Password" : "Contraseña" ,
   "Login" : "Iniciar sesion",
   "Register" : "Registrarse",
+  "Login/Register" : "Login/Registro",
+  "My account" : "Mi cuenta",
+  "Change password" : "Cambiar contraseña",
+  "New password" : "Nueva contraseña",
+  "in your current location" : "en tu ubicacion actual",
+  "Map" : "Mapa",
   "Email and passowrd are mandtory parameters" : "Email y contraseña son campos obligatorios",
   "Invald email or/and password" : "Email y/o contraseña incorrectos"
 }
