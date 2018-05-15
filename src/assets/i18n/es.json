@@ -2,6 +2,7 @@
   "Main": "Principal",
   "Nearest markets": "Mercados cercanos",
   "Markets" : "Mercados",
+  "My markets" : "Mis mercados",
   "Market" : "Mercado",
   "New market" : "Crear nuevo mercado",
   "Menu" : "Menu",
@@ -24,5 +25,8 @@
   "in your current location" : "en tu ubicacion actual",
   "Map" : "Mapa",
   "Email and passowrd are mandtory parameters" : "Email y contraseña son campos obligatorios",
+  "View" : "Ver",
+  "Edit" : "Editar",
+  "Delete" : "Borrar",
   "Invald email or/and password" : "Email y/o contraseña incorrectos"
 }

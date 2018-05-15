@@ -1,3 +1,4 @@
+import { MymarketsPage } from './../pages/mymarkets/mymarkets';
 import { LoginPage } from './../pages/login/login';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, Events } from 'ionic-angular';
@@ -37,6 +38,7 @@ export class MyApp {
         ];
         this.privatePages = [
           { title: this.translate.instant('My account'), component: MyaccountPage },
+          { title: this.translate.instant('My markets'), component: MymarketsPage },
         ];
         if (!localStorage.getItem("token")) {
           this.pages = this.publicPages.concat({ title: this.translate.instant('Login/Register'), component: LoginPage });

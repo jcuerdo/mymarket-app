@@ -29,6 +29,7 @@ import { ApiServiceProvider } from '../providers/api-service/api-service';
 import { LoginPage } from '../pages/login/login';
 import { AlertProvider } from '../providers/alert/alert';
 import { MyaccountPage } from '../pages/myaccount/myaccount';
+import { MymarketsPage } from '../pages/mymarkets/mymarkets';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { MyaccountPage } from '../pages/myaccount/myaccount';
     AddMarketPage,
     ViewMarketPage,
     MarketmapPage,
-    MyaccountPage
+    MyaccountPage,
+    MymarketsPage,
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,8 @@ import { MyaccountPage } from '../pages/myaccount/myaccount';
     AddMarketPage,
     ViewMarketPage,
     MarketmapPage,
-    MyaccountPage
+    MyaccountPage,
+    MymarketsPage,
   ],
   providers: [
     StatusBar,
