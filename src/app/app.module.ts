@@ -1,3 +1,4 @@
+import { EditmarketPage } from './../pages/editmarket/editmarket';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -41,6 +42,7 @@ import { MymarketsPage } from '../pages/mymarkets/mymarkets';
     MarketmapPage,
     MyaccountPage,
     MymarketsPage,
+    EditmarketPage,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +67,7 @@ import { MymarketsPage } from '../pages/mymarkets/mymarkets';
     MarketmapPage,
     MyaccountPage,
     MymarketsPage,
+    EditmarketPage,
   ],
   providers: [
     StatusBar,

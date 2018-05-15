@@ -1,3 +1,4 @@
+import { EditmarketPage } from './../editmarket/editmarket';
 import { ViewMarketPage } from './../view-market/view-market';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertProvider } from './../../providers/alert/alert';
@@ -52,8 +53,16 @@ export class MymarketsPage {
 
   }
 
-  edit(marketDate){
+  edit(marketData){
+    let market = new Market();
+    market.setId(marketData.id);
+    market.setName(marketData.name);
+    market.setDescription(marketData.description);
+    market.setDate(marketData.startDate);
+    market.setLat(marketData.lat);
+    market.setLng(marketData.lon);
 
+    this.navCtrl.push(EditmarketPage, { market: market });
   }
 
   view(marketData) {
