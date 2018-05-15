@@ -26,40 +26,40 @@ export class MyApp {
     public translate: TranslateService,
     public events: Events
   ) {
-    this.initializeApp();
     this.translate = translate;
-
-    // used for an example of ngFor and navigation
-    this.publicPages = [
-      { title: this.translate.instant('Markets'), component: HomePage },
-    ];
-
-    this.privatePages = [
-      { title: this.translate.instant('My account'), component: MyaccountPage },
-    ];
-
-    if(!localStorage.getItem("token")){
-      this.pages = this.publicPages.concat({ title: this.translate.instant('Login/Register'), component: LoginPage });
-
-    } else{
-      this.pages = this.publicPages.concat(this.privatePages);
-    }
-
-    events.subscribe('user:login', () => {
-      this.pages = this.publicPages.concat(this.privatePages);
-    });
-
-    events.subscribe('user:logout', () => {
-      this.pages = this.publicPages;
-    });
+    this.initializeApp();
   }
+  private generateMenuPages() {
+    this.translate.onDefaultLangChange.subscribe(
+      res => {
+        this.publicPages = [
+          { title: this.translate.instant('Markets'), component: HomePage },
+        ];
+        this.privatePages = [
+          { title: this.translate.instant('My account'), component: MyaccountPage },
+        ];
+        if (!localStorage.getItem("token")) {
+          this.pages = this.publicPages.concat({ title: this.translate.instant('Login/Register'), component: LoginPage });
+        }
+        else {
+          this.pages = this.publicPages.concat(this.privatePages);
+        }
+        this.events.subscribe('user:login', () => {
+          this.pages = this.publicPages.concat(this.privatePages);
+        });
+        this.events.subscribe('user:logout', () => {
+          this.pages = this.publicPages;
+        });
+      }
+    );
+  }
+
   initializeApp() {
     this.platform.ready().then(() => {
-      console.log('Platform is ready')
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
+    console.log('Platform is ready')
     this.statusBar.styleDefault();
     this.splashScreen.hide();
+    this.generateMenuPages();
     this.translate.setDefaultLang('es');
     });
   }
