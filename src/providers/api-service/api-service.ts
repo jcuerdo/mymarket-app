@@ -7,11 +7,11 @@ import { Photo } from '../../models/photo';
 @Injectable()
 export class ApiServiceProvider {
 
-  baseUrl: string = 'http://45.77.216.232:8080';
-  private token : string;
+  private baseUrl: string;
   private radio : number;
   constructor(public http: Http) {
      this.radio = 100
+     this.baseUrl = 'http://45.77.216.232:8080';
   }
 
 
