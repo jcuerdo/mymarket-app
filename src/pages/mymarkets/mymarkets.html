@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{'My Markets' | translate }} 
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <h3 *ngIf="markets.length == 0">{{"You have not create markets yet" | translate }} </h3>
+    <ion-card *ngFor="let market of markets">
+      <div class="marketImage">
+        <img src='{{market.image}}' />
+      </div>
+      <ion-card-content>
+        <ion-card-title>
+          <h2>{{ market.name }}</h2>
+        </ion-card-title>
+        <ion-icon name="calendar"></ion-icon>
+        <span>{{market.startDate | date:'dd-MM-yyyy hh:mm'}}</span>
+        <p>{{ market.description | slice:0:200}} </p>
+        <button (click)="view(market)" ion-button>
+          <ion-icon name="eye"></ion-icon> {{"View"|translate}}
+        </button>
+        <button (click)="edit(market)" ion-button>
+          <ion-icon name="options"></ion-icon> {{"Edit"|translate}}
+        </button>
+        <button (click)="delete(market)" ion-button>
+          <ion-icon name="trash"></ion-icon> {{"Delete"|translate}}
+        </button>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <ion-fab right bottom>
+    <button (click)="add()" ion-fab color="primary">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

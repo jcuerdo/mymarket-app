@@ -1,3 +1,4 @@
+import { MymarketsPage } from './../pages/mymarkets/mymarkets';
 import { LoginPage } from './../pages/login/login';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, Events } from 'ionic-angular';
@@ -29,43 +30,43 @@ export class MyApp {
     this.translate = translate;
     this.initializeApp();
   }
+
+  private generateMenuPages() {
+    this.translate.onDefaultLangChange.subscribe(
+      res => {
+        this.publicPages = [
+          { title: this.translate.instant('Markets'), component: HomePage },
+        ];
+        this.privatePages = [
+          { title: this.translate.instant('My account'), component: MyaccountPage },
+          { title: this.translate.instant('My markets'), component: MymarketsPage },
+        ];
+        if (!localStorage.getItem("token")) {
+          this.pages = this.publicPages.concat({ title: this.translate.instant('Login/Register'), component: LoginPage });
+        }
+        else {
+          this.pages = this.publicPages.concat(this.privatePages);
+        }
+        this.events.subscribe('user:login', () => {
+          this.pages = this.publicPages.concat(this.privatePages);
+        });
+        this.events.subscribe('user:logout', () => {
+          this.pages = this.publicPages;
+        });
+      }
+    );
+  }
+
   initializeApp() {
     this.platform.ready().then(() => {
-      console.log('Platform is ready')
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-
+    console.log('Platform is ready')
     this.statusBar.styleDefault();
     this.splashScreen.hide();
-
-    this.translate.onDefaultLangChange.subscribe(res => {
-      this.loadMenu();
-    });
+    this.generateMenuPages();
     this.translate.setDefaultLang('es');
     });
   }
 
-  private loadMenu() {
-    this.publicPages = [
-      { title: this.translate.instant('Markets'), component: HomePage },
-    ];
-    this.privatePages = [
-      { title: this.translate.instant('My account'), component: MyaccountPage },
-    ];
-    if (!localStorage.getItem("token")) {
-      this.pages = this.publicPages.concat({ title: this.translate.instant('Login'), component: LoginPage });
-    }
-    else {
-      this.pages = this.publicPages.concat(this.privatePages);
-    }
-    this.events.subscribe('user:login', () => {
-      console.log(this.translate.instant('Login'));
-      this.pages = this.publicPages.concat(this.privatePages);
-    });
-    this.events.subscribe('user:logout', () => {
-      this.pages = this.publicPages;
-    });
-  }
 
   openPage(page) {
     // Reset the content nav to have just this page

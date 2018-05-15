@@ -7,7 +7,7 @@ import { Photo } from '../../models/photo';
 @Injectable()
 export class ApiServiceProvider {
 
-  baseUrl: string = 'http://ec2-18-195-137-171.eu-central-1.compute.amazonaws.com:8080';
+  baseUrl: string = 'http://45.77.216.232:8080';
   private token : string;
   private radio : number;
   constructor(public http: Http) {
@@ -28,15 +28,20 @@ export class ApiServiceProvider {
 
     console.log('Getting markets lat:' + lat + ' lon: ' + lon);
 
-    return this.http.get(`${this.baseUrl}/public/market?token=${this.getToken()}&lat=${lat}&lon=${lon}&radio=${this.radio}`);
+    return this.http.get(`${this.baseUrl}/public/market?lat=${lat}&lon=${lon}&radio=${this.radio}`);
+  }
+
+  public getMyMarkets() {
+    console.log('Getting markets for current user');
+    return this.http.get(`${this.baseUrl}/private/market?token=${this.getToken()}`);
   }
 
   public getMarketFirstPhoto(id: number) {
-    return this.http.get(`${this.baseUrl}/public/market/${id}/photo?token=${this.getToken()}`)
+    return this.http.get(`${this.baseUrl}/public/market/${id}/photo`)
   }
 
   public getMarketPhotos(id: number){
-    return this.http.get(`${this.baseUrl}/public/market/${id}/photos?token=${this.getToken()}`)
+    return this.http.get(`${this.baseUrl}/public/market/${id}/photos`)
   }
 
   public saveMarket(market: Market) {

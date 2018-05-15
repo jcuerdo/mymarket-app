@@ -1,3 +1,4 @@
+import { EditmarketPage } from './../pages/editmarket/editmarket';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -29,6 +30,7 @@ import { ApiServiceProvider } from '../providers/api-service/api-service';
 import { LoginPage } from '../pages/login/login';
 import { AlertProvider } from '../providers/alert/alert';
 import { MyaccountPage } from '../pages/myaccount/myaccount';
+import { MymarketsPage } from '../pages/mymarkets/mymarkets';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { MyaccountPage } from '../pages/myaccount/myaccount';
     AddMarketPage,
     ViewMarketPage,
     MarketmapPage,
-    MyaccountPage
+    MyaccountPage,
+    MymarketsPage,
+    EditmarketPage,
   ],
   imports: [
     BrowserModule,
@@ -61,7 +65,9 @@ import { MyaccountPage } from '../pages/myaccount/myaccount';
     AddMarketPage,
     ViewMarketPage,
     MarketmapPage,
-    MyaccountPage
+    MyaccountPage,
+    MymarketsPage,
+    EditmarketPage,
   ],
   providers: [
     StatusBar,
