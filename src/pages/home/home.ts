@@ -88,16 +88,9 @@ export class HomePage {
     });
   }
 
-  view(marketData) {
-    let market = new Market();
-    market.setId(marketData.id);
-    market.setName(marketData.name);
-    market.setDescription(marketData.description);
-    market.setDate(marketData.startDate);
-    market.setLat(marketData.lat);
-    market.setLng(marketData.lon);
-
-    this.navCtrl.push(ViewMarketPage, { market: market });
+  view(marketId) {
+    console.log(marketId)
+    this.navCtrl.push(ViewMarketPage, { marketId: marketId });
   }
 
   add() {

@@ -225,8 +225,7 @@ export class AddMarketPage {
 
            this.camera.getPicture(options).then((imageData) => {
            let base64ImageUrl = 'data:image/jpeg;base64,' + imageData;
-           let photo = new Photo();
-           photo.setContent(base64ImageUrl);
+           let photo = new Photo(0,base64ImageUrl);
            this.market.addPhoto(photo,null);
            element.srcElement.src = base64ImageUrl;
           }, (err) => {

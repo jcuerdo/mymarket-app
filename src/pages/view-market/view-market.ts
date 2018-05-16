@@ -21,22 +21,53 @@ export class ViewMarketPage {
         public http: Http,
         private apiProvider: ApiServiceProvider,
     ) {
-        this.market =  navParams.get("market");
+        this.market =  new Market();
+        this.market.setId(navParams.get("marketId"))
+        this.market.addPhoto(new Photo(0, 'assets/img/image.png'), 0);
 
-        if(this.market.getPhotos().length == 0){
-            let photoEntity = new Photo();
-            photoEntity.setContent('assets/img/image.png');
-            this.market.addPhoto(photoEntity, null);
-        }
+        this.loadMarket()
     }
 
-    ngOnInit(): void {
-        this.loadPhotos();
-    }
-
-    private ionViewDidLoad(): void {
-        window['mapInit'] = () => {
+    private loadMarket(){
+        this.apiProvider.getMarket(this.market.getId()).subscribe(
+          res => {
+            let data = res.json();
+            data = data.result
+            this.market.setName(data.name)
+            this.market.setDescription(data.description)
+            this.market.setDate(new Date(data.startdate).toISOString())
+            this.market.setId(data.id)
+            this.market.setLat(data.lat)
+            this.market.setLng(data.lon)
             this.initMap();
+            this.loadPhotos();
+        }, (err) => {
+            console.log(err)
+        }
+        ); 
+      }
+
+      private loadPhotos() {
+        this.apiProvider.getMarketPhotos(this.market.getId())
+            .subscribe(res => {
+                let data = res.json();
+                let photos = data.result
+                let length = data.count
+                if (length > 0) {
+                    photos.forEach((photo, index) => {
+                    let photoEntity = new Photo(photo.id,photo.content);
+                    this.market.addPhoto(photoEntity, index);
+                    }, this);
+                }
+
+            }, (err) => {
+                console.log(err)
+            });
+    }
+
+    ionViewDidLoad(): void {
+        window['mapInit'] = () => {
+            this.loadMarket();
         }
 
         let script = document.createElement("script");
@@ -51,7 +82,7 @@ export class ViewMarketPage {
         if (google || google.maps) {
 
             var latLng = new google.maps.LatLng(Number(this.market.getLat()), Number(this.market.getLng()));
-            
+
             var zoom = 10;
 
             let mapOptions = {
@@ -74,27 +105,5 @@ export class ViewMarketPage {
 
             marker.bindTo('position', this.map, 'center');
         }
-    }
-
-
-    private loadPhotos() {
-        this.apiProvider.getMarketPhotos(this.market.getId())
-            .subscribe(res => {
-                let data = res.json();
-                let photos = data.result
-                let length = data.count
-                if (length > 0) {
-                    this.market.clearPhotos();
-                    photos.forEach((photo, index) => {
-                        let photoEntity = new Photo();
-                        photoEntity.setId(photo.id);
-                        photoEntity.setContent(photo.content);
-                        this.market.addPhoto(photoEntity, index);
-                    }, this);
-                }
-
-            }, (err) => {
-                console.log(err)
-            });
     }
 }

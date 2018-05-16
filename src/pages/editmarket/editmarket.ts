@@ -47,7 +47,7 @@ export class EditmarketPage {
         this.market.setDate(new Date(data.startdate).toISOString())
         this.market.setId(data.id)
         this.market.setLat(data.lat)
-        this.market.setLng(data.lng)
+        this.market.setLng(data.lon)
         this.loadPhotos();
     }, (err) => {
         console.log(err)
@@ -66,7 +66,6 @@ export class EditmarketPage {
             if (length > 0) {
                 photos.forEach((photo, index) => {
                     let photoEntity = new Photo(photo.id,photo.content);
-                    console.log(this.market.getPhotos())
                     this.market.addPhoto(photoEntity, index);
                 }, this);
             }
