@@ -57,8 +57,8 @@ export class MymarketsPage {
     this.navCtrl.push(EditmarketPage, { marketId: marketId });
   }
 
-  view(marketData) {
-    this.navCtrl.push(ViewMarketPage, { market: marketData });
+  view(marketId) {
+    this.navCtrl.push(ViewMarketPage, { marketId: marketId });
   }
 
    loadMarkets() {
