@@ -25,17 +25,27 @@ export class EditmarketPage {
     public navParams: NavParams,
     public apiProvider: ApiServiceProvider
   ) {
-    this.market = navParams.get("market");
+    this.market = new Market();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditmarketPage');
     this.loadMarket();
-    this.loadPhotos();
   }
 
   private loadMarket(){
+    this.apiProvider.getMarket(this.navParams.get("marketId")).subscribe(
+      res => {
+        let data = res.json();
+        console.log(data)
+        //SETTERS
+        //this.loadPhotos();
 
+    }, (err) => {
+        console.log(err)
+    }
+    );
+    
   }
 
   private loadPhotos() {

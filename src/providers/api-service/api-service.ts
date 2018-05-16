@@ -36,6 +36,11 @@ export class ApiServiceProvider {
     return this.http.get(`${this.baseUrl}/private/market?token=${this.getToken()}`);
   }
 
+  public getMarket(marketId: number) {
+    console.log('Getting market with id ');
+    return this.http.get(`${this.baseUrl}/public/market/${marketId}?token=${this.getToken()}`);
+  }
+
   public getMarketFirstPhoto(id: number) {
     return this.http.get(`${this.baseUrl}/public/market/${id}/photo`)
   }
