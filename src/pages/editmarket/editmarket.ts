@@ -26,6 +26,10 @@ export class EditmarketPage {
     public apiProvider: ApiServiceProvider
   ) {
     this.market = new Market();
+    this.market.addPhoto(new Photo(0, 'assets/img/camera.png'), 0);
+    this.market.addPhoto(new Photo(0, 'assets/img/camera.png'), 1);
+    this.market.addPhoto(new Photo(0, 'assets/img/camera.png'), 2);
+    this.market.addPhoto(new Photo(0, 'assets/img/camera.png'), 3);
   }
 
   ionViewDidLoad() {
@@ -37,10 +41,14 @@ export class EditmarketPage {
     this.apiProvider.getMarket(this.navParams.get("marketId")).subscribe(
       res => {
         let data = res.json();
-        console.log(data)
-        //SETTERS
-        //this.loadPhotos();
-
+        data = data.result
+        this.market.setName(data.name)
+        this.market.setDescription(data.description)
+        this.market.setDate(new Date(data.startdate).toISOString())
+        this.market.setId(data.id)
+        this.market.setLat(data.lat)
+        this.market.setLng(data.lng)
+        this.loadPhotos();
     }, (err) => {
         console.log(err)
     }
@@ -56,11 +64,9 @@ export class EditmarketPage {
             let photos = data.result
             let length = data.count
             if (length > 0) {
-                this.market.clearPhotos();
                 photos.forEach((photo, index) => {
-                    let photoEntity = new Photo();
-                    photoEntity.setId(photo.id);
-                    photoEntity.setContent(photo.content);
+                    let photoEntity = new Photo(photo.id,photo.content);
+                    console.log(this.market.getPhotos())
                     this.market.addPhoto(photoEntity, index);
                 }, this);
             }
