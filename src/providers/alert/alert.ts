@@ -11,9 +11,7 @@ import { AlertController } from 'ionic-angular';
 @Injectable()
 export class AlertProvider {
 
-
   constructor(public alertCtrl: AlertController) {
-
   }
 
   presentAlert(title : string, content: string) {

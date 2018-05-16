@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheet, ActionSheetController } from 'ionic-angular';
 import { Market } from '../../models/market';
 import { Photo } from '../../models/photo';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
+import { TranslateService } from '@ngx-translate/core';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 /**
  * Generated class for the EditmarketPage page.
@@ -23,7 +25,11 @@ export class EditmarketPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public apiProvider: ApiServiceProvider
+    public apiProvider: ApiServiceProvider,
+    public translate: TranslateService,
+    public actionSheetCtrl: ActionSheetController,
+    private camera: Camera,
+
   ) {
     this.market = new Market();
     this.market.addPhoto(new Photo(0, 'assets/img/camera.png'), 0);
@@ -53,7 +59,6 @@ export class EditmarketPage {
         console.log(err)
     }
     );
-    
   }
 
   private loadPhotos() {
@@ -73,5 +78,49 @@ export class EditmarketPage {
         }, (err) => {
             console.log(err)
         });
+}
+
+uploadPhotoAlert(element,index) {
+  let actionSheet = this.actionSheetCtrl.create({
+    title: this.translate.instant("Select origin"),
+    buttons: [
+      {
+        text: this.translate.instant("Camera"),
+        handler: () => {
+          this.uploadPhoto(element,index);
+        }
+      },{
+        text: this.translate.instant("Gallery"),
+        handler: () => {
+          this.uploadPhoto(element,index,this.camera.PictureSourceType.PHOTOLIBRARY);
+        }
+      }
+    ]
+  });
+  actionSheet.present();
+}
+
+
+
+uploadPhoto(element,index,source = this.camera.PictureSourceType.CAMERA) : void {
+
+  const options: CameraOptions = {
+      sourceType: source,
+      quality: 50,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      targetWidth : 600
+    }
+
+     this.camera.getPicture(options).then((imageData) => {
+     let base64ImageUrl = 'data:image/jpeg;base64,' + imageData;
+     let photo = new Photo(0,base64ImageUrl);
+     this.market.addPhoto(photo,null);
+     element.srcElement.src = base64ImageUrl;
+    }, (err) => {
+     console.log(err);
+    });
 }
 }

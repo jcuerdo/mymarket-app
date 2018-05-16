@@ -1,9 +1,10 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { Market } from '../../models/market';
 import { Http } from '@angular/http';
 import { Photo } from '../../models/photo';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
+import { AlertProvider } from '../../providers/alert/alert';
 
 @Component({
     selector: 'page-view-market',
@@ -20,6 +21,10 @@ export class ViewMarketPage {
         public navParams: NavParams,
         public http: Http,
         private apiProvider: ApiServiceProvider,
+        public loading: LoadingController,
+        public alertProvider: AlertProvider,
+
+
     ) {
         this.market =  new Market();
         this.market.setId(navParams.get("marketId"))
@@ -63,6 +68,43 @@ export class ViewMarketPage {
             }, (err) => {
                 console.log(err)
             });
+    }
+
+    saveMarket(): void {
+
+        let loader = this.loading.create({
+            content: '',
+        });
+
+        var headers = new Headers();
+        loader.present().then(() => {
+
+            this.market.setLat(this.map.center.lat());
+            this.market.setLng(this.map.center.lng());
+
+            this.apiProvider.editMarket(this.market)
+                .subscribe(res => {
+                    let data = res.json().result;
+                    this.market.setId(data.id);
+
+                    this.market.getPhotos().forEach(function(element) {
+                        if(element.getContent()){
+                            this.apiProvider.saveMarketPhoto(this.market,element)
+                                .subscribe(res => {
+                                    let imgData = res.json().result;
+                                    element.setId(imgData.id);
+                                }, (err) => {
+                                    this.presentAlert('Error', this.translate.instant('Image upload fail'));
+                                });                              
+                        }   
+                    },this);
+                    loader.dismiss();
+                    this.navCtrl.push(ViewMarketPage, { market: this.market });                    
+                }, (err) => {
+                    loader.dismiss();
+                    this.alertProvider.presentAlert('Error', err);
+                });
+        });
     }
 
     ionViewDidLoad(): void {

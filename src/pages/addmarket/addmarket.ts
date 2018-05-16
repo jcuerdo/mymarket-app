@@ -8,6 +8,7 @@ import {Photo} from '../../models/photo';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { ViewMarketPage } from '../view-market/view-market';
 import { TranslateService } from '@ngx-translate/core';
+import { AlertProvider } from '../../providers/alert/alert';
 
 
 @Component({
@@ -38,6 +39,7 @@ export class AddMarketPage {
         private apiProvider: ApiServiceProvider,
         public actionSheetCtrl: ActionSheetController,
         public translate: TranslateService,
+        public alertProvider: AlertProvider
         
         
     ) {
@@ -167,7 +169,7 @@ export class AddMarketPage {
                                     let imgData = res.json().result;
                                     element.setId(imgData.id);
                                 }, (err) => {
-                                    this.presentAlert('Error', 'Image upload fail');
+                                    this.presentAlert('Error', this.translate.instant('Image upload fail'));
                                 });                              
                         }   
                     },this);
@@ -175,18 +177,9 @@ export class AddMarketPage {
                     this.navCtrl.push(ViewMarketPage, { market: this.market });                    
                 }, (err) => {
                     loader.dismiss();
-                    this.presentAlert('Error', err);
+                    this.alertProvider.presentAlert('Error', err);
                 });
         });
-    }
-
-    presentAlert(title : string, content: string) {
-        const alert = this.alertCtrl.create({
-          title: title,
-          subTitle: content,
-          buttons: ['Ok']
-        });
-        alert.present();
     }
 
     uploadPhotoAlert(element,index) {

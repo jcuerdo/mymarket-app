@@ -14,7 +14,6 @@ export class ApiServiceProvider {
      this.baseUrl = 'http://45.77.216.232:8080';
   }
 
-
   public getOptions() {
     var headers = new Headers();
     headers.append("Accept", 'application/json');
@@ -59,6 +58,22 @@ export class ApiServiceProvider {
     }
 
     return this.http.post(`${this.baseUrl}/private/market?token=${this.getToken()}`,
+      postParams,
+      this.getOptions()
+    );
+
+  }
+
+  public editMarket(market: Market) {
+    let postParams = {
+      name: market.getName(),
+      description: market.getDescription(),
+      startdate: market.getDate(),
+      lat: market.getLat(),
+      lon: market.getLng(),
+    }
+
+    return this.http.post(`${this.baseUrl}/private/market/{market.id}?token=${this.getToken()}`,
       postParams,
       this.getOptions()
     );
