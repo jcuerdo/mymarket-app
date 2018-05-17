@@ -1,7 +1,7 @@
 import { ViewMarketPage } from './../view-market/view-market';
 import { AlertProvider } from './../../providers/alert/alert';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController, LoadingController, Loading } from 'ionic-angular';
 import { Market } from '../../models/market';
 import { Photo } from '../../models/photo';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
@@ -65,40 +65,40 @@ export class EditmarketPage {
                 this.apiProvider.deleteMarketPhotos(this.market)
                 .subscribe(res => {
                   this.photosToUpload = this.market.getPhotos().length
-                  if(this.photosToUpload == 0){
-                    loader.dismiss();
-                    this.navCtrl.push(ViewMarketPage, { marketId: this.market.getId() });   
-                  }
+                  this.checkAllPhotosUploaded(loader);
                   this.market.getPhotos().forEach(function(element) {              
                     if(element.getContent() && element.getContent() != 'assets/img/camera.png'){
                       this.apiProvider.saveMarketPhoto(this.market,element)
                         .subscribe(res => {
                           this.photosToUpload--;
-                          if(this.photosToUpload == 0){
-                            loader.dismiss();
-                            this.navCtrl.push(ViewMarketPage, { marketId: this.market.getId() });   
-                          }
+                          this.checkAllPhotosUploaded(loader);
                         }, (err) => {
                           this.photosToUpload--;
-                          if(this.photosToUpload == 0){
-                            loader.dismiss();
-                            this.navCtrl.push(ViewMarketPage, { marketId: this.market.getId() });   
-                          }
-                            this.alertProvider.presentAlert('Error', this.translate.instant('Image upload fail'));
+                          this.checkAllPhotosUploaded(loader);
+                          this.alertProvider.presentAlert('Error', this.translate.instant('Image upload fail'));
                         });                              
                       } else{
                         this.photosToUpload--;
+                        this.checkAllPhotosUploaded(loader);
                       }
                   },this);
                  }, (err) => {
                   this.alertProvider.presentAlert('Error', this.translate.instant('Image updated fail'));
-                 });                 
+                 });              
             }, (err) => {
                 loader.dismiss();
                 this.alertProvider.presentAlert('Error', err);
             });
     });
 }
+
+  private checkAllPhotosUploaded(loader) {
+    if (this.photosToUpload <= 0) {
+      loader.dismiss();
+      this.navCtrl.pop();
+      this.navCtrl.push(ViewMarketPage, { marketId: this.market.getId() });
+    }
+  }
 
   private loadMarket(){
     this.apiProvider.getMarket(this.navParams.get("marketId")).subscribe(

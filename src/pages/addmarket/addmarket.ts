@@ -156,36 +156,37 @@ export class AddMarketPage {
                     let data = res.json().result;
                     this.market.setId(data.id);
                     this.photosToUpload = this.market.getPhotos().length
-                    if(this.photosToUpload == 0){
-                        loader.dismiss();
-                        this.navCtrl.push(ViewMarketPage, { marketId: this.market.getId() });   
-                    }
-                    this.market.getPhotos().forEach(function(element) {
-                        if(element.getContent()){
-                            this.apiProvider.saveMarketPhoto(this.market,element)
-                                .subscribe(res => {
-                                    this.photosToUpload--;
-                                    if(this.photosToUpload == 0){
-                                      loader.dismiss();
-                                      this.navCtrl.push(ViewMarketPage, { marketId: this.market.getId() });   
-                                    }
-                                }, (err) => {
-                                    if(this.photosToUpload == 0){
-                                        loader.dismiss();
-                                        this.navCtrl.push(ViewMarketPage, { marketId: this.market.getId() });   
-                                    }
-                                    this.alertProvider.presentAlert('Error', this.translate.instant('Image upload fail'));
-                                });                              
-                        }   
-                    },this);
-                    loader.dismiss();
-                    this.navCtrl.push(ViewMarketPage, { market: this.market });                    
+                    this.checkAllPhotosUploaded(loader);
+                    this.market.getPhotos().forEach(function(element) {              
+                      if(element.getContent() && element.getContent() != 'assets/img/camera.png'){
+                        this.apiProvider.saveMarketPhoto(this.market,element)
+                          .subscribe(res => {
+                            this.photosToUpload--;
+                            this.checkAllPhotosUploaded(loader);
+                          }, (err) => {
+                            this.photosToUpload--;
+                            this.checkAllPhotosUploaded(loader);
+                            this.alertProvider.presentAlert('Error', this.translate.instant('Image upload fail'));
+                          });                             
+                        } else{
+                            this.photosToUpload--;
+                            this.checkAllPhotosUploaded(loader);
+                          }
+                    },this);               
                 }, (err) => {
                     loader.dismiss();
                     this.alertProvider.presentAlert('Error', err);
                 });
         });
     }
+
+    private checkAllPhotosUploaded(loader) {
+        if (this.photosToUpload <= 0) {
+          loader.dismiss();
+          this.navCtrl.pop();
+          this.navCtrl.push(ViewMarketPage, { marketId: this.market.getId() });
+        }
+      }
 
     uploadPhotoAlert(element,index) {
         let actionSheet = this.actionSheetCtrl.create({

@@ -131,6 +131,6 @@ export class ApiServiceProvider {
   }
 
   private getToken(){
-    return localStorage.getItem('token') ? localStorage.getItem('token') : '1234567890';
+    return localStorage.getItem('token');
   }
 }
