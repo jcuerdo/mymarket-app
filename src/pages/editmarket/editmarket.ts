@@ -139,15 +139,8 @@ uploadPhotoAlert(element,index) {
       },{
         text: this.translate.instant("Delete"),
         handler: () => {
-          console.log('ANTES')
-
-          console.log(this.market)
-
           this.market.addPhoto(new Photo(index,'assets/img/camera.png'), index);
-
-          console.log('DESPUES')
-
-          console.log(this.market)        }
+      }
       }
     ]
   });

@@ -159,8 +159,7 @@ export class AddMarketPage {
                         if(element.getContent()){
                             this.apiProvider.saveMarketPhoto(this.market,element)
                                 .subscribe(res => {
-                                    let imgData = res.json().result;
-                                    element.setId(imgData.id);
+                                    console.log(res);
                                 }, (err) => {
                                     this.alertProvider.presentAlert('Error', this.translate.instant('Image upload fail'));
                                 });                              
@@ -192,16 +191,7 @@ export class AddMarketPage {
             },{
                 text: this.translate.instant("Delete"),
                 handler: () => {
-                    console.log('ANTES')
-
-                    console.log(this.market)
-
                     this.market.addPhoto(new Photo(index,'assets/img/camera.png'), index);
-
-                    console.log('DESPUES')
-
-                    console.log(this.market)
-
                 }
             }
           ]
@@ -225,8 +215,8 @@ export class AddMarketPage {
 
            this.camera.getPicture(options).then((imageData) => {
            let base64ImageUrl = 'data:image/jpeg;base64,' + imageData;
-           let photo = new Photo(0,base64ImageUrl);
-           this.market.addPhoto(photo,null);
+           let photo = new Photo(index,base64ImageUrl);
+           this.market.addPhoto(photo,index);
            element.srcElement.src = base64ImageUrl;
           }, (err) => {
            console.log(err);
