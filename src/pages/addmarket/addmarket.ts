@@ -169,7 +169,7 @@ export class AddMarketPage {
                                     let imgData = res.json().result;
                                     element.setId(imgData.id);
                                 }, (err) => {
-                                    this.presentAlert('Error', this.translate.instant('Image upload fail'));
+                                    this.alertProvider.presentAlert('Error', this.translate.instant('Image upload fail'));
                                 });                              
                         }   
                     },this);

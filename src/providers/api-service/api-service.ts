@@ -66,6 +66,7 @@ export class ApiServiceProvider {
 
   public editMarket(market: Market) {
     let postParams = {
+      id : market.getId(),
       name: market.getName(),
       description: market.getDescription(),
       startdate: market.getDate(),
@@ -73,7 +74,7 @@ export class ApiServiceProvider {
       lon: market.getLng(),
     }
 
-    return this.http.post(`${this.baseUrl}/private/market/{market.id}?token=${this.getToken()}`,
+    return this.http.post(`${this.baseUrl}/private/market/${market.getId()}/edit?token=${this.getToken()}`,
       postParams,
       this.getOptions()
     );

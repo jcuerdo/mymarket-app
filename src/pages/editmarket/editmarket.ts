@@ -1,5 +1,7 @@
+import { ViewMarketPage } from './../view-market/view-market';
+import { AlertProvider } from './../../providers/alert/alert';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheet, ActionSheetController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheet, ActionSheetController, LoadingController } from 'ionic-angular';
 import { Market } from '../../models/market';
 import { Photo } from '../../models/photo';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
@@ -29,6 +31,8 @@ export class EditmarketPage {
     public translate: TranslateService,
     public actionSheetCtrl: ActionSheetController,
     private camera: Camera,
+    public alertProvider: AlertProvider,
+    public loading: LoadingController,
 
   ) {
     this.market = new Market();
@@ -43,11 +47,47 @@ export class EditmarketPage {
     this.loadMarket();
   }
 
+  saveMarket(): void {
+    let loader = this.loading.create({
+        content: '',
+    });
+
+    loader.present().then(() => {
+
+        //this.market.setLat(this.map.center.lat());
+        //this.market.setLng(this.map.center.lng());
+
+        this.apiProvider.editMarket(this.market)
+            .subscribe(res => {
+                let data = res.json().result;
+                this.market.setId(data.id);
+
+                this.market.getPhotos().forEach(function(element) {
+                    if(element.getContent()){
+                        this.apiProvider.saveMarketPhoto(this.market,element)
+                            .subscribe(res => {
+                                let imgData = res.json().result;
+                                element.setId(imgData.id);
+                            }, (err) => {
+                                this.alertProvider.presentAlert('Error', this.translate.instant('Image upload fail'));
+                            });                              
+                    }   
+                },this);
+                loader.dismiss();
+                this.navCtrl.push(ViewMarketPage, { market: this.market });                    
+            }, (err) => {
+                loader.dismiss();
+                this.alertProvider.presentAlert('Error', err);
+            });
+    });
+}
+
   private loadMarket(){
     this.apiProvider.getMarket(this.navParams.get("marketId")).subscribe(
       res => {
         let data = res.json();
         data = data.result
+        console.log(data)
         this.market.setName(data.name)
         this.market.setDescription(data.description)
         this.market.setDate(new Date(data.startdate).toISOString())
@@ -99,8 +139,6 @@ uploadPhotoAlert(element,index) {
   });
   actionSheet.present();
 }
-
-
 
 uploadPhoto(element,index,source = this.camera.PictureSourceType.CAMERA) : void {
 
