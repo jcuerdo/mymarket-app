@@ -37,9 +37,9 @@ export class EditmarketPage {
   ) {
     this.market = new Market();
     this.market.addPhoto(new Photo(0, 'assets/img/camera.png'), 0);
-    this.market.addPhoto(new Photo(0, 'assets/img/camera.png'), 1);
-    this.market.addPhoto(new Photo(0, 'assets/img/camera.png'), 2);
-    this.market.addPhoto(new Photo(0, 'assets/img/camera.png'), 3);
+    this.market.addPhoto(new Photo(1, 'assets/img/camera.png'), 1);
+    this.market.addPhoto(new Photo(2, 'assets/img/camera.png'), 2);
+    this.market.addPhoto(new Photo(3, 'assets/img/camera.png'), 3);
   }
 
   ionViewDidLoad() {
@@ -113,7 +113,7 @@ export class EditmarketPage {
             let length = data.count
             if (length > 0) {
                 photos.forEach((photo, index) => {
-                    let photoEntity = new Photo(photo.id,photo.content);
+                    let photoEntity = new Photo(index,photo.content);
                     this.market.addPhoto(photoEntity, index);
                 }, this);
             }
@@ -139,9 +139,15 @@ uploadPhotoAlert(element,index) {
       },{
         text: this.translate.instant("Delete"),
         handler: () => {
-          element.srcElement.src = 'assets/img/camera.png';
-          this.market.addPhoto(new Photo(0,'assets/img/camera.png'), index);
-        }
+          console.log('ANTES')
+
+          console.log(this.market)
+
+          this.market.addPhoto(new Photo(index,'assets/img/camera.png'), index);
+
+          console.log('DESPUES')
+
+          console.log(this.market)        }
       }
     ]
   });
@@ -162,7 +168,7 @@ uploadPhoto(element,index,source = this.camera.PictureSourceType.CAMERA) : void 
 
      this.camera.getPicture(options).then((imageData) => {
      let base64ImageUrl = 'data:image/jpeg;base64,' + imageData;
-     let photo = new Photo(0,base64ImageUrl);
+     let photo = new Photo(index,base64ImageUrl);
      this.market.addPhoto(photo,index);
      element.srcElement.src = base64ImageUrl;
     }, (err) => {

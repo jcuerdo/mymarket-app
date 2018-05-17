@@ -143,7 +143,7 @@ export class AddMarketPage {
     saveMarket(): void {
 
         let loader = this.loading.create({
-            content: '',
+            content: this.translate.instant("Saving market"),
         });
         loader.present().then(() => {
 
@@ -192,8 +192,16 @@ export class AddMarketPage {
             },{
                 text: this.translate.instant("Delete"),
                 handler: () => {
-                  element.srcElement.src = 'assets/img/camera.png';
-                  this.market.addPhoto(new Photo(0,'assets/img/camera.png'), index);
+                    console.log('ANTES')
+
+                    console.log(this.market)
+
+                    this.market.addPhoto(new Photo(index,'assets/img/camera.png'), index);
+
+                    console.log('DESPUES')
+
+                    console.log(this.market)
+
                 }
             }
           ]

@@ -60,7 +60,7 @@ export class ViewMarketPage {
                 let length = data.count
                 if (length > 0) {
                     photos.forEach((photo, index) => {
-                    let photoEntity = new Photo(photo.id,photo.content);
+                    let photoEntity = new Photo(index,photo.content);
                     this.market.addPhoto(photoEntity, index);
                     }, this);
                 }
