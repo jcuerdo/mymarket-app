@@ -3,9 +3,6 @@ import { Platform } from 'ionic-angular';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { Geolocation } from '@ionic-native/geolocation';
 
-
-declare var Connection;
-
 @Injectable()
 export class LocationServiceProvider {
 

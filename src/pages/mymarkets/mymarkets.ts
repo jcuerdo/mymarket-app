@@ -6,7 +6,6 @@ import { ApiServiceProvider } from './../../providers/api-service/api-service';
 import { AddMarketPage } from './../addmarket/addmarket';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
-import { Market } from '../../models/market';
 
 /**
  * Generated class for the MymarketsPage page.

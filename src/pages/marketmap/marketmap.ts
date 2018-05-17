@@ -1,6 +1,6 @@
 import { Component, ViewChild,ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
-import {Market} from '../../models/market';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { Market } from '../../models/market';
 import { ViewMarketPage } from '../view-market/view-market';
 
 

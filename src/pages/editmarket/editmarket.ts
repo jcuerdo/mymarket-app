@@ -1,5 +1,7 @@
+import { ViewMarketPage } from './../view-market/view-market';
+import { AlertProvider } from './../../providers/alert/alert';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheet, ActionSheetController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController, LoadingController } from 'ionic-angular';
 import { Market } from '../../models/market';
 import { Photo } from '../../models/photo';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
@@ -21,6 +23,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 export class EditmarketPage {
 
   market: Market;
+  photosToUpload : number
 
   constructor(
     public navCtrl: NavController,
@@ -29,13 +32,15 @@ export class EditmarketPage {
     public translate: TranslateService,
     public actionSheetCtrl: ActionSheetController,
     private camera: Camera,
+    public alertProvider: AlertProvider,
+    public loading: LoadingController,
 
   ) {
     this.market = new Market();
     this.market.addPhoto(new Photo(0, 'assets/img/camera.png'), 0);
-    this.market.addPhoto(new Photo(0, 'assets/img/camera.png'), 1);
-    this.market.addPhoto(new Photo(0, 'assets/img/camera.png'), 2);
-    this.market.addPhoto(new Photo(0, 'assets/img/camera.png'), 3);
+    this.market.addPhoto(new Photo(1, 'assets/img/camera.png'), 1);
+    this.market.addPhoto(new Photo(2, 'assets/img/camera.png'), 2);
+    this.market.addPhoto(new Photo(3, 'assets/img/camera.png'), 3);
   }
 
   ionViewDidLoad() {
@@ -43,11 +48,64 @@ export class EditmarketPage {
     this.loadMarket();
   }
 
+  saveMarket(): void {
+    let loader = this.loading.create({
+        content: '',
+    });
+
+    loader.present().then(() => {
+
+        //this.market.setLat(this.map.center.lat());
+        //this.market.setLng(this.map.center.lng());
+
+        this.apiProvider.editMarket(this.market)
+            .subscribe(res => {
+                let data = res.json().result;
+                this.market.setId(data.id);
+                this.apiProvider.deleteMarketPhotos(this.market)
+                .subscribe(res => {
+                  this.photosToUpload = this.market.getPhotos().length
+                  if(this.photosToUpload == 0){
+                    loader.dismiss();
+                    this.navCtrl.push(ViewMarketPage, { marketId: this.market.getId() });   
+                  }
+                  this.market.getPhotos().forEach(function(element) {              
+                    if(element.getContent() && element.getContent() != 'assets/img/camera.png'){
+                      this.apiProvider.saveMarketPhoto(this.market,element)
+                        .subscribe(res => {
+                          this.photosToUpload--;
+                          if(this.photosToUpload == 0){
+                            loader.dismiss();
+                            this.navCtrl.push(ViewMarketPage, { marketId: this.market.getId() });   
+                          }
+                        }, (err) => {
+                          this.photosToUpload--;
+                          if(this.photosToUpload == 0){
+                            loader.dismiss();
+                            this.navCtrl.push(ViewMarketPage, { marketId: this.market.getId() });   
+                          }
+                            this.alertProvider.presentAlert('Error', this.translate.instant('Image upload fail'));
+                        });                              
+                      } else{
+                        this.photosToUpload--;
+                      }
+                  },this);
+                 }, (err) => {
+                  this.alertProvider.presentAlert('Error', this.translate.instant('Image updated fail'));
+                 });                 
+            }, (err) => {
+                loader.dismiss();
+                this.alertProvider.presentAlert('Error', err);
+            });
+    });
+}
+
   private loadMarket(){
     this.apiProvider.getMarket(this.navParams.get("marketId")).subscribe(
       res => {
         let data = res.json();
         data = data.result
+        console.log(data)
         this.market.setName(data.name)
         this.market.setDescription(data.description)
         this.market.setDate(new Date(data.startdate).toISOString())
@@ -70,11 +128,10 @@ export class EditmarketPage {
             let length = data.count
             if (length > 0) {
                 photos.forEach((photo, index) => {
-                    let photoEntity = new Photo(photo.id,photo.content);
+                    let photoEntity = new Photo(index,photo.content);
                     this.market.addPhoto(photoEntity, index);
                 }, this);
             }
-
         }, (err) => {
             console.log(err)
         });
@@ -94,13 +151,16 @@ uploadPhotoAlert(element,index) {
         handler: () => {
           this.uploadPhoto(element,index,this.camera.PictureSourceType.PHOTOLIBRARY);
         }
+      },{
+        text: this.translate.instant("Delete"),
+        handler: () => {
+          this.market.addPhoto(new Photo(index,'assets/img/camera.png'), index);
+      }
       }
     ]
   });
   actionSheet.present();
 }
-
-
 
 uploadPhoto(element,index,source = this.camera.PictureSourceType.CAMERA) : void {
 
@@ -116,8 +176,8 @@ uploadPhoto(element,index,source = this.camera.PictureSourceType.CAMERA) : void 
 
      this.camera.getPicture(options).then((imageData) => {
      let base64ImageUrl = 'data:image/jpeg;base64,' + imageData;
-     let photo = new Photo(0,base64ImageUrl);
-     this.market.addPhoto(photo,null);
+     let photo = new Photo(index,base64ImageUrl);
+     this.market.addPhoto(photo,index);
      element.srcElement.src = base64ImageUrl;
     }, (err) => {
      console.log(err);
