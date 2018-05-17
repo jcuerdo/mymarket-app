@@ -10,6 +10,7 @@ import { MarketmapPage } from '../marketmap/marketmap';
 import { LocationServiceProvider } from '../../providers/location-service/location-service';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
+import { LoginPage } from '../login/login';
 
 @Component({
   selector: 'page-home',
@@ -94,7 +95,11 @@ export class HomePage {
   }
 
   add() {
-   this.navCtrl.push(AddMarketPage);
+   if(localStorage.getItem('token')){
+    this.navCtrl.push(AddMarketPage);
+   } else{
+     this.navCtrl.push(LoginPage)
+   }
   }
 
   showMap(){
