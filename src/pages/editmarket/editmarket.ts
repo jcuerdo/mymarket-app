@@ -1,7 +1,7 @@
 import { ViewMarketPage } from './../view-market/view-market';
 import { AlertProvider } from './../../providers/alert/alert';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheet, ActionSheetController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController, LoadingController } from 'ionic-angular';
 import { Market } from '../../models/market';
 import { Photo } from '../../models/photo';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
@@ -67,8 +67,7 @@ export class EditmarketPage {
                     if(element.getContent() && element.getContent() != 'assets/img/camera.png'){
                       this.apiProvider.saveMarketPhoto(this.market,element)
                         .subscribe(res => {
-                            let imgData = res.json().result;
-                            element.setId(imgData.id);
+                          console.log(res);
                         }, (err) => {
                             this.alertProvider.presentAlert('Error', this.translate.instant('Image upload fail'));
                         });                              
@@ -118,7 +117,6 @@ export class EditmarketPage {
                     this.market.addPhoto(photoEntity, index);
                 }, this);
             }
-
         }, (err) => {
             console.log(err)
         });
