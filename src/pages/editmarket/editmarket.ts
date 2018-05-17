@@ -61,20 +61,24 @@ export class EditmarketPage {
             .subscribe(res => {
                 let data = res.json().result;
                 this.market.setId(data.id);
-
-                this.market.getPhotos().forEach(function(element) {
-                    if(element.getContent()){
-                        this.apiProvider.saveMarketPhoto(this.market,element)
-                            .subscribe(res => {
-                                let imgData = res.json().result;
-                                element.setId(imgData.id);
-                            }, (err) => {
-                                this.alertProvider.presentAlert('Error', this.translate.instant('Image upload fail'));
-                            });                              
-                    }   
-                },this);
+                this.apiProvider.deleteMarketPhotos(this.market)
+                .subscribe(res => {
+                  this.market.getPhotos().forEach(function(element) {                  
+                    if(element.getContent() && element.getContent() != 'assets/img/camera.png'){
+                      this.apiProvider.saveMarketPhoto(this.market,element)
+                        .subscribe(res => {
+                            let imgData = res.json().result;
+                            element.setId(imgData.id);
+                        }, (err) => {
+                            this.alertProvider.presentAlert('Error', this.translate.instant('Image upload fail'));
+                        });                              
+                      }   
+                  },this);
+                 }, (err) => {
+                  this.alertProvider.presentAlert('Error', this.translate.instant('Image updated fail'));
+                 });  
                 loader.dismiss();
-                this.navCtrl.push(ViewMarketPage, { market: this.market });                    
+                this.navCtrl.push(ViewMarketPage, { marketId: this.market.getId() });                    
             }, (err) => {
                 loader.dismiss();
                 this.alertProvider.presentAlert('Error', err);

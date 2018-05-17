@@ -123,6 +123,13 @@ export class ApiServiceProvider {
     )
   }
 
+  public deleteMarketPhotos(market: Market) {
+    return this.http.delete(
+      `${this.baseUrl}/private/market/${market.getId()}/photo?token=${this.getToken()}`,
+      this.getOptions()
+    )
+  }
+
   private getToken(){
     return localStorage.getItem('token') ? localStorage.getItem('token') : '1234567890';
   }
