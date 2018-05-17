@@ -1,13 +1,14 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, NavParams, ModalController,AlertController,ActionSheetController } from 'ionic-angular';
+import { NavController, NavParams,AlertController,ActionSheetController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Http } from '@angular/http';
 import { Camera, CameraOptions } from '@ionic-native/camera';
-import {Market} from '../../models/market';
-import {Photo} from '../../models/photo';
+import { Market } from '../../models/market';
+import { Photo } from '../../models/photo';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { ViewMarketPage } from '../view-market/view-market';
 import { TranslateService } from '@ngx-translate/core';
+import { AlertProvider } from '../../providers/alert/alert';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class AddMarketPage {
     searchDisabled: boolean = true;
     
     market: Market;
+    photosToUpload : number
     
     constructor(
         public navCtrl: NavController,
@@ -38,13 +40,14 @@ export class AddMarketPage {
         private apiProvider: ApiServiceProvider,
         public actionSheetCtrl: ActionSheetController,
         public translate: TranslateService,
+        public alertProvider: AlertProvider
         
         
     ) {
         this.market = new Market();
     }
 
-    private ionViewDidLoad(): void {
+    ionViewDidLoad(): void {
 
         window['mapInit'] = () => {
             this.initMap();
@@ -136,20 +139,13 @@ export class AddMarketPage {
 
             this.map.setCenter({ lat: location.lat, lng: location.lng });
         });
-
     }
 
     saveMarket(): void {
 
         let loader = this.loading.create({
-            content: '',
+            content: this.translate.instant("Saving market"),
         });
-
-        var headers = new Headers();
-        headers.append("Accept", 'application/json');
-        headers.append('Content-Type', 'application/json');
-        let options = new RequestOptions({ headers: headers });
-
         loader.present().then(() => {
 
             this.market.setLat(this.map.center.lat());
@@ -159,35 +155,38 @@ export class AddMarketPage {
                 .subscribe(res => {
                     let data = res.json().result;
                     this.market.setId(data.id);
-
-                    this.market.getPhotos().forEach(function(element) {
-                        if(element.getContent()){
-                            this.apiProvider.saveMarketPhoto(this.market,element)
-                                .subscribe(res => {
-                                    let imgData = res.json().result;
-                                    element.setId(imgData.id);
-                                }, (err) => {
-                                    this.presentAlert('Error', 'Image upload fail');
-                                });                              
-                        }   
-                    },this);
-                    loader.dismiss();
-                    this.navCtrl.push(ViewMarketPage, { market: this.market });                    
+                    this.photosToUpload = this.market.getPhotos().length
+                    this.checkAllPhotosUploaded(loader);
+                    this.market.getPhotos().forEach(function(element) {              
+                      if(element.getContent() && element.getContent() != 'assets/img/camera.png'){
+                        this.apiProvider.saveMarketPhoto(this.market,element)
+                          .subscribe(res => {
+                            this.photosToUpload--;
+                            this.checkAllPhotosUploaded(loader);
+                          }, (err) => {
+                            this.photosToUpload--;
+                            this.checkAllPhotosUploaded(loader);
+                            this.alertProvider.presentAlert('Error', this.translate.instant('Image upload fail'));
+                          });                             
+                        } else{
+                            this.photosToUpload--;
+                            this.checkAllPhotosUploaded(loader);
+                          }
+                    },this);               
                 }, (err) => {
                     loader.dismiss();
-                    this.presentAlert('Error', err);
+                    this.alertProvider.presentAlert('Error', err);
                 });
         });
     }
 
-    presentAlert(title : string, content: string) {
-        const alert = this.alertCtrl.create({
-          title: title,
-          subTitle: content,
-          buttons: ['Ok']
-        });
-        alert.present();
-    }
+    private checkAllPhotosUploaded(loader) {
+        if (this.photosToUpload <= 0) {
+          loader.dismiss();
+          this.navCtrl.pop();
+          this.navCtrl.push(ViewMarketPage, { marketId: this.market.getId() });
+        }
+      }
 
     uploadPhotoAlert(element,index) {
         let actionSheet = this.actionSheetCtrl.create({
@@ -203,6 +202,11 @@ export class AddMarketPage {
               handler: () => {
                 this.uploadPhoto(element,index,this.camera.PictureSourceType.PHOTOLIBRARY);
               }
+            },{
+                text: this.translate.instant("Delete"),
+                handler: () => {
+                    this.market.addPhoto(new Photo(index,'assets/img/camera.png'), index);
+                }
             }
           ]
         });
@@ -225,9 +229,8 @@ export class AddMarketPage {
 
            this.camera.getPicture(options).then((imageData) => {
            let base64ImageUrl = 'data:image/jpeg;base64,' + imageData;
-           let photo = new Photo();
-           photo.setContent(base64ImageUrl);
-           this.market.addPhoto(photo,null);
+           let photo = new Photo(index,base64ImageUrl);
+           this.market.addPhoto(photo,index);
            element.srcElement.src = base64ImageUrl;
           }, (err) => {
            console.log(err);

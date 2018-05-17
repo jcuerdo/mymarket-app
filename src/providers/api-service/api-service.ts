@@ -7,13 +7,12 @@ import { Photo } from '../../models/photo';
 @Injectable()
 export class ApiServiceProvider {
 
-  baseUrl: string = 'http://45.77.216.232:8080';
-  private token : string;
+  private baseUrl: string;
   private radio : number;
   constructor(public http: Http) {
      this.radio = 100
+     this.baseUrl = 'http://45.77.216.232:8080';
   }
-
 
   public getOptions() {
     var headers = new Headers();
@@ -36,6 +35,11 @@ export class ApiServiceProvider {
     return this.http.get(`${this.baseUrl}/private/market?token=${this.getToken()}`);
   }
 
+  public getMarket(marketId: number) {
+    console.log('Getting market with id ');
+    return this.http.get(`${this.baseUrl}/public/market/${marketId}?token=${this.getToken()}`);
+  }
+
   public getMarketFirstPhoto(id: number) {
     return this.http.get(`${this.baseUrl}/public/market/${id}/photo`)
   }
@@ -54,6 +58,23 @@ export class ApiServiceProvider {
     }
 
     return this.http.post(`${this.baseUrl}/private/market?token=${this.getToken()}`,
+      postParams,
+      this.getOptions()
+    );
+
+  }
+
+  public editMarket(market: Market) {
+    let postParams = {
+      id : market.getId(),
+      name: market.getName(),
+      description: market.getDescription(),
+      startdate: market.getDate(),
+      lat: market.getLat(),
+      lon: market.getLng(),
+    }
+
+    return this.http.post(`${this.baseUrl}/private/market/${market.getId()}/edit?token=${this.getToken()}`,
       postParams,
       this.getOptions()
     );
@@ -102,7 +123,14 @@ export class ApiServiceProvider {
     )
   }
 
+  public deleteMarketPhotos(market: Market) {
+    return this.http.delete(
+      `${this.baseUrl}/private/market/${market.getId()}/photo?token=${this.getToken()}`,
+      this.getOptions()
+    )
+  }
+
   private getToken(){
-    return localStorage.getItem('token') ? localStorage.getItem('token') : '1234567890';
+    return localStorage.getItem('token');
   }
 }

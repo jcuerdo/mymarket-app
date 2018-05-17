@@ -22,13 +22,13 @@
         <ion-icon name="calendar"></ion-icon>
         <span>{{market.startDate | date:'dd-MM-yyyy hh:mm'}}</span>
         <p>{{ market.description | slice:0:200}} </p>
-        <button (click)="view(market)" ion-button>
+        <button (click)="view(market.id)" ion-button>
           <ion-icon name="eye"></ion-icon> {{"View"|translate}}
         </button>
-        <button (click)="edit(market)" ion-button>
+        <button (click)="edit(market.id)" ion-button>
           <ion-icon name="options"></ion-icon> {{"Edit"|translate}}
         </button>
-        <button (click)="delete(market)" ion-button>
+        <button (click)="delete(market.id)" ion-button>
           <ion-icon name="trash"></ion-icon> {{"Delete"|translate}}
         </button>
       </ion-card-content>

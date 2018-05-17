@@ -5,11 +5,11 @@ import { Http } from '@angular/http';
 import { AddMarketPage } from '../addmarket/addmarket';
 import { ViewMarketPage } from '../view-market/view-market';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
-import { Market } from '../../models/market';
 import { MarketmapPage } from '../marketmap/marketmap';
 import { LocationServiceProvider } from '../../providers/location-service/location-service';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
+import { LoginPage } from '../login/login';
 
 @Component({
   selector: 'page-home',
@@ -88,20 +88,17 @@ export class HomePage {
     });
   }
 
-  view(marketData) {
-    let market = new Market();
-    market.setId(marketData.id);
-    market.setName(marketData.name);
-    market.setDescription(marketData.description);
-    market.setDate(marketData.startDate);
-    market.setLat(marketData.lat);
-    market.setLng(marketData.lon);
-
-    this.navCtrl.push(ViewMarketPage, { market: market });
+  view(marketId) {
+    console.log(marketId)
+    this.navCtrl.push(ViewMarketPage, { marketId: marketId });
   }
 
   add() {
-   this.navCtrl.push(AddMarketPage);
+   if(localStorage.getItem('token')){
+    this.navCtrl.push(AddMarketPage);
+   } else{
+     this.navCtrl.push(LoginPage)
+   }
   }
 
   showMap(){

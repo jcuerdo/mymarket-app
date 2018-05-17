@@ -6,7 +6,6 @@ import { ApiServiceProvider } from './../../providers/api-service/api-service';
 import { AddMarketPage } from './../addmarket/addmarket';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
-import { Market } from '../../models/market';
 
 /**
  * Generated class for the MymarketsPage page.
@@ -49,32 +48,16 @@ export class MymarketsPage {
     this.navCtrl.push(AddMarketPage);
    }
 
-  delete(marketData){
+  delete(marketId){
 
   }
 
-  edit(marketData){
-    let market = new Market();
-    market.setId(marketData.id);
-    market.setName(marketData.name);
-    market.setDescription(marketData.description);
-    market.setDate(marketData.startDate);
-    market.setLat(marketData.lat);
-    market.setLng(marketData.lon);
-
-    this.navCtrl.push(EditmarketPage, { market: market });
+  edit(marketId){
+    this.navCtrl.push(EditmarketPage, { marketId: marketId });
   }
 
-  view(marketData) {
-    let market = new Market();
-    market.setId(marketData.id);
-    market.setName(marketData.name);
-    market.setDescription(marketData.description);
-    market.setDate(marketData.startDate);
-    market.setLat(marketData.lat);
-    market.setLng(marketData.lon);
-
-    this.navCtrl.push(ViewMarketPage, { market: market });
+  view(marketId) {
+    this.navCtrl.push(ViewMarketPage, { marketId: marketId });
   }
 
    loadMarkets() {

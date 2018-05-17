@@ -70,12 +70,7 @@ export class Market {
 	}
 
 	public addPhoto(photo: Photo, index: number) {
-        if(index){
-            this.photos[index] = photo;            
-        }
-        else{
-            this.photos.push(photo);            
-        }
+        this.photos[index] = photo;        
     }
 
     public clearPhotos() : void{

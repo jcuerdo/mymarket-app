@@ -39,4 +39,12 @@ export class MyaccountPage {
     );
   }
 
+  saveDetails(){
+    
+  }
+
+  savePassword(){
+
+  }
+
 }
