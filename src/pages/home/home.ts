@@ -5,7 +5,6 @@ import { Http } from '@angular/http';
 import { AddMarketPage } from '../addmarket/addmarket';
 import { ViewMarketPage } from '../view-market/view-market';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
-import { Market } from '../../models/market';
 import { MarketmapPage } from '../marketmap/marketmap';
 import { LocationServiceProvider } from '../../providers/location-service/location-service';
 import { TranslateService } from '@ngx-translate/core';

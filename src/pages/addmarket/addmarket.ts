@@ -1,10 +1,10 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, NavParams, ModalController,AlertController,ActionSheetController } from 'ionic-angular';
+import { NavController, NavParams,AlertController,ActionSheetController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Http } from '@angular/http';
 import { Camera, CameraOptions } from '@ionic-native/camera';
-import {Market} from '../../models/market';
-import {Photo} from '../../models/photo';
+import { Market } from '../../models/market';
+import { Photo } from '../../models/photo';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { ViewMarketPage } from '../view-market/view-market';
 import { TranslateService } from '@ngx-translate/core';
@@ -46,7 +46,7 @@ export class AddMarketPage {
         this.market = new Market();
     }
 
-    private ionViewDidLoad(): void {
+    ionViewDidLoad(): void {
 
         window['mapInit'] = () => {
             this.initMap();
@@ -138,7 +138,6 @@ export class AddMarketPage {
 
             this.map.setCenter({ lat: location.lat, lng: location.lng });
         });
-
     }
 
     saveMarket(): void {
@@ -146,12 +145,6 @@ export class AddMarketPage {
         let loader = this.loading.create({
             content: '',
         });
-
-        var headers = new Headers();
-        headers.append("Accept", 'application/json');
-        headers.append('Content-Type', 'application/json');
-        let options = new RequestOptions({ headers: headers });
-
         loader.present().then(() => {
 
             this.market.setLat(this.map.center.lat());
@@ -196,6 +189,12 @@ export class AddMarketPage {
               handler: () => {
                 this.uploadPhoto(element,index,this.camera.PictureSourceType.PHOTOLIBRARY);
               }
+            },{
+                text: this.translate.instant("Delete"),
+                handler: () => {
+                  element.srcElement.src = 'assets/img/camera.png';
+                  this.market.addPhoto(new Photo(0,'assets/img/camera.png'), index);
+                }
             }
           ]
         });

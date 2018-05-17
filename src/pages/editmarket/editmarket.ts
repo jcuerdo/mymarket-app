@@ -136,6 +136,12 @@ uploadPhotoAlert(element,index) {
         handler: () => {
           this.uploadPhoto(element,index,this.camera.PictureSourceType.PHOTOLIBRARY);
         }
+      },{
+        text: this.translate.instant("Delete"),
+        handler: () => {
+          element.srcElement.src = 'assets/img/camera.png';
+          this.market.addPhoto(new Photo(0,'assets/img/camera.png'), index);
+        }
       }
     ]
   });
@@ -157,7 +163,7 @@ uploadPhoto(element,index,source = this.camera.PictureSourceType.CAMERA) : void 
      this.camera.getPicture(options).then((imageData) => {
      let base64ImageUrl = 'data:image/jpeg;base64,' + imageData;
      let photo = new Photo(0,base64ImageUrl);
-     this.market.addPhoto(photo,null);
+     this.market.addPhoto(photo,index);
      element.srcElement.src = base64ImageUrl;
     }, (err) => {
      console.log(err);
