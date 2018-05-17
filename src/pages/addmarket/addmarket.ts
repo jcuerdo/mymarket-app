@@ -28,6 +28,7 @@ export class AddMarketPage {
     searchDisabled: boolean = true;
     
     market: Market;
+    photosToUpload : number
     
     constructor(
         public navCtrl: NavController,
@@ -154,13 +155,25 @@ export class AddMarketPage {
                 .subscribe(res => {
                     let data = res.json().result;
                     this.market.setId(data.id);
-
+                    this.photosToUpload = this.market.getPhotos().length
+                    if(this.photosToUpload == 0){
+                        loader.dismiss();
+                        this.navCtrl.push(ViewMarketPage, { marketId: this.market.getId() });   
+                    }
                     this.market.getPhotos().forEach(function(element) {
                         if(element.getContent()){
                             this.apiProvider.saveMarketPhoto(this.market,element)
                                 .subscribe(res => {
-                                    console.log(res);
+                                    this.photosToUpload--;
+                                    if(this.photosToUpload == 0){
+                                      loader.dismiss();
+                                      this.navCtrl.push(ViewMarketPage, { marketId: this.market.getId() });   
+                                    }
                                 }, (err) => {
+                                    if(this.photosToUpload == 0){
+                                        loader.dismiss();
+                                        this.navCtrl.push(ViewMarketPage, { marketId: this.market.getId() });   
+                                    }
                                     this.alertProvider.presentAlert('Error', this.translate.instant('Image upload fail'));
                                 });                              
                         }   

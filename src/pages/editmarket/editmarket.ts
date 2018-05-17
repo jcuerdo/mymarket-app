@@ -23,6 +23,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 export class EditmarketPage {
 
   market: Market;
+  photosToUpload : number
 
   constructor(
     public navCtrl: NavController,
@@ -63,21 +64,35 @@ export class EditmarketPage {
                 this.market.setId(data.id);
                 this.apiProvider.deleteMarketPhotos(this.market)
                 .subscribe(res => {
-                  this.market.getPhotos().forEach(function(element) {                  
+                  this.photosToUpload = this.market.getPhotos().length
+                  if(this.photosToUpload == 0){
+                    loader.dismiss();
+                    this.navCtrl.push(ViewMarketPage, { marketId: this.market.getId() });   
+                  }
+                  this.market.getPhotos().forEach(function(element) {              
                     if(element.getContent() && element.getContent() != 'assets/img/camera.png'){
                       this.apiProvider.saveMarketPhoto(this.market,element)
                         .subscribe(res => {
-                          console.log(res);
+                          this.photosToUpload--;
+                          if(this.photosToUpload == 0){
+                            loader.dismiss();
+                            this.navCtrl.push(ViewMarketPage, { marketId: this.market.getId() });   
+                          }
                         }, (err) => {
+                          this.photosToUpload--;
+                          if(this.photosToUpload == 0){
+                            loader.dismiss();
+                            this.navCtrl.push(ViewMarketPage, { marketId: this.market.getId() });   
+                          }
                             this.alertProvider.presentAlert('Error', this.translate.instant('Image upload fail'));
                         });                              
-                      }   
+                      } else{
+                        this.photosToUpload--;
+                      }
                   },this);
                  }, (err) => {
                   this.alertProvider.presentAlert('Error', this.translate.instant('Image updated fail'));
-                 });  
-                loader.dismiss();
-                this.navCtrl.push(ViewMarketPage, { marketId: this.market.getId() });                    
+                 });                 
             }, (err) => {
                 loader.dismiss();
                 this.alertProvider.presentAlert('Error', err);
