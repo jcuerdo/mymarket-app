@@ -10,7 +10,7 @@
 
 <ion-content padding>
   <ion-list>
-    <h3 *ngIf="markets.length == 0">{{"You have not create markets yet" | translate }} </h3>
+    <h3 *ngIf="emptyMarkets">{{"You have not create markets yet" | translate }} </h3>
     <ion-card *ngFor="let market of markets">
       <div class="marketImage">
         <img src='{{market.image}}' />

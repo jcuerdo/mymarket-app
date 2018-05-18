@@ -22,6 +22,7 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 export class MymarketsPage {
   
   public markets = [];
+  public emptyMarkets = false;
   private loader : any;
 
   constructor(
@@ -61,6 +62,7 @@ export class MymarketsPage {
   }
 
    loadMarkets() {
+    this.emptyMarkets = false;
     console.log('Trying to load my markets')
     this.markets = []
     this.apiProvider.getMyMarkets()
@@ -79,6 +81,8 @@ export class MymarketsPage {
               }, (err) => {
               });
           }, this);
+        }else{
+          this.emptyMarkets = true;
         }
         this.loader.dismiss();
       }, (err) => {
