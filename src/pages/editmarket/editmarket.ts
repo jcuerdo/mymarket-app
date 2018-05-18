@@ -50,7 +50,7 @@ export class EditmarketPage {
 
   saveMarket(): void {
     let loader = this.loading.create({
-        content: '',
+      content: this.translate.instant("Saving market information"),
     });
 
     loader.present().then(() => {

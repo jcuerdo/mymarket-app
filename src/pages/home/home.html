@@ -5,7 +5,7 @@
     </button>
     <ion-title>{{'Markets' | translate }} 
       <strong *ngIf="place != null">in {{place.description}}</strong> 
-      <strong *ngIf="place == null">in your current location</strong> 
+      <strong *ngIf="place == null">{{'in your current location'|translate}}</strong> 
     </ion-title>
     <ion-buttons end>
     <button (click)="showMap()" ion-button icon-left>
@@ -17,25 +17,23 @@
 
 <ion-content padding>
   <div id="noLocation">
-    <ion-toolbar class="searchLocation">
+    <ion-grid class="searchLocation">
         <ion-searchbar class="" [disabled]="searchDisabled" [(ngModel)]="query" (ionInput)="searchPlace()" placeholder='{{"Change address" | translate}}'>
         </ion-searchbar>
-    </ion-toolbar>
-    <ion-toolbar class="buttonSelectLocation">
+    </ion-grid>
+    <ion-grid class="buttonSelectLocation">
         <button  (click)="loadCurrentPosition()" ion-button block icon-center>
             <ion-icon name="locate"></ion-icon>
         </button>
-    </ion-toolbar>
+    </ion-grid>
 
     <ion-list>
       <ion-item *ngFor="let place of places" (click)="selectPlace(place)">{{place.description}}</ion-item>
     </ion-list>
-
-
   </div>
 
   <ion-list>
-    <h3 *ngIf="markets.length == 0">{{'Sorry we cannot find markets in this location' | translate }} </h3>
+    <h3 *ngIf="emptyMarkets">{{'Sorry we cannot find markets in this location' | translate }} </h3>
     <ion-card *ngFor="let market of markets" (click)="view(market.id)">
       <div class="marketImage">
         <img src='{{market.image}}' />

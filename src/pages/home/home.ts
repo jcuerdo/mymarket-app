@@ -17,6 +17,7 @@ import { LoginPage } from '../login/login';
 })
 export class HomePage {
   public markets = [];
+  public emptyMarkets = false;
   public aviso = "";
   private loader;
   placesService: any;
@@ -51,7 +52,7 @@ export class HomePage {
   document.body.appendChild(script);
 
   this.loader = this.loading.create({
-    content: ''
+    content: this.translate.instant('Obtaining current location')
   });
   this.loader.present();
   this.locationProvider.requestLocation(this.loadMarkets.bind(this), this.loadEmpty.bind(this));
@@ -62,6 +63,7 @@ export class HomePage {
   }
 
   loadMarkets() {
+  this.emptyMarkets = false;
   console.log('Trying to load markets')
   this.markets = []
   this.apiProvider.getMarkets()
@@ -80,6 +82,8 @@ export class HomePage {
             }, (err) => {
             });
         }, this);
+      } else{
+        this.emptyMarkets = true;
       }
       this.loader.dismiss();
     }, (err) => {
@@ -146,7 +150,7 @@ export class HomePage {
 
 selectPlace(place) {
   this.loader = this.loading.create({
-    content: ''
+    content: this.translate.instant("Loading market list"),
   });
   this.loader.present();
   this.place = place
@@ -162,7 +166,7 @@ selectPlace(place) {
 
 loadCurrentPosition(){
   this.loader = this.loading.create({
-    content: ''
+    content: this.translate.instant("Loading market list"),
   });
   this.loader.present();
   

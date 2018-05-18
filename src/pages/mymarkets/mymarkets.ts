@@ -38,7 +38,7 @@ export class MymarketsPage {
     console.log('ionViewDidLoad MymarketsPage');
 
     this.loader = this.loading.create({
-      content: ''
+      content: this.translate.instant("Loading market list"),
     });
     this.loader.present();
     this.loadMarkets()

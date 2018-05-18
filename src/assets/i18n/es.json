@@ -29,5 +29,8 @@
   "View" : "Ver",
   "Edit" : "Editar",
   "Delete" : "Borrar",
-  "Invald email or/and password" : "Email y/o contraseña incorrectos"
+  "Obtaining current location": "Obteniendo la localización actual",
+  "Saving market information" : "Guardando la información del mercado",
+  "Invald email or/and password" : "Email y/o contraseña incorrectos",
+  "Loading market list" : "Cargando la lista de mercados"
 }

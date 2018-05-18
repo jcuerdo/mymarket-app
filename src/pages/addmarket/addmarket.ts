@@ -144,7 +144,7 @@ export class AddMarketPage {
     saveMarket(): void {
 
         let loader = this.loading.create({
-            content: this.translate.instant("Saving market"),
+            content: this.translate.instant("Saving market information"),
         });
         loader.present().then(() => {
 
@@ -212,8 +212,6 @@ export class AddMarketPage {
         });
         actionSheet.present();
       }
-    
-
 
     uploadPhoto(element,index,source = this.camera.PictureSourceType.CAMERA) : void {
 
