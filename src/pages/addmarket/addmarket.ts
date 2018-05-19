@@ -45,6 +45,10 @@ export class AddMarketPage {
         
     ) {
         this.market = new Market();
+        this.market.addPhoto(new Photo(0, 'assets/img/camera.png'), 0);
+        this.market.addPhoto(new Photo(1, 'assets/img/camera.png'), 1);
+        this.market.addPhoto(new Photo(2, 'assets/img/camera.png'), 2);
+        this.market.addPhoto(new Photo(3, 'assets/img/camera.png'), 3);
     }
 
     ionViewDidLoad(): void {

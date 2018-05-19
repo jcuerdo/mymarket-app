@@ -11,13 +11,9 @@
 </ion-header>
 
 <ion-content>
-  <ion-item>
-      <img src="assets/img/camera.png"  class="photoInput" (click)="uploadPhotoAlert($event,0)"/>
-      <img src="assets/img/camera.png"  class="photoInput" (click)="uploadPhotoAlert($event,1)"/>
-      <img src="assets/img/camera.png"  class="photoInput" (click)="uploadPhotoAlert($event,2)"/>
-      <img src="assets/img/camera.png"  class="photoInput" (click)="uploadPhotoAlert($event,3)"/>
-  </ion-item>
-
+  <ion-item >
+    <img  *ngFor="let photo of market.photos" src="{{photo.content}}"  class="photoInput" (click)="uploadPhotoAlert($event,photo.id)"/>
+</ion-item>
   <ion-list>
     <ion-item style="height:30%">
       <ion-label color="primary" fixed>{{"Name" | translate}}</ion-label>

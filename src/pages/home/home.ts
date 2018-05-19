@@ -170,11 +170,7 @@ loadCurrentPosition(){
     content: this.translate.instant("Loading market list"),
   });
   this.loader.present();
-  
-  localStorage.setItem("lat", localStorage.getItem('currentlat'))
-  localStorage.setItem("lon", localStorage.getItem('currentlon'))
-
-  this.loadMarkets()
+  this.locationProvider.requestLocation(this.loadMarkets.bind(this), this.loadEmpty.bind(this));
 
 }
 
