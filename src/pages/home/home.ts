@@ -60,6 +60,7 @@ export class HomePage {
 
   loadEmpty(error){
     this.loader.dismiss();
+    this.emptyMarkets = false;
   }
 
   loadMarkets() {

@@ -1,8 +1,6 @@
 import { Component, ViewChild,ElementRef } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
-import { Market } from '../../models/market';
 import { ViewMarketPage } from '../view-market/view-market';
-
 
 @Component({
   selector: 'page-marketmap',
@@ -65,7 +63,7 @@ export class MarketmapPage {
               marker.addListener('click', function(this) {
                 var div = document.createElement('div');
                 div.innerHTML = element.name;
-                div.onclick = function(){t.view(element)};
+                div.onclick = function(){t.view(element.id)};
                 infowindow.setContent(div);
                 infowindow.open(t.map, marker)
 
@@ -74,16 +72,8 @@ export class MarketmapPage {
             }
       }
 
-      view(marketData) {
-        let market = new Market();
-        market.setId(marketData.id);
-        market.setName(marketData.name);
-        market.setDescription(marketData.description);
-        market.setDate(marketData.startDate);
-        market.setLat(marketData.lat);
-        market.setLng(marketData.lon);
-    
-        this.navCtrl.push(ViewMarketPage, { market: market });
+      view(marketId) {    
+        this.navCtrl.push(ViewMarketPage, { marketId: marketId });
       }
 
       presentAlert(title : string, content: string) {

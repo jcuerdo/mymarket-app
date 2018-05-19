@@ -31,46 +31,54 @@ export class LocationServiceProvider {
   }
   
   public requestLocation(callback, errorCallback){
-    this.subscribeToLocation()
+    this.subscribeToLocation();
     console.log('Requesting location')
     if(localStorage.getItem('lat') && localStorage.getItem('lat')){
       console.log('Lacation already set in local storage')
       callback()
+      return
     } else{
       console.log('Lacation not set in local storage')
       if(this.onDevice){
         this.locationAccuracy.canRequest().then((canRequest: boolean) => {
           console.log('Requesting location accuracy')
           if(canRequest) {
+            console.log('I can request')
             // the accuracy option will be ignored by iOS
             this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
               () => this.getPosition(callback, errorCallback),
               error => {
-                console.log('ERROR getting requesting location accuracy', JSON.stringify(error) )
+                console.log('ERROR getting requesting location accuracy')
+                console.log(error)
                 errorCallback(error)
               }
             );
           } else{
+            console.log('I cant request')
             this.getPosition(callback, errorCallback);
           }
         });
       } else{
+        console.log('Not on device')
         this.getPosition(callback, errorCallback)
       }
       ;  
     }
-    
   }
 
   private getPosition(callback, errorCallback){
     console.log('Getting current position')
-
-    this.geolocation.getCurrentPosition().then((position) => this.setPosition(position, callback)).catch((error) => {
-      console.log('ERROR getting current location', JSON.stringify(error) )
-      errorCallback(error)
+    this.geolocation.getCurrentPosition({timeout: 10000}).then(
+      (position) => {
+        this.setPosition(position, callback);
+      }
+    ).catch(
+      (error) => {
+        console.log('ERROR getting current location')
+        console.log(error)
+        errorCallback(error)
     });
   }
-
 
   private setPosition(position,callback){
     console.log('Storing location on local storage')

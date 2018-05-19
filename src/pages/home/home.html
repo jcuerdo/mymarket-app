@@ -3,9 +3,9 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>{{'Markets' | translate }} 
-      <strong *ngIf="place != null">in {{place.description}}</strong> 
-      <strong *ngIf="place == null">{{'in your current location'|translate}}</strong> 
+    <ion-title>
+      <strong *ngIf="place != null">{{place.description}}</strong> 
+      <strong *ngIf="place == null">{{'Your location'|translate}}</strong> 
     </ion-title>
     <ion-buttons end>
     <button (click)="showMap()" ion-button icon-left>
