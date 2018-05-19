@@ -205,6 +205,9 @@ export class AddMarketPage {
               text: this.translate.instant("Gallery"),
               handler: () => {
                 this.uploadPhoto(element,index,this.camera.PictureSourceType.PHOTOLIBRARY);
+                let fileInputs: HTMLCollection = document.getElementsByClassName('cordova-camera-select');
+                let lastInput : HTMLElement = fileInputs.item(fileInputs.length - 1) as HTMLElement;
+                lastInput.click();
               }
             },{
                 text: this.translate.instant("Delete"),

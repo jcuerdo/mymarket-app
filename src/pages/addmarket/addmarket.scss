@@ -32,9 +32,5 @@ page-add-market {
 }
 
 .cordova-camera-select{
-    padding-top: 2em;
-    font-size: 4em;
-    border: 10px dashed black;
-    border-radius: 50px;
-    text-align-last: center;
+    visibility: hidden;
 }
