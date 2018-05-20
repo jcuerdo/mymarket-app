@@ -8,7 +8,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <ion-list>
     <h3 *ngIf="emptyMarkets">{{"You have not create markets yet" | translate }} </h3>
     <ion-card *ngFor="let market of markets">

@@ -7,23 +7,53 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+  <div>
+    <ion-segment [(ngModel)]="tab">
+      <ion-segment-button value="info">{{"Info" | translate}}</ion-segment-button>
+      <ion-segment-button value="comments">{{"Comments" | translate}}</ion-segment-button>
+      <ion-segment-button value="assistance">{{"Assistance" | translate}}</ion-segment-button>
+    </ion-segment>
+  </div>
   
+  <div [ngSwitch]="tab" >
+    <ion-list *ngIf="tab=='info'" ngSelected="selected">
+      <ion-card>
+        <ion-slides zoom="true" pager="true" zoom="true">
+          <ion-slide *ngFor="let photo of this.market.photos" class="marketImage">
+            <img src='{{photo.getContent()}}' />
+          </ion-slide>
+        </ion-slides>
+        <ion-card-content>
+          <ion-card-title>
+            <h2>{{ market.name }}</h2>
+          </ion-card-title>
+          <ion-icon name="calendar"></ion-icon>
+          <span>{{market.date | date:'dd-MM-yyyy hh:mm'}}</span>
+          <p>{{ market.description }} </p>
+        </ion-card-content>
+      </ion-card>
+   </ion-list>
+<ion-list *ngIf="tab=='comments'">
   <ion-card>
-    <ion-slides zoom="true" pager="true" zoom="true">
-      <ion-slide *ngFor="let photo of this.market.photos" class="marketImage">
-        <img src='{{photo.getContent()}}' />
-      </ion-slide>
-    </ion-slides>
     <ion-card-content>
       <ion-card-title>
-        <h2>{{ market.name }}</h2>
+        <h2>{{ "Comments" | translate }}</h2>
       </ion-card-title>
-      <ion-icon name="calendar"></ion-icon>
-      <span>{{market.date | date:'dd-MM-yyyy hh:mm'}}</span>
-      <p>{{ market.description }} </p>
     </ion-card-content>
   </ion-card>
+</ion-list>
+  <ion-list *ngIf="tab=='assistance'">
+  <ion-card>
+    <ion-card-content>
+      <ion-card-title>
+        <h2>{{ "Assistance list" | translate }}</h2>
+      </ion-card-title>
+    </ion-card-content>
+  </ion-card>
+   </ion-list>
+</div>
+  
 
     <div style="height: 100%;width: 100%" #map id="map"></div>
 

@@ -12,6 +12,7 @@ import { AlertProvider } from '../../providers/alert/alert';
 })
 export class ViewMarketPage {
 
+    tab : any = 'info'
     market: Market;
     map: any;
     @ViewChild('map') mapElement: ElementRef;
@@ -110,5 +111,9 @@ export class ViewMarketPage {
 
             marker.bindTo('position', this.map, 'center');
         }
+    }
+
+    comments(){
+        console.log('COMENTANDO')
     }
 }
