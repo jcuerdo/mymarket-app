@@ -48,6 +48,23 @@ export class ApiServiceProvider {
     return this.http.get(`${this.baseUrl}/public/market/${id}/photos`)
   }
 
+  public getMarketComments(id: number){
+    return this.http.get(`${this.baseUrl}/public/market/${id}/comment`)
+  }
+
+  public saveMarketComment(market: Market,content) {
+    let postParams = {
+      market_id: market.getId(),
+      content: content,
+    }
+
+    return this.http.post(`${this.baseUrl}/private/market/${market.getId()}/comment?token=${this.getToken()}`,
+      postParams,
+      this.getOptions()
+    );
+
+  }
+
   public saveMarket(market: Market) {
     let postParams = {
       name: market.getName(),

@@ -11,8 +11,8 @@
   <div>
     <ion-segment [(ngModel)]="tab">
       <ion-segment-button value="info">{{"Info" | translate}}</ion-segment-button>
-      <ion-segment-button value="comments">{{"Comments" | translate}}</ion-segment-button>
-      <ion-segment-button value="assistance">{{"Assistance" | translate}}</ion-segment-button>
+      <ion-segment-button (click)="loadComments()" value="comments">{{"Comments" | translate}}</ion-segment-button>
+      <ion-segment-button (click)="loadAssistance()" value="assistance">{{"Assistance" | translate}}</ion-segment-button>
     </ion-segment>
   </div>
   
@@ -40,6 +40,19 @@
       <ion-card-title>
         <h2>{{ "Comments" | translate }}</h2>
       </ion-card-title>
+      <ion-item>
+          <ion-input required [(ngModel)]="commentContent" placeholder='{{"Your comment" | translate}}' type="text"></ion-input>
+        </ion-item>
+        <button ion-button (click)="addComment()">{{"Comment" | translate}}</button>
+        <ion-list *ngFor="let comment of comments">
+            <ion-item>
+              <ion-avatar item-start>
+                  <img  src="{{ comment.user.photo.String }}"/>
+              </ion-avatar>
+              <h2>{{ comment.user.fullname.String }} ({{ comment.user.email }}) ({{ comment.date }})</h2>
+              <p>{{ comment.content }}</p>
+            </ion-item>
+          </ion-list>
     </ion-card-content>
   </ion-card>
 </ion-list>

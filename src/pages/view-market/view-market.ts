@@ -15,6 +15,8 @@ export class ViewMarketPage {
     tab : any = 'info'
     market: Market;
     map: any;
+    comments : any[]
+    commentContent : string
     @ViewChild('map') mapElement: ElementRef;
 
     constructor(
@@ -24,8 +26,6 @@ export class ViewMarketPage {
         private apiProvider: ApiServiceProvider,
         public loading: LoadingController,
         public alertProvider: AlertProvider,
-
-
     ) {
         this.market =  new Market();
         this.market.setId(navParams.get("marketId"))
@@ -113,7 +113,28 @@ export class ViewMarketPage {
         }
     }
 
-    comments(){
-        console.log('COMENTANDO')
+    loadComments(){
+        this.apiProvider.getMarketComments(this.market.getId()).subscribe(
+            result => {
+                this.comments = result.json().result;
+                console.log(this.comments)
+            },err=>{
+                
+            }
+        );
+    }
+
+    addComment(){
+        this.apiProvider.saveMarketComment(this.market,this.commentContent).subscribe(
+            result => {
+                this.loadComments()
+            },
+            err => {}
+        );
+        console.log(this.commentContent)
+    }
+
+    loadAssistance(){
+        console.log('ASISTENTES')
     }
 }
