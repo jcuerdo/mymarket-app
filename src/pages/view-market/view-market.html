@@ -49,8 +49,11 @@
               <ion-avatar item-start>
                   <img  src="{{ comment.user.photo.String }}"/>
               </ion-avatar>
-              <h2>{{ comment.user.fullname.String }} ({{ comment.user.email }}) ({{ comment.date }})</h2>
-              <p>{{ comment.content }}</p>
+              <h2>{{ comment.user.fullname.String }} <em>{{ comment.user.email }}</em></h2>
+              <p>{{ comment.date }} : {{ comment.content }}</p> 
+              <button (click)="removeComment(comment.id)">
+                <ion-icon name="trash"></ion-icon>
+              </button>
             </ion-item>
           </ion-list>
     </ion-card-content>

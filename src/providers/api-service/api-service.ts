@@ -18,7 +18,7 @@ export class ApiServiceProvider {
     var headers = new Headers();
     headers.append("Accept", 'application/json');
     headers.append('Content-Type', 'application/json');
-    return new RequestOptions({ headers: headers });
+    return new RequestOptions({ headers: headers});
   }
 
   public getMarkets() {
@@ -52,7 +52,14 @@ export class ApiServiceProvider {
     return this.http.get(`${this.baseUrl}/public/market/${id}/comment`)
   }
 
-  public saveMarketComment(market: Market,content) {
+  public removeMarketComment(market: Market, commentId) {
+    return this.http.delete(
+      `${this.baseUrl}/private/market/${market.getId()}/comment/${commentId}?token=${this.getToken()}`,
+      this.getOptions()
+    );
+  }
+
+  public addMarketComment(market: Market,content) {
     let postParams = {
       market_id: market.getId(),
       content: content,

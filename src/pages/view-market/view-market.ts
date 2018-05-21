@@ -117,7 +117,6 @@ export class ViewMarketPage {
         this.apiProvider.getMarketComments(this.market.getId()).subscribe(
             result => {
                 this.comments = result.json().result;
-                console.log(this.comments)
             },err=>{
                 
             }
@@ -125,13 +124,21 @@ export class ViewMarketPage {
     }
 
     addComment(){
-        this.apiProvider.saveMarketComment(this.market,this.commentContent).subscribe(
+        this.apiProvider.addMarketComment(this.market,this.commentContent).subscribe(
             result => {
                 this.loadComments()
             },
             err => {}
         );
-        console.log(this.commentContent)
+    }
+
+    removeComment(id){
+        this.apiProvider.removeMarketComment(this.market, id).subscribe(
+            result => {
+                this.loadComments()
+            },
+            err => {}
+        );
     }
 
     loadAssistance(){
