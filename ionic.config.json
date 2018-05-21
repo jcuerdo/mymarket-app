@@ -1,6 +1,6 @@
 {
   "name": "mymarket",
-  "app_id": "",
+  "app_id": "47a500de",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
