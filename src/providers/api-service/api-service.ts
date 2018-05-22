@@ -52,9 +52,20 @@ export class ApiServiceProvider {
     return this.http.get(`${this.baseUrl}/public/market/${id}/comment`)
   }
 
+  public getMarketAssistance(id: number){
+    return this.http.get(`${this.baseUrl}/public/market/${id}/assistance`)
+  }
+
   public removeMarketComment(market: Market, commentId) {
     return this.http.delete(
       `${this.baseUrl}/private/market/${market.getId()}/comment/${commentId}?token=${this.getToken()}`,
+      this.getOptions()
+    );
+  }
+
+  public removeMarketAssistance(market: Market, assistanceId) {
+    return this.http.delete(
+      `${this.baseUrl}/private/market/${market.getId()}/assistance/${assistanceId}?token=${this.getToken()}`,
       this.getOptions()
     );
   }
@@ -66,6 +77,18 @@ export class ApiServiceProvider {
     }
 
     return this.http.post(`${this.baseUrl}/private/market/${market.getId()}/comment?token=${this.getToken()}`,
+      postParams,
+      this.getOptions()
+    );
+
+  }
+
+  public addMarketAssistance(market: Market) {
+    let postParams = {
+      market_id: market.getId()
+    }
+
+    return this.http.post(`${this.baseUrl}/private/market/${market.getId()}/assistance?token=${this.getToken()}`,
       postParams,
       this.getOptions()
     );

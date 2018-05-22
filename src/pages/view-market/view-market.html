@@ -64,7 +64,20 @@
     <ion-card-content>
       <ion-card-title>
         <h2>{{ "Assistance list" | translate }}</h2>
+        <button ion-button (click)="addAssistance()">{{"Assist" | translate}}</button>
       </ion-card-title>
+      <ion-list *ngFor="let assistance of assistances">
+          <ion-item>
+            <ion-avatar item-start>
+                <img  src="{{ assistance.user_id.photo.String }}"/>
+            </ion-avatar>
+            <h2>{{ assistance.user_id.fullname.String }} <em>{{ assistance.user_id.email }}</em></h2>
+            <p>{{ assistance.date }}</p> 
+            <button (click)="removeAssistance(assistance.id)">
+              <ion-icon name="trash"></ion-icon>
+            </button>
+          </ion-item>
+        </ion-list>
     </ion-card-content>
   </ion-card>
    </ion-list>
