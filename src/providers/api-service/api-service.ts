@@ -21,13 +21,15 @@ export class ApiServiceProvider {
     return new RequestOptions({ headers: headers});
   }
 
-  public getMarkets() {
+  public getMarkets(page = 0) {
+
     let lat = localStorage.getItem('lat')
     let lon = localStorage.getItem('lon')
 
-    console.log('Getting markets lat:' + lat + ' lon: ' + lon);
+    console.log('Getting markets lat:' + lat + ' lon: ' + lon + ' page: ' + page);
+    
 
-    return this.http.get(`${this.baseUrl}/public/market?lat=${lat}&lon=${lon}&radio=${this.radio}`);
+    return this.http.get(`${this.baseUrl}/public/market?lat=${lat}&lon=${lon}&radio=${this.radio}&page=${page}`);
   }
 
   public getMyMarkets() {

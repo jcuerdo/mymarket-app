@@ -26,6 +26,7 @@ export class HomePage {
   query: string = '';
   searchDisabled: boolean = true;
   autocompleteService: any;
+  page = 0;
 
 
   constructor(
@@ -60,19 +61,23 @@ export class HomePage {
 
   loadEmpty(error){
     this.loader.dismiss();
-    this.emptyMarkets = false;
   }
 
-  loadMarkets() {
+  doInfinite(infiniteScroll) {
+    this.loadMarkets(infiniteScroll)
+  }
+  loadMarkets(infiniteScroll = null) {
   this.emptyMarkets = false;
   console.log('Trying to load markets')
-  this.markets = []
-  this.apiProvider.getMarkets()
+
+  this.apiProvider.getMarkets(this.page)
     .subscribe(res => {
       console.log('API getMarkets response with ' +  res.json().count + " results.")
       if(res.json().count > 0) {
-        this.markets = res.json().result;          
-        this.markets.forEach(element => {
+        this.page++;
+        let markets = res.json().result;          
+        markets.forEach(element => {
+          this.markets.push(element)
           element.image = 'assets/img/image.png';
           this.apiProvider.getMarketFirstPhoto(element.id)
             .subscribe(res => {
@@ -84,11 +89,21 @@ export class HomePage {
             });
         }, this);
       } else{
+      if(this.markets.length == 0){
         this.emptyMarkets = true;
+      } else{
+        this.alertProvier.presentAlert(this.translate.instant("There are no more markets for your search"));
       }
+     }
       this.loader.dismiss();
+      if(infiniteScroll){
+        infiniteScroll.complete();
+      }
     }, (err) => {
       this.loader.dismiss();
+      if(infiniteScroll){
+        infiniteScroll.complete();
+      }
       this.alertProvier.presentAlert(this.translate.instant("Error"), err)
     });
   }
@@ -161,6 +176,8 @@ selectPlace(place) {
       console.log(details)
       localStorage.setItem("lat", details.geometry.location.lat());
       localStorage.setItem("lon", details.geometry.location.lng());
+      this.markets = []
+      this.page = 0;
       this.loadMarkets()
   });
 }
@@ -170,8 +187,9 @@ loadCurrentPosition(){
     content: this.translate.instant("Loading market list"),
   });
   this.loader.present();
+  this.markets = []
+  this.page = 0;
   this.locationProvider.requestLocation(this.loadMarkets.bind(this), this.loadEmpty.bind(this));
-
 }
 
 }
