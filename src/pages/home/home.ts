@@ -92,7 +92,7 @@ export class HomePage {
       if(this.markets.length == 0){
         this.emptyMarkets = true;
       } else{
-        this.alertProvier.presentAlert(this.translate.instant("There are no more markets for your search"));
+          //No more
       }
      }
       this.loader.dismiss();
