@@ -16,6 +16,7 @@ export class ViewMarketPage {
     market: Market;
     map: any;
     comments : any[]
+    assistances : any[]
     commentContent : string
     @ViewChild('map') mapElement: ElementRef;
 
@@ -142,6 +143,32 @@ export class ViewMarketPage {
     }
 
     loadAssistance(){
-        console.log('ASISTENTES')
+        this.apiProvider.getMarketAssistance(this.market.getId()).subscribe(
+            result => {
+                this.assistances = result.json().result;
+                console.log(this.assistances)
+            },err=>{
+                
+            }
+        );    
     }
+
+    addAssistance(){
+        this.apiProvider.addMarketAssistance(this.market).subscribe(
+            result => {
+                this.loadAssistance()
+            },
+            err => {}
+        );
+    }
+
+    removeAssistance(id){
+        this.apiProvider.removeMarketAssistance(this.market, id).subscribe(
+            result => {
+                this.loadAssistance()
+            },
+            err => {}
+        );
+    }
+
 }
