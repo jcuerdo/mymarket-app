@@ -32,6 +32,9 @@ import { AlertProvider } from '../providers/alert/alert';
 import { MyaccountPage } from '../pages/myaccount/myaccount';
 import { MymarketsPage } from '../pages/mymarkets/mymarkets';
 
+import { FCM } from '@ionic-native/fcm';
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -80,7 +83,8 @@ import { MymarketsPage } from '../pages/mymarkets/mymarkets';
     Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ApiServiceProvider,
-    AlertProvider
+    AlertProvider,
+    FCM
   ]
 })
 export class AppModule {}

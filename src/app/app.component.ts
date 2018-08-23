@@ -7,6 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { TranslateService } from '@ngx-translate/core';
 import { HomePage } from '../pages/home/home';
 import { MyaccountPage } from '../pages/myaccount/myaccount';
+import { FCM } from '@ionic-native/fcm';
 
 @Component({
   templateUrl: 'app.html'
@@ -25,7 +26,8 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public translate: TranslateService,
-    public events: Events
+    public events: Events,
+    public fcm: FCM
   ) {
     this.translate = translate;
     this.initializeApp();
@@ -64,7 +66,26 @@ export class MyApp {
     this.splashScreen.hide();
     this.generateMenuPages();
     this.translate.setDefaultLang('es');
-    });
+
+    if(this.fcm){
+      this.fcm.getToken().then(token => {
+        console.log(token)
+      });
+  
+      this.fcm.onNotification().subscribe( data => {
+        console.log(JSON.stringify(data))
+  
+        if(data.wasTapped){
+          //Notification was received on device tray and tapped by the user.
+        }else{
+          //Notification was received in foreground. Maybe the user needs to be notified.
+        }
+      });
+    }
+
+  });
+
+
   }
 
 
