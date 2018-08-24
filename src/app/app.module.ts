@@ -32,7 +32,7 @@ import { AlertProvider } from '../providers/alert/alert';
 import { MyaccountPage } from '../pages/myaccount/myaccount';
 import { MymarketsPage } from '../pages/mymarkets/mymarkets';
 
-import { FCM } from '@ionic-native/fcm';
+import { Firebase } from '@ionic-native/firebase';
 
 
 @NgModule({
@@ -84,7 +84,7 @@ import { FCM } from '@ionic-native/fcm';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ApiServiceProvider,
     AlertProvider,
-    FCM
+    Firebase
   ]
 })
 export class AppModule {}
