@@ -85,6 +85,13 @@ export class ApiServiceProvider {
 
   }
 
+  public updateUserFirebaseToken(token:string) {
+    return this.http.post(`${this.baseUrl}/private/user/firebase/token/${token}/comment?token=${this.getToken()}`,
+      {},
+      this.getOptions()
+    );
+  }
+
   public addMarketAssistance(market: Market) {
     let postParams = {
       market_id: market.getId()

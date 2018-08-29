@@ -1,5 +1,6 @@
 import { MymarketsPage } from './../pages/mymarkets/mymarkets';
 import { LoginPage } from './../pages/login/login';
+import { ViewMarketPage } from './../pages/view-market/view-market';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -8,6 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { HomePage } from '../pages/home/home';
 import { MyaccountPage } from '../pages/myaccount/myaccount';
 import { Firebase } from '@ionic-native/firebase';
+import { ApiServiceProvider } from '../providers/api-service/api-service';
 
 @Component({
   templateUrl: 'app.html'
@@ -27,7 +29,8 @@ export class MyApp {
     public splashScreen: SplashScreen,
     public translate: TranslateService,
     public events: Events,
-    public firebase: Firebase
+    public firebase: Firebase,
+    public apiProvider: ApiServiceProvider
   ) {
     this.translate = translate;
     this.initializeApp();
@@ -67,17 +70,15 @@ export class MyApp {
     this.generateMenuPages();
     this.translate.setDefaultLang('es');
 
-    if(this.firebase){
+    if (this.firebase) {
       this.firebase.getToken().then(token => {
-        console.log(token)
+        console.log(token);
       });
-  
       this.firebase.onNotificationOpen().subscribe( data => {
         console.log(JSON.stringify(data))
-        alert('PEPIYO')
+        this.nav.push(ViewMarketPage, { marketId: data.marketID });
       });
     }
-
   });
 
 

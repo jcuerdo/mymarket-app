@@ -82,8 +82,8 @@
       "cordova-plugin-advanced-http": {},
       "cordova-plugin-camera": {},
       "cordova-plugin-geolocation": {},
-      "cordova-plugin-request-location-accuracy": {},
-      "cordova-plugin-firebase": {}
+      "cordova-plugin-firebase": {},
+      "cordova-plugin-request-location-accuracy": {}
     }
   }
 }
