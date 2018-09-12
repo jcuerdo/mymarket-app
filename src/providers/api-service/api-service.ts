@@ -86,7 +86,7 @@ export class ApiServiceProvider {
   }
 
   public updateUserFirebaseToken(token:string) {
-    return this.http.post(`${this.baseUrl}/private/user/firebase/token/${token}/comment?token=${this.getToken()}`,
+    return this.http.post(`${this.baseUrl}/private/user/firebase/token/${token}?token=${this.getToken()}`,
       {},
       this.getOptions()
     );
@@ -101,7 +101,6 @@ export class ApiServiceProvider {
       postParams,
       this.getOptions()
     );
-
   }
 
   public saveMarket(market: Market) {
@@ -185,7 +184,6 @@ export class ApiServiceProvider {
       this.getOptions()
     )
   }
-
   private getToken(){
     return localStorage.getItem('token');
   }

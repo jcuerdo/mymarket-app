@@ -70,11 +70,19 @@ export class MyApp {
     this.generateMenuPages();
     this.translate.setDefaultLang('es');
 
+    
     if (this.firebase) {
       this.firebase.getToken().then(token => {
         console.log(token);
+        this.apiProvider.updateUserFirebaseToken(token).subscribe(data=>{
+          console.log(JSON.stringify(data))
+        },error=>{
+          console.log('ERROR')
+          console.log(JSON.stringify(error))
+        });
       });
       this.firebase.onNotificationOpen().subscribe( data => {
+        //IF TAB SINO TOSTADA
         console.log(JSON.stringify(data))
         this.nav.push(ViewMarketPage, { marketId: data.marketID });
       });
