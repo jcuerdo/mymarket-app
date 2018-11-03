@@ -50,7 +50,19 @@ export class MymarketsPage {
    }
 
   delete(marketId){
-
+    this.loader = this.loading.create({
+      content: this.translate.instant("Deleting market"),
+    });
+    this.loader.present();
+    this.apiProvider.removeMarket(marketId).subscribe(
+      result => {
+        this.loadMarkets()
+      },
+      err => {
+        this.loader.present();
+        this.alertProvier.presentAlert(this.translate.instant("Error"), err)
+      }
+  );
   }
 
   edit(marketId){
@@ -64,7 +76,7 @@ export class MymarketsPage {
    loadMarkets() {
     this.emptyMarkets = false;
     console.log('Trying to load my markets')
-    this.markets = []
+
     this.apiProvider.getMyMarkets()
       .subscribe(res => {
         console.log('API getMarkets response with ' +  res.json().count + " results.")

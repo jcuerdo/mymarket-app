@@ -58,6 +58,13 @@ export class ApiServiceProvider {
     return this.http.get(`${this.baseUrl}/public/market/${id}/assistance`)
   }
 
+  public removeMarket(marketId: number) {
+    return this.http.delete(
+      `${this.baseUrl}/private/market/${marketId}/delete?token=${this.getToken()}`,
+      this.getOptions()
+    );
+  }
+
   public removeMarketComment(market: Market, commentId) {
     return this.http.delete(
       `${this.baseUrl}/private/market/${market.getId()}/comment/${commentId}?token=${this.getToken()}`,
