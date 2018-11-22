@@ -112,6 +112,10 @@ export class EditmarketPage {
         this.market.setId(data.id)
         this.market.setLat(data.lat)
         this.market.setLng(data.lon)
+        this.market.setType(data.type)
+        this.market.setPlace(data.place)
+        this.market.setFlexible(data.flexible)
+
         this.loadPhotos();
     }, (err) => {
         console.log(err)

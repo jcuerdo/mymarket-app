@@ -8,13 +8,14 @@ export class Market {
     private date: string;
     private lat: string;
     private lng: string;
-    private photos: Photo[] = [];
-
+	private photos: Photo[] = [];
+	private type: string;
+	private flexible: boolean;
+	private place: string;
 
 	constructor() {
 		this.photos = [];
 	}
-    
 
     public getId(): number {
 		return this.id;
@@ -75,6 +76,29 @@ export class Market {
 
     public clearPhotos() : void{
         this.photos = [];
-    }
+	}
+	
+	public getType(): string {
+		return this.type;
+	}
 
+	public setType(value: string) {
+		this.type = value;
+	}
+
+	public getPlace(): string {
+		return this.place;
+	}
+
+	public setPlace(value: string) {
+		this.place = value;
+	}
+
+	public getFlexible(): boolean {
+		return this.flexible;
+	}
+
+	public setFlexible(value: boolean) {
+		this.flexible = value;
+	}
 }

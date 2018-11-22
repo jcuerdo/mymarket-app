@@ -68,7 +68,7 @@ export class LocationServiceProvider {
 
   private getPosition(callback, errorCallback){
     console.log('Getting current position')
-    this.geolocation.getCurrentPosition({timeout: 10000}).then(
+    this.geolocation.getCurrentPosition({timeout: 5000}).then(
       (position) => {
         this.setPosition(position, callback);
       }

@@ -31,6 +31,19 @@
           <ion-icon name="calendar"></ion-icon>
           <span>{{market.date | date:'dd-MM-yyyy hh:mm'}}</span>
           <p>{{ market.description }} </p>
+
+          <p *ngIf='market.type == "FREE"'>  <ion-icon name="card"></ion-icon>
+             {{ "Free market" | translate }}</p>
+          <p *ngIf='market.type == "PAY"'>  <ion-icon name="card"></ion-icon>
+             {{ "Pay market" | translate }}</p>
+          <p *ngIf='market.type == "MIXED"'>  <ion-icon name="card"></ion-icon>
+             {{ "Mixed market free and payed items" | translate }}</p>
+
+          <p *ngIf='market.place == "INDOOR"'>  <ion-icon name="home"></ion-icon>
+             {{ "Indor market" | translate }}</p>
+          <p *ngIf='market.place == "OUTDOOR"'>  <ion-icon name="home"></ion-icon>
+             {{ "Outdoor market" | translate }}</p>
+
         </ion-card-content>
       </ion-card>
    </ion-list>

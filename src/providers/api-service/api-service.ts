@@ -117,6 +117,9 @@ export class ApiServiceProvider {
       startdate: market.getDate(),
       lat: market.getLat(),
       lon: market.getLng(),
+      type: market.getType(),
+      place: market.getPlace(),
+      flexible: market.getFlexible(),
     }
 
     return this.http.post(`${this.baseUrl}/private/market?token=${this.getToken()}`,
@@ -134,6 +137,9 @@ export class ApiServiceProvider {
       startdate: market.getDate(),
       lat: market.getLat(),
       lon: market.getLng(),
+      type: market.getType(),
+      place: market.getPlace(),
+      flexible: market.getFlexible(),
     }
 
     return this.http.post(`${this.baseUrl}/private/market/${market.getId()}/edit?token=${this.getToken()}`,
