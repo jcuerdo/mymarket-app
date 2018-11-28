@@ -65,6 +65,18 @@ export class ApiServiceProvider {
     );
   }
 
+  public repeatMarket(marketId: number, startdate) {
+    let postParams = {
+      id: marketId,
+      startdate: startdate,
+    }
+    return this.http.post(
+      `${this.baseUrl}/private/market/${marketId}/repeat?token=${this.getToken()}`,
+      postParams,
+      this.getOptions()
+    );
+  }
+
   public removeMarketComment(market: Market, commentId) {
     return this.http.delete(
       `${this.baseUrl}/private/market/${market.getId()}/comment/${commentId}?token=${this.getToken()}`,

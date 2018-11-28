@@ -31,6 +31,19 @@
         <button (click)="delete(market.id)" ion-button>
           <ion-icon name="trash"></ion-icon> {{"Delete"|translate}}
         </button>
+    
+      
+      <h3>{{ "Repeat Market" | translate }}</h3>
+      <ion-item>
+          <ion-label>{{"New date" | translate}}</ion-label>
+            <ion-datetime [(ngModel)]="market.date" pickerFormat="YYYY/MM/DD HH:m" displayFormat="YYYY/MM/DD HH:m"></ion-datetime>
+          </ion-item>   
+      <ion-item>
+          <button (click)="repeat(market.id)" ion-button>
+              <ion-icon name="repeat"></ion-icon> {{"Repeat"|translate}}
+            </button>
+      </ion-item>
+
       </ion-card-content>
     </ion-card>
   </ion-list>

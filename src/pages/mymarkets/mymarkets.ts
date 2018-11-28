@@ -49,6 +49,10 @@ export class MymarketsPage {
     this.navCtrl.push(AddMarketPage);
    }
 
+   repeat(marketId) {
+    this.apiProvider.removeMarket(marketId, )
+   }
+
   delete(marketId){
     this.loader = this.loading.create({
       content: this.translate.instant("Deleting market"),
