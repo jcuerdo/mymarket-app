@@ -33,6 +33,7 @@ import { MyaccountPage } from '../pages/myaccount/myaccount';
 import { MymarketsPage } from '../pages/mymarkets/mymarkets';
 
 import { Firebase } from '@ionic-native/firebase';
+import { GooglemapsProvider } from '../providers/googlemaps/googlemaps';
 
 
 @NgModule({
@@ -84,7 +85,8 @@ import { Firebase } from '@ionic-native/firebase';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ApiServiceProvider,
     AlertProvider,
-    Firebase
+    Firebase,
+    GooglemapsProvider
   ]
 })
 export class AppModule {}

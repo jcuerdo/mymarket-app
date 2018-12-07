@@ -12,6 +12,8 @@ import { AlertProvider } from '../../providers/alert/alert';
 import { LoginPage } from '../login/login';
 import { Market } from '../../models/market';
 import { Photo } from '../../models/photo';
+import { GooglemapsProvider } from '../../providers/googlemaps/googlemaps';
+
 
 @Component({
   selector: 'page-home',
@@ -40,19 +42,13 @@ export class HomePage {
     public apiProvider: ApiServiceProvider,
     public locationProvider: LocationServiceProvider,
     public alertProvier : AlertProvider,
-    public translate : TranslateService
+    public translate : TranslateService,
+    public googleMapsProvider: GooglemapsProvider,
   ) {}
 
   ionViewDidLoad(){
   console.log("Loading home page")
-  window['mapInit'] = () => {
-    this.initMapServices();
-  }
-  let script = document.createElement("script");
-  script.id = "googleMaps";
-  script.src = 'http://maps.google.com/maps/api/js?key=AIzaSyDlRrMhhZXm-uhLM6XYAa4EWKdqgDSPPQk&callback=mapInit&libraries=places';
-  
-  document.body.appendChild(script);
+  this.googleMapsProvider.loadGoogleMapsAndInit(this.initMapServices.bind(this))
 
   this.loader = this.loading.create({
     content: this.translate.instant('Obtaining current location')

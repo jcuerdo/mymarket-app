@@ -9,6 +9,7 @@ import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { ViewMarketPage } from '../view-market/view-market';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
+import { GooglemapsProvider } from '../../providers/googlemaps/googlemaps';
 
 
 @Component({
@@ -40,8 +41,8 @@ export class AddMarketPage {
         private apiProvider: ApiServiceProvider,
         public actionSheetCtrl: ActionSheetController,
         public translate: TranslateService,
-        public alertProvider: AlertProvider
-        
+        public alertProvider: AlertProvider,
+        public googleMapsProvider: GooglemapsProvider,        
         
     ) {
         this.market = new Market();
@@ -53,17 +54,8 @@ export class AddMarketPage {
 
     ionViewDidLoad(): void {
 
-        window['mapInit'] = () => {
-            this.initMap();
-        }
+        this.googleMapsProvider.loadGoogleMapsAndInit(this.initMap.bind(this))
 
-        let script = document.createElement("script");
-        script.id = "googleMaps";
-
-        
-        script.src = 'http://maps.google.com/maps/api/js?key=AIzaSyDlRrMhhZXm-uhLM6XYAa4EWKdqgDSPPQk&callback=mapInit&libraries=places';
-
-        document.body.appendChild(script);
     }
 
     initMap() {
