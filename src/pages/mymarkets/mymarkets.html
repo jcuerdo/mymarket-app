@@ -13,15 +13,18 @@
     <h3 *ngIf="emptyMarkets">{{"You have not create markets yet" | translate }} </h3>
     <ion-card *ngFor="let market of markets">
       <div class="marketImage">
-        <img src='{{market.image}}' />
+        <img src='{{market.getPhotos()[0].getContent()}}' />
       </div>
       <ion-card-content>
         <ion-card-title>
           <h2>{{ market.name }}</h2>
         </ion-card-title>
         <ion-icon name="calendar"></ion-icon>
-        <span>{{market.startDate | date:'dd-MM-yyyy hh:mm'}}</span>
+        <span>{{market.date | date:'dd-MM-yyyy hh:mm'}}</span>
         <p>{{ market.description | slice:0:200}} </p>
+
+        <h2>{{ "Market options" | translate }}</h2>
+
         <button (click)="view(market.id)" ion-button>
           <ion-icon name="eye"></ion-icon> {{"View"|translate}}
         </button>
@@ -34,15 +37,24 @@
     
       
       <h3>{{ "Repeat Market" | translate }}</h3>
-      <ion-item>
-          <ion-label>{{"New date" | translate}}</ion-label>
-            <ion-datetime [(ngModel)]="market.date" pickerFormat="YYYY/MM/DD HH:m" displayFormat="YYYY/MM/DD HH:m"></ion-datetime>
-          </ion-item>   
-      <ion-item>
-          <button (click)="repeat(market.id)" ion-button>
-              <ion-icon name="repeat"></ion-icon> {{"Repeat"|translate}}
-            </button>
-      </ion-item>
+
+      <ion-grid>
+          <ion-row>
+            <ion-col col-md-6>
+                <ion-item>
+                    <ion-datetime [(ngModel)]="market.date" pickerFormat="YYYY/MM/DD HH:m" displayFormat="YYYY/MM/DD HH:m"></ion-datetime>
+                </ion-item>  
+            </ion-col>
+            <ion-col col-md-6>
+                <ion-item>
+                    <button (click)="repeat(market.id)" ion-button>
+                        <ion-icon name="repeat"></ion-icon> {{"Repeat"|translate}}
+                      </button>
+                </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
 
       </ion-card-content>
     </ion-card>

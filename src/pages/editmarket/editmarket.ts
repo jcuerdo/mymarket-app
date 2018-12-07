@@ -105,7 +105,6 @@ export class EditmarketPage {
       res => {
         let data = res.json();
         data = data.result
-        console.log(data)
         this.market.setName(data.name)
         this.market.setDescription(data.description)
         this.market.setDate(new Date(data.startdate).toISOString())

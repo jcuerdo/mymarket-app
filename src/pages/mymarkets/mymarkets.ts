@@ -6,6 +6,8 @@ import { ApiServiceProvider } from './../../providers/api-service/api-service';
 import { AddMarketPage } from './../addmarket/addmarket';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { Market } from '../../models/market';
+import { Photo } from '../../models/photo';
 
 /**
  * Generated class for the MymarketsPage page.
@@ -85,14 +87,28 @@ export class MymarketsPage {
       .subscribe(res => {
         console.log('API getMarkets response with ' +  res.json().count + " results.")
         if(res.json().count > 0) {
-          this.markets = res.json().result;          
-          this.markets.forEach(element => {
-            element.image = 'assets/img/image.png';
-            this.apiProvider.getMarketFirstPhoto(element.id)
+          let result = res.json().result;
+          this.markets = []         
+          result.forEach(data => {
+            let market = new Market()
+            this.markets.push(market)
+            market.setName(data.name)
+            market.setDescription(data.description)
+            market.setDate(new Date(data.startdate).toISOString())
+            market.setId(data.id)
+            market.setLat(data.lat)
+            market.setLng(data.lon)
+            market.setType(data.type)
+            market.setPlace(data.place)
+            market.setFlexible(data.flexible)
+
+            market.addPhoto(new Photo(0, 'assets/img/image.png'), 0);
+
+            this.apiProvider.getMarketFirstPhoto(market.getId())
               .subscribe(res => {
                 let photo = res.json().result;
                 if (photo) {
-                  element.image = photo.content;
+                  market.addPhoto(new Photo(0, photo.content), 0);
                 }
               }, (err) => {
               });
