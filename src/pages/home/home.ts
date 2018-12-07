@@ -10,6 +10,8 @@ import { LocationServiceProvider } from '../../providers/location-service/locati
 import { TranslateService } from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
 import { LoginPage } from '../login/login';
+import { Market } from '../../models/market';
+import { Photo } from '../../models/photo';
 
 @Component({
   selector: 'page-home',
@@ -76,14 +78,25 @@ export class HomePage {
       if(res.json().count > 0) {
         this.page++;
         let markets = res.json().result;          
-        markets.forEach(element => {
-          this.markets.push(element)
-          element.image = 'assets/img/image.png';
-          this.apiProvider.getMarketFirstPhoto(element.id)
+        markets.forEach(data => {
+          let market = new Market()
+          this.markets.push(market)
+          market.setName(data.name)
+          market.setDescription(data.description)
+          market.setDate(new Date(data.startdate).toISOString())
+          market.setId(data.id)
+          market.setLat(data.lat)
+          market.setLng(data.lon)
+          market.setType(data.type)
+          market.setPlace(data.place)
+          market.setFlexible(data.flexible)
+
+          market.addPhoto(new Photo(0, 'assets/img/image.png'), 0);
+          this.apiProvider.getMarketFirstPhoto(market.getId())
             .subscribe(res => {
               let photo = res.json().result;
               if (photo) {
-                element.image = photo.content;
+                market.addPhoto(new Photo(0, photo.content), 0);
               }
             }, (err) => {
             });
