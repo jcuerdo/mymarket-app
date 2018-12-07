@@ -39,11 +39,11 @@ export class MarketmapPage {
       }
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
       this.markets.forEach(element => {
-        var latLng = new google.maps.LatLng(element.lat, element.lon);
+        var latLng = new google.maps.LatLng(element.getLat(), element.getLng());
         var marker = new google.maps.Marker({
             position: latLng,
             map: this.map,
-            title: element.name,
+            title: element.getName(),
             icon : {
                 url: "assets/img/market.png",
                 scaledSize: new google.maps.Size(32, 32)
@@ -55,8 +55,8 @@ export class MarketmapPage {
         var infowindow = new google.maps.InfoWindow();
         marker.addListener('click', function(this) {
           var div = document.createElement('div');
-          div.innerHTML = element.name;
-          div.onclick = function(){t.view(element.id)};
+          div.innerHTML = element.getName();
+          div.onclick = function(){t.view(element.getId())};
           infowindow.setContent(div);
           infowindow.open(t.map, marker)
 
