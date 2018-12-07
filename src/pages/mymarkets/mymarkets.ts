@@ -51,8 +51,17 @@ export class MymarketsPage {
     this.navCtrl.push(AddMarketPage);
    }
 
-   repeat(marketId) {
-    this.apiProvider.removeMarket(marketId, )
+   repeat(marketId, marketNewDate) {
+    this.apiProvider.repeatMarket(marketId, marketNewDate).subscribe(
+      result => {
+        let repeatedMarket = result.json().result;
+        this.view(repeatedMarket.id)
+      },
+      err => {
+        this.loader.present();
+        this.alertProvier.presentAlert(this.translate.instant("Error"), err)
+      }
+  );
    }
 
   delete(marketId){
