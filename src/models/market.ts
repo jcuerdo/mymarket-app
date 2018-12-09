@@ -1,8 +1,10 @@
 import { Photo } from './photo';
+import { User } from './user';
 
 export class Market {
 
-    private id: number;
+	private id: number;
+	private owner: User;
     private name: string;
     private description: string;
     private date: string;
@@ -15,6 +17,7 @@ export class Market {
 
 	constructor() {
 		this.photos = [];
+		this.owner = null;
 	}
 
     public getId(): number {
@@ -23,6 +26,14 @@ export class Market {
 
 	public setId(value: number) {
 		this.id = value;
+	}
+
+	public getOwner(): User {
+		return this.owner;
+	}
+
+	public setOwner(value: User) {
+		this.owner = value;
 	}
     
     public getName(): string {

@@ -34,6 +34,7 @@ import { MymarketsPage } from '../pages/mymarkets/mymarkets';
 
 import { Firebase } from '@ionic-native/firebase';
 import { GooglemapsProvider } from '../providers/googlemaps/googlemaps';
+import { ViewUserPage } from '../pages/view-user/view-user';
 
 
 @NgModule({
@@ -47,6 +48,8 @@ import { GooglemapsProvider } from '../providers/googlemaps/googlemaps';
     MyaccountPage,
     MymarketsPage,
     EditmarketPage,
+    ViewUserPage,
+
   ],
   imports: [
     BrowserModule,
@@ -72,6 +75,8 @@ import { GooglemapsProvider } from '../providers/googlemaps/googlemaps';
     MyaccountPage,
     MymarketsPage,
     EditmarketPage,
+    ViewUserPage,
+
   ],
   providers: [
     StatusBar,

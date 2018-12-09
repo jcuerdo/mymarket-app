@@ -1,11 +1,13 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
 import { Market } from '../../models/market';
 import { Http } from '@angular/http';
 import { Photo } from '../../models/photo';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { AlertProvider } from '../../providers/alert/alert';
 import { GooglemapsProvider } from '../../providers/googlemaps/googlemaps';
+import { User } from '../../models/user';
+import { ViewUserPage } from '../view-user/view-user';
 
 @Component({
     selector: 'page-view-market',
@@ -24,6 +26,7 @@ export class ViewMarketPage {
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
+        public modCtrl: ModalController,
         public http: Http,
         private apiProvider: ApiServiceProvider,
         public loading: LoadingController,
@@ -54,6 +57,8 @@ export class ViewMarketPage {
 
             this.initMap();
             this.loadPhotos();
+            this.loadOwner(data.user_id);
+
         }, (err) => {
             console.log(err)
         }
@@ -77,6 +82,29 @@ export class ViewMarketPage {
                 console.log(err)
             });
     }
+
+    private loadOwner(userId: number) {
+        this.apiProvider.getPublicUser(userId)
+            .subscribe(res => {
+                let data = res.json().result;
+
+                let owner = new User();
+                owner.$id = data.id;
+                owner.$email = data.email;
+                owner.$fullname = data.fullname;
+                owner.$photo = data.photo;
+                owner.$description = data.description;
+                this.market.setOwner(owner);
+            }, (err) => {
+                console.log(err)
+            });
+    }
+
+    public viewUser(userId: number){
+        let profileModal = this.modCtrl.create(ViewUserPage, { userId: userId });
+        profileModal.onDidDismiss(data => {
+        });
+        profileModal.present();    }
     
     ionViewDidLoad(): void {
         this.googleMapsProvider.loadGoogleMapsAndInit(this.initMap.bind(this))
