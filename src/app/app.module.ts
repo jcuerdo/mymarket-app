@@ -35,6 +35,7 @@ import { MymarketsPage } from '../pages/mymarkets/mymarkets';
 import { Firebase } from '@ionic-native/firebase';
 import { GooglemapsProvider } from '../providers/googlemaps/googlemaps';
 import { ViewUserPage } from '../pages/view-user/view-user';
+import { ToastproviderProvider } from '../providers/toastprovider/toastprovider';
 
 
 @NgModule({
@@ -91,7 +92,8 @@ import { ViewUserPage } from '../pages/view-user/view-user';
     ApiServiceProvider,
     AlertProvider,
     Firebase,
-    GooglemapsProvider
+    GooglemapsProvider,
+    ToastproviderProvider,
   ]
 })
 export class AppModule {}
