@@ -17,7 +17,7 @@ export class ToastproviderProvider {
     let toast = this.toastCtrl.create({
       message: this.translate.instant(message),
       duration: 3000,
-      position: 'middle'
+      position: 'top'
     });
   
     toast.onDidDismiss(() => {

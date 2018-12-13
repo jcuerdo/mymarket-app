@@ -47,8 +47,14 @@ export class MyaccountPage {
     this.apiProvider.updateUser(this.user).subscribe(
       res => {
         console.log(res)
+        this.toastProvider.presentToast("Your datas has been succesfully modified")
       }, (err) => {
-        console.log(err.status)
+        if( err.status == 409) {
+          this.toastProvider.presentToast("This email already exists")
+        } 
+        else if (err.status = 304) {
+          this.toastProvider.presentToast("Nothing to modify")
+        }
       }
     );
   }
