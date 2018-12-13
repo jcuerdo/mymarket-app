@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { User } from '../../models/user';
+import { ToastproviderProvider } from '../../providers/toastprovider/toastprovider';
 
 @IonicPage()
 @Component({
@@ -15,7 +16,8 @@ export class MyaccountPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public apiProvider : ApiServiceProvider
+    public apiProvider : ApiServiceProvider,
+    private toastProvider : ToastproviderProvider
   ) {
     this.user = new User()
   }
@@ -34,7 +36,7 @@ export class MyaccountPage {
         this.user.$photo = data.photo
       }, (err) => {
         console.log(err)
-        //Alert with error
+          this.toastProvider.presentToast("Error loading user data")
       }
     );
   }
