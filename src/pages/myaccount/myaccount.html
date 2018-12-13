@@ -27,13 +27,10 @@
     <ion-label color="primary" stacked>{{"Description" | translate}}</ion-label>
     <ion-input required [(ngModel)]="user.description" type="text" placeholder=""></ion-input>
    </ion-item>
-   <button (click)="saveDetails()" ion-button block>{{"Save" | translate}}</button>
 
-
-   <h2>{{"Change password" | translate}}</h2>
     <ion-item>
       <ion-label color="primary" stacked>{{"New password" | translate}}</ion-label>
       <ion-input required [(ngModel)]="user.password" type="password" placeholder=""></ion-input>
     </ion-item>
-    <button (click)="savePassword()" ion-button block>{{"Save" | translate}}</button>
-</ion-content>
+    <button (click)="saveDetails()" ion-button block>{{"Save" | translate}}</button>
+  </ion-content>

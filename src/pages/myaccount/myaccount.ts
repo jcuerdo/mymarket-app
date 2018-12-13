@@ -26,6 +26,7 @@ export class MyaccountPage {
       res => {
         console.log(res)
         let data = res.json().result;
+        this.user.$id = data.id
         this.user.$email = data.email
         this.user.$description = data.description
         this.user.$fullname = data.fullname
@@ -40,11 +41,13 @@ export class MyaccountPage {
   }
 
   saveDetails(){
-    
+    console.log('ionViewDidLoad MyaccountPage');
+    this.apiProvider.updateUser(this.user).subscribe(
+      res => {
+        console.log(res)
+      }, (err) => {
+        console.log(err.status)
+      }
+    );
   }
-
-  savePassword(){
-
-  }
-
 }

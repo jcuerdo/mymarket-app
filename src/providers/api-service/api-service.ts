@@ -3,6 +3,7 @@ import { Http, RequestOptions, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Market } from '../../models/market';
 import { Photo } from '../../models/photo';
+import { User } from '../../models/user';
 
 @Injectable()
 export class ApiServiceProvider {
@@ -180,6 +181,22 @@ export class ApiServiceProvider {
     }
     return this.http.post(
       `${this.baseUrl}/public/user/create`,
+      postParams,
+      this.getOptions()
+    )
+  }
+
+  public updateUser(user: User) {
+    let postParams = {
+      id: user.$id,
+      email: user.$email,
+      password: user.$password,
+      photo : user.$photo,
+      description : user.$description,
+      fullname : user.$fullname,
+    }
+    return this.http.post(
+      `${this.baseUrl}/private/user?token=${this.getToken()}`,
       postParams,
       this.getOptions()
     )
