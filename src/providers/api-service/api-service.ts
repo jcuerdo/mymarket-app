@@ -38,6 +38,11 @@ export class ApiServiceProvider {
     return this.http.get(`${this.baseUrl}/private/market?token=${this.getToken()}`);
   }
 
+  public getUserMarkets(userId : number) {
+    console.log('Getting markets for user ' + userId);
+    return this.http.get(`${this.baseUrl}/public/user/${userId}/market`);
+  }
+
   public getMarket(marketId: number) {
     console.log('Getting market with id ');
     return this.http.get(`${this.baseUrl}/public/market/${marketId}?token=${this.getToken()}`);
