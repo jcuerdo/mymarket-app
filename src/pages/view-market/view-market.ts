@@ -8,6 +8,7 @@ import { AlertProvider } from '../../providers/alert/alert';
 import { GooglemapsProvider } from '../../providers/googlemaps/googlemaps';
 import { User } from '../../models/user';
 import { ViewUserPage } from '../view-user/view-user';
+import { UserProvider } from '../../providers/user/user';
 
 @Component({
     selector: 'page-view-market',
@@ -32,6 +33,7 @@ export class ViewMarketPage {
         public loading: LoadingController,
         public alertProvider: AlertProvider,
         public googleMapsProvider: GooglemapsProvider,
+        public userProvider: UserProvider,
     ) {
         this.market =  new Market();
         this.market.setId(navParams.get("marketId"))

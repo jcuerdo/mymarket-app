@@ -4,13 +4,15 @@ import 'rxjs/add/operator/map';
 import { Market } from '../../models/market';
 import { Photo } from '../../models/photo';
 import { User } from '../../models/user';
+import { UserProvider } from '../user/user';
 
 @Injectable()
 export class ApiServiceProvider {
 
   private baseUrl: string;
   private radio : number;
-  constructor(public http: Http) {
+
+  constructor(public http: Http, private userProvider: UserProvider) {
      this.radio = 100
      this.baseUrl = 'http://45.77.216.232:8080';
   }
@@ -238,6 +240,6 @@ export class ApiServiceProvider {
     )
   }
   private getToken(){
-    return localStorage.getItem('token');
+    return this.userProvider.getCurrentUserToken();
   }
 }

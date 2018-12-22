@@ -545,3 +545,7 @@ ion-icon[ng-reflect-disabled="true"] {
 .fadeInDown {
   animation-name: fadeInDown;
 }
+
+.clickable:hover{
+  cursor: pointer;
+}

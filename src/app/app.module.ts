@@ -36,6 +36,7 @@ import { Firebase } from '@ionic-native/firebase';
 import { GooglemapsProvider } from '../providers/googlemaps/googlemaps';
 import { ViewUserPage } from '../pages/view-user/view-user';
 import { ToastproviderProvider } from '../providers/toastprovider/toastprovider';
+import { UserProvider } from '../providers/user/user';
 
 
 @NgModule({
@@ -94,6 +95,7 @@ import { ToastproviderProvider } from '../providers/toastprovider/toastprovider'
     Firebase,
     GooglemapsProvider,
     ToastproviderProvider,
+    UserProvider,
   ]
 })
 export class AppModule {}

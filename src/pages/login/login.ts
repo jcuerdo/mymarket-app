@@ -42,10 +42,12 @@ export class LoginPage {
     if (this.email != null && this.email != "" && this.password && this.password != "") {
       this.apiProvider.loginUser(this.email, this.password)
       .subscribe(res => {
-          let data = res.json();
-          console.log(data.result)
-          if (data.result) {
+          let data = res.json();  
+          console.log('Logueandose ostia')
+          console.log(data)
+          if (data.result) {    
              localStorage.setItem('token', data.result)
+             localStorage.setItem('userId', data.userId)
           }
           this.events.publish('user:login');
           if(fromRegister){

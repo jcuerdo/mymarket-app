@@ -32,7 +32,7 @@
           <span>{{market.date | date:'dd-MM-yyyy hh:mm'}}</span>
           <p>{{ market.description }} </p>
 
-          <ion-item *ngIf='market.owner'>
+          <ion-item class="clickable" *ngIf='market.owner'>
               <h2>{{ "Created by" | translate }}</h2>
             <ion-avatar item-start>
                 <img  src="{{ market.owner.photo }}" (click)="viewUser(market.owner.id)"/>
@@ -71,8 +71,8 @@
                   <img  src="{{ comment.user.photo.String }}"/>
               </ion-avatar>
               <h2>{{ comment.user.fullname.String }} <em>{{ comment.user.email }}</em></h2>
-              <p>{{ comment.date }} : {{ comment.content }}</p> 
-              <button (click)="removeComment(comment.id)">
+              <p>{{ comment.date }} : {{ comment.content }}</p>
+              <button *ngIf="this.userProvider.getCurrentUserId() == comment.user.id" (click)="removeComment(comment.id)">
                 <ion-icon name="trash"></ion-icon>
               </button>
             </ion-item>
@@ -94,7 +94,7 @@
             </ion-avatar>
             <h2>{{ assistance.user_id.fullname.String }} <em>{{ assistance.user_id.email }}</em></h2>
             <p>{{ assistance.date }}</p> 
-            <button (click)="removeAssistance(assistance.id)">
+            <button *ngIf="this.userProvider.getCurrentUserId() == assistance.user_id.id" (click)="removeAssistance(assistance.id)">
               <ion-icon name="trash"></ion-icon>
             </button>
           </ion-item>

@@ -21,9 +21,15 @@
             <p><ion-icon name="person"></ion-icon> {{ user.description }} </p>
             <p><ion-icon name="mail"></ion-icon> {{ user.email }} </p>
           </ion-item>
-
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+          <ion-card-content>
+              <ion-card-title>
+                  <h1>{{'Markets created by ' | translate }} {{ user.fullname }}</h1>
+                </ion-card-title>
           <ion-list>
-              <ion-item *ngFor="let market of markets" (click)="view(market.id)">
+              <ion-item class="clickable" *ngFor="let market of markets" (click)="view(market.id)">
                   <ion-avatar item-start>
                     <img src='{{market.getPhotos()[0].getContent()}}' />
                   </ion-avatar>
