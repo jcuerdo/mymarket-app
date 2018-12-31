@@ -56,6 +56,10 @@
           <p *ngIf='market.place == "PUBLIC"'>  <ion-icon name="flower"></ion-icon>
               {{ "Public market" | translate }}</p>
 
+          <p  *ngIf='market.googlePlaceId'>  <ion-icon name="globe"></ion-icon>
+              <a href="https://www.google.com/maps/search/?api=1&query=Google&query_place_id={{market.googlePlaceId}}">{{ "Market url" | translate }}</a>
+              </p>
+
         </ion-card-content>
       </ion-card>
    </ion-list>

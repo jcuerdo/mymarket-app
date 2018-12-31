@@ -14,6 +14,7 @@ export class Market {
 	private type: string;
 	private flexible: boolean;
 	private place: string;
+	private googlePlaceId: string;
 
 	constructor() {
 		this.photos = [];
@@ -111,5 +112,13 @@ export class Market {
 
 	public setFlexible(value: boolean) {
 		this.flexible = value;
+	}
+	
+	public getGooglePlaceId(): string {
+		return this.googlePlaceId;
+	}
+
+	public setGooglePlaceIdPlace(value: string) {
+		this.googlePlaceId = value;
 	}
 }

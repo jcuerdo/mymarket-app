@@ -47,6 +47,7 @@ export class ViewMarketPage {
           res => {
             let data = res.json();
             data = data.result
+            console.log(data)
             this.market.setName(data.name)
             this.market.setDescription(data.description)
             this.market.setDate(new Date(data.startdate).toISOString())
@@ -56,6 +57,8 @@ export class ViewMarketPage {
             this.market.setType(data.type)
             this.market.setPlace(data.place)
             this.market.setFlexible(data.flexible)
+            this.market.setGooglePlaceIdPlace(data.google_place_id)
+
 
             this.initMap();
             this.loadPhotos();
