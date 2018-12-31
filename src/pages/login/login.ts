@@ -1,6 +1,6 @@
 import { MyaccountPage } from './../myaccount/myaccount';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { NavController, NavParams, Events } from 'ionic-angular';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { HomePage } from '../home/home';
 import { AlertProvider } from '../../providers/alert/alert';
@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
+
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',

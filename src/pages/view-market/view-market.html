@@ -46,11 +46,15 @@
              {{ "Pay market" | translate }}</p>
           <p *ngIf='market.type == "MIXED"'>  <ion-icon name="card"></ion-icon>
              {{ "Mixed market free and payed items" | translate }}</p>
+          <p *ngIf='market.type == "PUBLIC"'>  <ion-icon name="card"></ion-icon>
+            {{ "Pay market" | translate }}</p>
 
-          <p *ngIf='market.place == "INDOOR"'>  <ion-icon name="home"></ion-icon>
+          <p *ngIf='market.place == "INDOOR"'>  <ion-icon name="globe"></ion-icon>
              {{ "Indor market" | translate }}</p>
           <p *ngIf='market.place == "OUTDOOR"'>  <ion-icon name="home"></ion-icon>
              {{ "Outdoor market" | translate }}</p>
+          <p *ngIf='market.place == "PUBLIC"'>  <ion-icon name="flower"></ion-icon>
+              {{ "Public market" | translate }}</p>
 
         </ion-card-content>
       </ion-card>
@@ -61,10 +65,12 @@
       <ion-card-title>
         <h2>{{ "Comments" | translate }}</h2>
       </ion-card-title>
+      <div *ngIf="this.userProvider.getCurrentUserId() > 0">
       <ion-item>
           <ion-input required [(ngModel)]="commentContent" placeholder='{{"Your comment" | translate}}' type="text"></ion-input>
         </ion-item>
         <button ion-button (click)="addComment()">{{"Comment" | translate}}</button>
+      </div>
         <ion-list *ngFor="let comment of comments">
             <ion-item>
               <ion-avatar item-start>
@@ -85,7 +91,9 @@
     <ion-card-content>
       <ion-card-title>
         <h2>{{ "Assistance list" | translate }}</h2>
+        <div *ngIf="this.userProvider.getCurrentUserId() > 0">
         <button ion-button (click)="addAssistance()">{{"Assist" | translate}}</button>
+        </div>
       </ion-card-title>
       <ion-list *ngFor="let assistance of assistances">
           <ion-item>

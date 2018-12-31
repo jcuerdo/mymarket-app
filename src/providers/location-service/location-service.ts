@@ -40,24 +40,18 @@ export class LocationServiceProvider {
     } else{
       console.log('Lacation not set in local storage')
       if(this.onDevice){
-        this.locationAccuracy.canRequest().then((canRequest: boolean) => {
-          console.log('Requesting location accuracy')
-          if(canRequest) {
-            console.log('I can request')
             // the accuracy option will be ignored by iOS
             this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
-              () => this.getPosition(callback, errorCallback),
+              () => {
+                console.log('Location accuracy OK')
+                this.getPosition(callback, errorCallback)
+              },
               error => {
                 console.log('ERROR getting requesting location accuracy')
                 console.log(error)
                 errorCallback(error)
               }
             );
-          } else{
-            console.log('I cant request')
-            this.getPosition(callback, errorCallback);
-          }
-        });
       } else{
         console.log('Not on device')
         this.getPosition(callback, errorCallback)
@@ -71,10 +65,15 @@ export class LocationServiceProvider {
     this.geolocation.getCurrentPosition({timeout: 5000}).then(
       (position) => {
         this.setPosition(position, callback);
-      }
-    ).catch(
+      },
       (error) => {
         console.log('ERROR getting current location')
+        console.log(error)
+        errorCallback(error)
+    }
+    ).catch(
+      (error) => {
+        console.log('CATCH ERROR getting current location')
         console.log(error)
         errorCallback(error)
     });

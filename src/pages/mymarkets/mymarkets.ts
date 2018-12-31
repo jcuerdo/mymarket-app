@@ -5,7 +5,7 @@ import { AlertProvider } from './../../providers/alert/alert';
 import { ApiServiceProvider } from './../../providers/api-service/api-service';
 import { AddMarketPage } from './../addmarket/addmarket';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { Market } from '../../models/market';
 import { Photo } from '../../models/photo';
 
@@ -16,7 +16,6 @@ import { Photo } from '../../models/photo';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-mymarkets',
   templateUrl: 'mymarkets.html',

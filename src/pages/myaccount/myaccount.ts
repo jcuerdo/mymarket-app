@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { User } from '../../models/user';
 import { ToastproviderProvider } from '../../providers/toastprovider/toastprovider';
 
-@IonicPage()
 @Component({
   selector: 'page-myaccount',
   templateUrl: 'myaccount.html',

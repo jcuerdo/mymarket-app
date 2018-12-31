@@ -59,6 +59,7 @@ export class HomePage {
 
   loadEmpty(error){
     this.loader.dismiss();
+    this.emptyMarkets = true;
   }
 
   doInfinite(infiniteScroll) {
@@ -101,7 +102,7 @@ export class HomePage {
       if(this.markets.length == 0){
         this.emptyMarkets = true;
       } else{
-          //No more
+        this.loader.dismiss();
       }
      }
       this.loader.dismiss();
@@ -198,7 +199,17 @@ loadCurrentPosition(){
   this.loader.present();
   this.markets = []
   this.page = 0;
+
+  if (localStorage.getItem('currentlat') != null && localStorage.getItem('currentlon') != null) {
+    localStorage.setItem("lat", localStorage.getItem('currentlat'));
+    localStorage.setItem("lon", localStorage.getItem('currentlon'));
+  }
+
   this.locationProvider.requestLocation(this.loadMarkets.bind(this), this.loadEmpty.bind(this));
 }
 
+positionIsLoaded(){
+  var isLoaded = localStorage.getItem('lat') != null && localStorage.getItem('lon') != null;
+  return isLoaded
+}
 }

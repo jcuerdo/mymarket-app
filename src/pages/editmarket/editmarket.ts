@@ -1,7 +1,7 @@
 import { ViewMarketPage } from './../view-market/view-market';
 import { AlertProvider } from './../../providers/alert/alert';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, ActionSheetController, LoadingController } from 'ionic-angular';
 import { Market } from '../../models/market';
 import { Photo } from '../../models/photo';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
@@ -15,7 +15,6 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-editmarket',
   templateUrl: 'editmarket.html',

@@ -33,8 +33,27 @@
   </div>
 
   <ion-list>
-    <h3 *ngIf="emptyMarkets">{{'Sorry we cannot find markets in this location' | translate }} </h3>
+    <div class="emptyLocation" *ngIf="!positionIsLoaded()">
+      <h3>{{'Location unavailable' | translate }} </h3>
+      <p>You can retry or select manually your location</p>
+      <button  (click)="loadCurrentPosition()" ion-button block icon-center>
+          {{'Retry' | translate }}
+      </button>
+      <img src="assets/img/nolocation.png">
+    </div>
+    <div class="emptyMarkets" *ngIf="positionIsLoaded() && emptyMarkets">
+      <h3>{{'Sorry we cannot find markets in this location' | translate }} </h3>
+      <img src="assets/img/market.png">
+    </div>
+
+
     <ion-card *ngFor="let market of markets" (click)="view(market.id)">
+        <p *ngIf='market.place == "INDOOR"' class="privacy private">
+          {{ "PRIVATE MARKET" | translate }}</p>
+       <p *ngIf='market.place == "OUTDOOR"' class="privacy private">
+          {{ "PRIVATE MARKET" | translate }}</p>
+       <p *ngIf='market.place == "PUBLIC"' class="privacy public">
+           {{ "PUBLIC MARKET" | translate }}</p>
       <div class="marketImage">
           <img src='{{market.getPhotos()[0].getContent()}}' />
       </div>

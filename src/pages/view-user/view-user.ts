@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { User } from '../../models/user';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { Market } from '../../models/market';
@@ -13,7 +13,6 @@ import { ViewMarketPage } from '../view-market/view-market';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-view-user',
   templateUrl: 'view-user.html',

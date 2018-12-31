@@ -549,3 +549,41 @@ ion-icon[ng-reflect-disabled="true"] {
 .clickable:hover{
   cursor: pointer;
 }
+
+
+.privacy{
+color: white !important;
+text-align: center;
+text-shadow: black 1px 1px;
+font-weight: 900 !important;
+}
+
+.private{
+background-color: color($colors, primary);
+margin: 0 !important;
+}
+
+.public{
+  background-color: color($colors, primary);
+  margin: 0 !important;
+
+}
+
+.emptyLocation, .emptyMarkets{
+
+}
+
+.emptyLocation h3, .emptyMarkets h3, .emptyLocation p, .emptyMarkets p{
+  text-align: center;
+}
+
+.emptyLocation img, .emptyMarkets img{
+  display: block;
+  margin: 0 auto;
+}
+
+.emptyLocation button, .emptyMarkets button{
+  display: block;
+  margin: 0 auto;
+  width: 25%;
+}
