@@ -587,3 +587,19 @@ margin: 0 !important;
   margin: 0 auto;
   width: 25%;
 }
+
+.searchPlace, .mapboxgl-ctrl-geocoder {
+  width: 100% !important;
+  max-width: 95%  !important;
+  margin: 15px auto !important;
+}
+
+.searchPlace input{
+  width: 100% !important;
+}
+
+#map, #completemap{
+  margin: 0 auto;
+  width:90%;
+  height: 100%;
+}

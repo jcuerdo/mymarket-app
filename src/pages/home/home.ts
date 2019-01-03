@@ -14,7 +14,6 @@ import { Market } from '../../models/market';
 import { Photo } from '../../models/photo';
 import { GooglemapsProvider } from '../../providers/googlemaps/googlemaps';
 
-
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
