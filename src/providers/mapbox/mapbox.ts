@@ -34,6 +34,18 @@ map.addControl(new mapboxgl.GeolocateControl({
   return map;
 }
 
+public createEmptyMap() {
+  var g = document.createElement('div');
+  g.setAttribute("id", "fakemap");
+
+  mapboxgl.accessToken = this.apiKey;
+  var map = new mapboxgl.Map({
+  container: g,
+  });
+
+  return map;
+}
+
 public createMarker(point, map, draggable = false) {
   let el = document.createElement('div');
   el.className = 'marker';
@@ -56,10 +68,14 @@ public setPopUpFromDiv(marker, div){
 
 public createSearch(map ,id){
   let geocoder = new mapboxglg({
-    accessToken: this.apiKey
+    accessToken: this.apiKey,
+    placeholder: "Traduceme please"
 });
 
 document.getElementById(id).appendChild(geocoder.onAdd(map));
+
+return geocoder;
+
 }
 
 }

@@ -12,7 +12,8 @@ import { AlertProvider } from '../../providers/alert/alert';
 import { LoginPage } from '../login/login';
 import { Market } from '../../models/market';
 import { Photo } from '../../models/photo';
-import { GooglemapsProvider } from '../../providers/googlemaps/googlemaps';
+import { MapboxProvider } from '../../providers/mapbox/mapbox';
+
 
 @Component({
   selector: 'page-home',
@@ -27,7 +28,6 @@ export class HomePage {
   places: any = [];
   place: any = null;
   query: string = '';
-  searchDisabled: boolean = true;
   autocompleteService: any;
   page = 0;
 
@@ -42,13 +42,25 @@ export class HomePage {
     public locationProvider: LocationServiceProvider,
     public alertProvier : AlertProvider,
     public translate : TranslateService,
-    public googleMapsProvider: GooglemapsProvider,
+    private mapboxProvider : MapboxProvider,
   ) {}
 
   ionViewDidLoad(){
-  console.log("Loading home page")
-  this.googleMapsProvider.loadGoogleMapsAndInit(this.initMapServices.bind(this))
 
+
+    let map = this.mapboxProvider.createEmptyMap()
+
+    let search = this.mapboxProvider.createSearch(map, 'searchPlace')
+
+    search.on('result', function(result){
+      localStorage.setItem("lat", result.result.center[1]);
+      localStorage.setItem("lon", result.result.center[0]);
+      this.markets = []
+      this.page = 0;
+      this.loadMarkets()
+    }.bind(this));
+
+  console.log("Loading home page")
   this.loader = this.loading.create({
     content: this.translate.instant('Obtaining current location')
   });
@@ -137,41 +149,6 @@ export class HomePage {
     profileModal.present();
   }
 
-  initMapServices() {
-    if (google || google.maps) {
-        this.autocompleteService = new google.maps.places.AutocompleteService();
-        this.placesService = new google.maps.places.PlacesService(document.createElement('div'));
-
-        this.searchDisabled = false;
-    }
-}
-
-  searchPlace() {
-    if (this.query.length > 0 && !this.searchDisabled) {
-
-        let config = {
-            types: ['geocode'],
-            input: this.query
-        }
-
-        this.autocompleteService.getPlacePredictions(config, (predictions, status) => {
-
-            if (status == google.maps.places.PlacesServiceStatus.OK && predictions) {
-
-                this.places = [];
-
-                predictions.forEach((prediction) => {
-                    this.places.push(prediction);
-                });
-            }
-
-        });
-
-    } else {
-        this.places = [];
-    }
-
-}
 
 selectPlace(place) {
   this.loader = this.loading.create({

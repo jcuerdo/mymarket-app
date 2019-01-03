@@ -18,18 +18,13 @@
 <ion-content>
   <div id="noLocation">
     <ion-grid class="searchLocation">
-        <ion-searchbar class="" [disabled]="searchDisabled" [(ngModel)]="query" (ionInput)="searchPlace()" placeholder='{{"Change address" | translate}}'>
-        </ion-searchbar>
+      <div id="searchPlace" class="searchPlace"></div>
     </ion-grid>
     <ion-grid class="buttonSelectLocation">
         <button  (click)="loadCurrentPosition()" ion-button block icon-center>
             <ion-icon name="locate"></ion-icon>
         </button>
     </ion-grid>
-
-    <ion-list>
-      <ion-item *ngFor="let place of places" (click)="selectPlace(place)">{{place.description}}</ion-item>
-    </ion-list>
   </div>
 
   <ion-list>

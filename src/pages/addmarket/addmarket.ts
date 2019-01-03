@@ -20,10 +20,6 @@ export class AddMarketPage {
     position: any;
     map: any;
     autocompleteService: any;
-    placesService: any;
-    places: any = [];
-    query: string = '';
-    searchDisabled: boolean = true;
     
     market: Market;
     photosToUpload : number
