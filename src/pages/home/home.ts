@@ -15,6 +15,7 @@ import { Photo } from '../../models/photo';
 import { MapboxProvider } from '../../providers/mapbox/mapbox';
 
 
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -31,7 +32,6 @@ export class HomePage {
   autocompleteService: any;
   page = 0;
 
-
   constructor(
     public navCtrl: NavController,
     public modCtrl: ModalController,    
@@ -46,10 +46,7 @@ export class HomePage {
   ) {}
 
   ionViewDidLoad(){
-
-
     let map = this.mapboxProvider.createEmptyMap()
-
     let search = this.mapboxProvider.createSearch(map, 'searchPlace')
 
     search.on('result', function(result){

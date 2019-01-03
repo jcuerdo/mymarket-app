@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import mapboxgl from 'mapbox-gl';
 import mapboxglg from 'mapbox-gl-geocoder';
+import { TranslateService } from '@ngx-translate/core';
+
 
 /*
   Generated class for the MapboxProvider provider.
@@ -13,6 +15,11 @@ import mapboxglg from 'mapbox-gl-geocoder';
 export class MapboxProvider {
 
 private apiKey : string = 'pk.eyJ1Ijoiam9jdWFsIiwiYSI6ImNqcWZkb2JhZDAzNWgzeG85dXE1MWIxcTAifQ.vBzlr0tOmEmJCvRUUOri0w';
+
+constructor(
+  private translate: TranslateService,
+) {
+}
 
 public createMap(point, zoom, container = "map") {
   mapboxgl.accessToken = this.apiKey;
@@ -69,7 +76,7 @@ public setPopUpFromDiv(marker, div){
 public createSearch(map ,id){
   let geocoder = new mapboxglg({
     accessToken: this.apiKey,
-    placeholder: "Traduceme please"
+    placeholder: this.translate.instant('Search')
 });
 
 document.getElementById(id).appendChild(geocoder.onAdd(map));
