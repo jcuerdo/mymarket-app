@@ -22,7 +22,7 @@
     "@angular/platform-browser-dynamic": "4.4.3",
     "@ionic-native/camera": "^3.0.0",
     "@ionic-native/core": "^3.0.0",
-    "@ionic-native/firebase": "^3.0.0",
+    "@ionic-native/firebase": "^3.14.0",
     "@ionic-native/geolocation": "^3.0.0",
     "@ionic-native/google-maps": "^3.0.0",
     "@ionic-native/http": "^3.0.0",

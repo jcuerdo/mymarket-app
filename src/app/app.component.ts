@@ -71,7 +71,7 @@ export class MyApp {
     this.translate.setDefaultLang('es');
 
     
-    if (this.firebase) {
+    try {
       this.firebase.getToken().then(token => {
         console.log(token);
         this.apiProvider.updateUserFirebaseToken(token).subscribe(data=>{
@@ -86,6 +86,8 @@ export class MyApp {
         console.log(JSON.stringify(data))
         this.nav.push(ViewMarketPage, { marketId: data.marketID });
       });
+    } catch(exception){
+      console.log(exception)
     }
     
   });
