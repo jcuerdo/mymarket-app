@@ -87,6 +87,7 @@ export class MyApp {
         this.nav.push(ViewMarketPage, { marketId: data.marketID });
       });
     }
+    
   });
 
 

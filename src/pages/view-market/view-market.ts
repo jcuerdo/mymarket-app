@@ -5,10 +5,10 @@ import { Http } from '@angular/http';
 import { Photo } from '../../models/photo';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { AlertProvider } from '../../providers/alert/alert';
-import { GooglemapsProvider } from '../../providers/googlemaps/googlemaps';
 import { User } from '../../models/user';
 import { ViewUserPage } from '../view-user/view-user';
 import { UserProvider } from '../../providers/user/user';
+import { MapboxProvider } from '../../providers/mapbox/mapbox';
 
 @Component({
     selector: 'page-view-market',
@@ -32,8 +32,8 @@ export class ViewMarketPage {
         private apiProvider: ApiServiceProvider,
         public loading: LoadingController,
         public alertProvider: AlertProvider,
-        public googleMapsProvider: GooglemapsProvider,
         public userProvider: UserProvider,
+        private mapboxProvider : MapboxProvider,
     ) {
         this.market =  new Market();
         this.market.setId(navParams.get("marketId"))
@@ -58,7 +58,6 @@ export class ViewMarketPage {
             this.market.setPlace(data.place)
             this.market.setFlexible(data.flexible)
             this.market.setGooglePlaceIdPlace(data.google_place_id)
-
 
             this.initMap();
             this.loadPhotos();
@@ -109,39 +108,17 @@ export class ViewMarketPage {
         let profileModal = this.modCtrl.create(ViewUserPage, { userId: userId });
         profileModal.onDidDismiss(data => {
         });
-        profileModal.present();    }
-    
-    ionViewDidLoad(): void {
-        this.googleMapsProvider.loadGoogleMapsAndInit(this.initMap.bind(this))
+        profileModal.present();    
     }
+    
 
     initMap() {
-        if (google || google.maps) {
+        var point = [(this.market.getLng()), (this.market.getLat())];
+        var zoom = 16;
 
-            var latLng = new google.maps.LatLng(Number(this.market.getLat()), Number(this.market.getLng()));
+        let map = this.mapboxProvider.createMap(point, zoom)
 
-            var zoom = 10;
-
-            let mapOptions = {
-                center: latLng,
-                zoom: zoom,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            }
-            this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-
-            var marker = new google.maps.Marker({
-                position: latLng,
-                map: this.map,
-                title: '',
-                icon : {
-                    url: "assets/img/market.png",
-                    scaledSize: new google.maps.Size(32, 32)
-                }
-            }
-            );
-
-            marker.bindTo('position', this.map, 'center');
-        }
+        this.mapboxProvider.createMarker(point, map, false)
     }
 
     loadComments(){

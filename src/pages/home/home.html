@@ -18,18 +18,18 @@
 <ion-content>
   <div id="noLocation">
     <ion-grid class="searchLocation">
-        <ion-searchbar class="" [disabled]="searchDisabled" [(ngModel)]="query" (ionInput)="searchPlace()" placeholder='{{"Change address" | translate}}'>
-        </ion-searchbar>
+      <div id="searchPlace" class="searchPlaceMain"></div>
     </ion-grid>
     <ion-grid class="buttonSelectLocation">
         <button  (click)="loadCurrentPosition()" ion-button block icon-center>
             <ion-icon name="locate"></ion-icon>
         </button>
     </ion-grid>
-
-    <ion-list>
-      <ion-item *ngFor="let place of places" (click)="selectPlace(place)">{{place.description}}</ion-item>
-    </ion-list>
+    <ion-grid class="buttonFilter">
+        <button  (click)="openFilter()" ion-button block icon-center>
+            <ion-icon name="options"></ion-icon>
+        </button>
+    </ion-grid>
   </div>
 
   <ion-list>
@@ -43,6 +43,9 @@
     </div>
     <div class="emptyMarkets" *ngIf="positionIsLoaded() && emptyMarkets">
       <h3>{{'Sorry we cannot find markets in this location' | translate }} </h3>
+      <button  (click)="clearFilters()" ion-button block icon-center>
+          {{'Clear filters' | translate }}
+      </button>
       <img src="assets/img/market.png">
     </div>
 

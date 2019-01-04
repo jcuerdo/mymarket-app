@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams,AlertController,ActionSheetController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { Http } from '@angular/http';
@@ -9,7 +9,7 @@ import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { ViewMarketPage } from '../view-market/view-market';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
-import { GooglemapsProvider } from '../../providers/googlemaps/googlemaps';
+import { MapboxProvider } from '../../providers/mapbox/mapbox';
 
 
 @Component({
@@ -17,16 +17,9 @@ import { GooglemapsProvider } from '../../providers/googlemaps/googlemaps';
     templateUrl: 'addmarket.html'
 })
 export class AddMarketPage {
-
-    @ViewChild('map') mapElement: ElementRef;
-
     position: any;
     map: any;
     autocompleteService: any;
-    placesService: any;
-    places: any = [];
-    query: string = '';
-    searchDisabled: boolean = true;
     
     market: Market;
     photosToUpload : number
@@ -42,7 +35,8 @@ export class AddMarketPage {
         public actionSheetCtrl: ActionSheetController,
         public translate: TranslateService,
         public alertProvider: AlertProvider,
-        public googleMapsProvider: GooglemapsProvider,        
+        private mapboxProvider : MapboxProvider,
+       
         
     ) {
         this.market = new Market();
@@ -52,89 +46,24 @@ export class AddMarketPage {
         this.market.addPhoto(new Photo(3, 'assets/img/camera.png'), 3);
     }
 
-    ionViewDidLoad(): void {
-
-        this.googleMapsProvider.loadGoogleMapsAndInit(this.initMap.bind(this))
-
-    }
-
-    initMap() {
-        if (google || google.maps) {
-            let lat = localStorage.getItem('lat')
-            let lon = localStorage.getItem('lon')
-            var latLng = new google.maps.LatLng(parseFloat(lat), parseFloat(lon))
-
-            let mapOptions = {
-                center: latLng,
-                zoom: 15,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            }
-            this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-
-            var marker = new google.maps.Marker({
-                position: latLng,
-                map: this.map,
-                title: '',
-                icon : {
-                    url: "assets/img/market.png",
-                    scaledSize: new google.maps.Size(32, 32)
-                }
-            });
-
-            marker.bindTo('position', this.map, 'center');
-
-            this.autocompleteService = new google.maps.places.AutocompleteService();
-            this.placesService = new google.maps.places.PlacesService(this.map);
-            this.searchDisabled = false;
-        }
-    }
-
-    searchPlace() {
-        if (this.query.length > 0 && !this.searchDisabled) {
-
-            let config = {
-                types: ['geocode'],
-                input: this.query
-            }
-
-            this.autocompleteService.getPlacePredictions(config, (predictions, status) => {
-
-                if (status == google.maps.places.PlacesServiceStatus.OK && predictions) {
-
-                    this.places = [];
-
-                    predictions.forEach((prediction) => {
-                        this.places.push(prediction);
-                    });
-                }
-
-            });
-
-        } else {
-            this.places = [];
-        }
-
-    }
-
-
-    selectPlace(place) {
-
-        this.places = [];
-
-        let location = {
-            lat: null,
-            lng: null,
-            name: place.name
-        };
-
-        this.placesService.getDetails({ placeId: place.place_id }, (details) => {
-
-            location.name = details.name;
-            location.lat = details.geometry.location.lat();
-            location.lng = details.geometry.location.lng();
-
-            this.map.setCenter({ lat: location.lat, lng: location.lng });
+    ionViewDidLoad() {
+        let lat = localStorage.getItem('lat')
+        let lon = localStorage.getItem('lon')
+    
+        var point = [lon,lat];
+        var zoom = 10;
+    
+        let map = this.mapboxProvider.createMap(point, zoom)
+        let marker = this.mapboxProvider.createMarker(point, map, true)
+        
+        map.on('moveend', function() {
+            marker.setLngLat(map.getCenter())
         });
+
+        this.mapboxProvider.createSearch(map, 'searchPlace')
+
+        this.map = map
+
     }
 
     saveMarket(): void {
@@ -144,8 +73,8 @@ export class AddMarketPage {
         });
         loader.present().then(() => {
 
-            this.market.setLat(this.map.center.lat());
-            this.market.setLng(this.map.center.lng());
+            this.market.setLat(this.map.getCenter().lat);
+            this.market.setLng(this.map.getCenter().lng);
 
             this.apiProvider.saveMarket(this.market)
                 .subscribe(res => {

@@ -49,12 +49,10 @@
       <ion-label>{{"Date" | translate}}</ion-label>
       <ion-datetime [(ngModel)]="market.date" pickerFormat="YYYY/MM/DD HH:m" displayFormat="YYYY/MM/DD HH:m"></ion-datetime>
     </ion-item>
-    <ion-grid>
-      <ion-searchbar [disabled]="searchDisabled" [(ngModel)]="query" (ionInput)="searchPlace()" placeholder='{{"Address" | translate}}'></ion-searchbar>
-    </ion-grid>
+    <div id="searchPlace" class="searchPlace"></div>
     <ion-list>
       <ion-item *ngFor="let place of places" (click)="selectPlace(place)">{{place.description}}</ion-item>
     </ion-list>
   </ion-list>
-  <div style="height: 100%;width: 100%" #map id="map"></div>
+  <div  id="map"></div>
 </ion-content>

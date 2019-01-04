@@ -8,16 +8,22 @@ page-home {
 }
 
 .searchLocation{
-    width: 80%;
+    width: 70%;
     float: left;
 }
 .searchLocation .searchbar{
-    margin: 0;
+    margin: 0 !important;
     padding:0;
 }
 
-.buttonSelectLocation{
-    width: 20%;
+.buttonSelectLocation button, .buttonFilter button{
+    margin: 0 !important;
+    height: 40px !important;
+}
+
+.buttonSelectLocation ,.buttonFilter{
+    width: 15%;
+    float: left;
 }
 
 .buttonSelectLocation button{

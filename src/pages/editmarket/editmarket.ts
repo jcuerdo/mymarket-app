@@ -53,10 +53,6 @@ export class EditmarketPage {
     });
 
     loader.present().then(() => {
-
-        //this.market.setLat(this.map.center.lat());
-        //this.market.setLng(this.map.center.lng());
-
         this.apiProvider.editMarket(this.market)
             .subscribe(res => {
                 let data = res.json().result;

@@ -1,7 +1,7 @@
 import { Component, ViewChild,ElementRef } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { ViewMarketPage } from '../view-market/view-market';
-import { GooglemapsProvider } from '../../providers/googlemaps/googlemaps';
+import { MapboxProvider } from '../../providers/mapbox/mapbox';
 
 @Component({
   selector: 'page-marketmap',
@@ -18,51 +18,32 @@ export class MarketmapPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public alertCtrl: AlertController,
-    public googleMapsProvider: GooglemapsProvider,
+    private mapboxProvider : MapboxProvider,
   ) {
     this.markets = navParams.get('markets');
   }
 
-  ionViewDidLoad(): void {    
-    this.googleMapsProvider.loadGoogleMapsAndInit(this.initMap.bind(this))
-  }
-  initMap() {
-    if (google || google.maps) {
-      let lat = localStorage.getItem('lat')
-      let lon = localStorage.getItem('lon')
-      var latLng = new google.maps.LatLng(parseFloat(lat), parseFloat(lon))                    
+  ionViewDidLoad(): void {
+    let lat = localStorage.getItem('lat')
+    let lon = localStorage.getItem('lon')
 
-      let mapOptions = {
-          center: latLng,
-          zoom: 15,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-      }
-      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-      this.markets.forEach(element => {
-        var latLng = new google.maps.LatLng(element.getLat(), element.getLng());
-        var marker = new google.maps.Marker({
-            position: latLng,
-            map: this.map,
-            title: element.getName(),
-            icon : {
-                url: "assets/img/market.png",
-                scaledSize: new google.maps.Size(32, 32)
-            }
-        });
+    var point = [lon,lat];
+    var zoom = 10;
 
-        var t = this
+    let map = this.mapboxProvider.createMap(point, zoom, 'completemap')
 
-        var infowindow = new google.maps.InfoWindow();
-        marker.addListener('click', function(this) {
-          var div = document.createElement('div');
-          div.innerHTML = element.getName();
-          div.onclick = function(){t.view(element.getId())};
-          infowindow.setContent(div);
-          infowindow.open(t.map, marker)
+    this.markets.forEach(element => {
+      var marketPoint = [element.getLng(),element.getLat()];
+      var marker = this.mapboxProvider.createMarker(marketPoint, map, false)
 
-        });
-      });
-      }
+      var t = this
+      var div = document.createElement('div');
+      div.innerHTML = element.getName();
+      div.onclick = function(){t.view(element.getId())};
+
+      this.mapboxProvider.setPopUpFromDiv(marker,div)
+
+    });
 }
 
 view(marketId) {    

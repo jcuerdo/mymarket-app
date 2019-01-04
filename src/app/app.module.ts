@@ -37,6 +37,7 @@ import { GooglemapsProvider } from '../providers/googlemaps/googlemaps';
 import { ViewUserPage } from '../pages/view-user/view-user';
 import { ToastproviderProvider } from '../providers/toastprovider/toastprovider';
 import { UserProvider } from '../providers/user/user';
+import { MapboxProvider } from '../providers/mapbox/mapbox';
 
 
 @NgModule({
@@ -96,6 +97,7 @@ import { UserProvider } from '../providers/user/user';
     GooglemapsProvider,
     ToastproviderProvider,
     UserProvider,
+    MapboxProvider,
   ]
 })
 export class AppModule {}

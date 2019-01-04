@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController,ModalController } from 'ionic-angular';
+import { NavController, AlertController,ModalController, ActionSheetController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { AddMarketPage } from '../addmarket/addmarket';
@@ -12,7 +12,8 @@ import { AlertProvider } from '../../providers/alert/alert';
 import { LoginPage } from '../login/login';
 import { Market } from '../../models/market';
 import { Photo } from '../../models/photo';
-import { GooglemapsProvider } from '../../providers/googlemaps/googlemaps';
+import { MapboxProvider } from '../../providers/mapbox/mapbox';
+
 
 
 @Component({
@@ -28,10 +29,8 @@ export class HomePage {
   places: any = [];
   place: any = null;
   query: string = '';
-  searchDisabled: boolean = true;
   autocompleteService: any;
   page = 0;
-
 
   constructor(
     public navCtrl: NavController,
@@ -43,13 +42,24 @@ export class HomePage {
     public locationProvider: LocationServiceProvider,
     public alertProvier : AlertProvider,
     public translate : TranslateService,
-    public googleMapsProvider: GooglemapsProvider,
+    private mapboxProvider : MapboxProvider,
+    public actionSheetCtrl: ActionSheetController,
+
   ) {}
 
   ionViewDidLoad(){
-  console.log("Loading home page")
-  this.googleMapsProvider.loadGoogleMapsAndInit(this.initMapServices.bind(this))
+    let map = this.mapboxProvider.createEmptyMap()
+    let search = this.mapboxProvider.createSearch(map, 'searchPlace')
 
+    search.on('result', function(result){
+      localStorage.setItem("lat", result.result.center[1]);
+      localStorage.setItem("lon", result.result.center[0]);
+      this.markets = []
+      this.page = 0;
+      this.loadMarkets()
+    }.bind(this));
+
+  console.log("Loading home page")
   this.loader = this.loading.create({
     content: this.translate.instant('Obtaining current location')
   });
@@ -138,41 +148,6 @@ export class HomePage {
     profileModal.present();
   }
 
-  initMapServices() {
-    if (google || google.maps) {
-        this.autocompleteService = new google.maps.places.AutocompleteService();
-        this.placesService = new google.maps.places.PlacesService(document.createElement('div'));
-
-        this.searchDisabled = false;
-    }
-}
-
-  searchPlace() {
-    if (this.query.length > 0 && !this.searchDisabled) {
-
-        let config = {
-            types: ['geocode'],
-            input: this.query
-        }
-
-        this.autocompleteService.getPlacePredictions(config, (predictions, status) => {
-
-            if (status == google.maps.places.PlacesServiceStatus.OK && predictions) {
-
-                this.places = [];
-
-                predictions.forEach((prediction) => {
-                    this.places.push(prediction);
-                });
-            }
-
-        });
-
-    } else {
-        this.places = [];
-    }
-
-}
 
 selectPlace(place) {
   this.loader = this.loading.create({
@@ -211,5 +186,46 @@ loadCurrentPosition(){
 positionIsLoaded(){
   var isLoaded = localStorage.getItem('lat') != null && localStorage.getItem('lon') != null;
   return isLoaded
+}
+
+openFilter(){
+  let actionSheet = this.actionSheetCtrl.create({
+    title: this.translate.instant("Filter markets"),
+    buttons: [
+      {
+        text: this.translate.instant("Show only private markets"),
+        handler: () => {
+          localStorage.setItem('marketPrivacy', 'private')
+          this.markets = []
+          this.page = 0;
+          this.loadMarkets()
+        }
+      },{
+        text: this.translate.instant("Show only public markets"),
+        handler: () => {
+          localStorage.setItem('marketPrivacy', 'public')
+          this.markets = []
+          this.page = 0;
+          this.loadMarkets()
+        }
+      },{
+        text: this.translate.instant("Show all markets"),
+        handler: () => {
+          localStorage.setItem('marketPrivacy', '')
+          this.markets = []
+          this.page = 0;
+          this.loadMarkets()
+        }
+      }
+    ]
+  });
+  actionSheet.present();
+}
+
+clearFilters(){
+  localStorage.setItem('marketPrivacy', '')
+  this.markets = []
+  this.page = 0;
+  this.loadMarkets()
 }
 }
