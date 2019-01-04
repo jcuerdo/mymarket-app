@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController,ModalController } from 'ionic-angular';
+import { NavController, AlertController,ModalController, ActionSheetController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { AddMarketPage } from '../addmarket/addmarket';
@@ -43,6 +43,8 @@ export class HomePage {
     public alertProvier : AlertProvider,
     public translate : TranslateService,
     private mapboxProvider : MapboxProvider,
+    public actionSheetCtrl: ActionSheetController,
+
   ) {}
 
   ionViewDidLoad(){
@@ -184,5 +186,46 @@ loadCurrentPosition(){
 positionIsLoaded(){
   var isLoaded = localStorage.getItem('lat') != null && localStorage.getItem('lon') != null;
   return isLoaded
+}
+
+openFilter(){
+  let actionSheet = this.actionSheetCtrl.create({
+    title: this.translate.instant("Filter markets"),
+    buttons: [
+      {
+        text: this.translate.instant("Show only private markets"),
+        handler: () => {
+          localStorage.setItem('marketPrivacy', 'private')
+          this.markets = []
+          this.page = 0;
+          this.loadMarkets()
+        }
+      },{
+        text: this.translate.instant("Show only pubic markets"),
+        handler: () => {
+          localStorage.setItem('marketPrivacy', 'public')
+          this.markets = []
+          this.page = 0;
+          this.loadMarkets()
+        }
+      },{
+        text: this.translate.instant("Show all markets"),
+        handler: () => {
+          localStorage.setItem('marketPrivacy', '')
+          this.markets = []
+          this.page = 0;
+          this.loadMarkets()
+        }
+      }
+    ]
+  });
+  actionSheet.present();
+}
+
+clearFilters(){
+  localStorage.setItem('marketPrivacy', '')
+  this.markets = []
+  this.page = 0;
+  this.loadMarkets()
 }
 }

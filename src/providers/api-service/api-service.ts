@@ -28,11 +28,11 @@ export class ApiServiceProvider {
 
     let lat = localStorage.getItem('lat')
     let lon = localStorage.getItem('lon')
+    let privacy = localStorage.getItem('marketPrivacy')
 
     console.log('Getting markets lat:' + lat + ' lon: ' + lon + ' page: ' + page);
-    
 
-    return this.http.get(`${this.baseUrl}/public/market?lat=${lat}&lon=${lon}&radio=${this.radio}&page=${page}`);
+    return this.http.get(`${this.baseUrl}/public/market?lat=${lat}&lon=${lon}&radio=${this.radio}&page=${page}&privacy=${privacy}`);
   }
 
   public getMyMarkets() {

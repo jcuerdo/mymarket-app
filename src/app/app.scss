@@ -600,8 +600,8 @@ margin: 0 !important;
 
 .searchPlaceMain, .searchPlaceMain .mapboxgl-ctrl-geocoder {
   width: 100% !important;
-  max-width: 95%  !important;
-  margin: 0px auto !important;
+  max-width: 100%  !important;
+  margin: 0px !important;
 }
 
 .searchPlaceMain input{
@@ -612,5 +612,9 @@ margin: 0 !important;
   margin: 0 auto;
   width:90%;
   height: 100%;
+}
+
+.marketPrivacy{
+
 }
 

@@ -50,5 +50,11 @@
   "Error loading user data" : "Error cargando los datos del usuario",
   "Your datas has been succesfully modified" : "Tus dados han sido modificados correctamente",
   "Nothing to modify" : "No has modificado ningún dato",
-  "This email already exists" : "El email ya ha sido utilizado por otro usuario"
+  "This email already exists" : "El email ya ha sido utilizado por otro usuario",
+  "Clear filters" : "Quitar filtros",
+  "Show only private markets" : "Ver solo mercados privados",
+  "Show only public markets" : "Ver solo mercados públicos",
+  "Show all markets" : "Ver todos los mercados",
+  "Filter markets" : "Filtro de mercados"
+
 }
