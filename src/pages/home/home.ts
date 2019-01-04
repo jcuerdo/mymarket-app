@@ -201,7 +201,7 @@ openFilter(){
           this.loadMarkets()
         }
       },{
-        text: this.translate.instant("Show only pubic markets"),
+        text: this.translate.instant("Show only public markets"),
         handler: () => {
           localStorage.setItem('marketPrivacy', 'public')
           this.markets = []
