@@ -54,9 +54,9 @@ export class AddMarketPage {
         var zoom = 10;
     
         let map = this.mapboxProvider.createMap(point, zoom)
-        let marker = this.mapboxProvider.createMarker(point, map, true)
+        let marker = this.mapboxProvider.createMarker(point, map, false)
         
-        map.on('moveend', function() {
+        map.on('render', function() {
             marker.setLngLat(map.getCenter())
         });
 

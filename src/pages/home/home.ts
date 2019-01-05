@@ -49,7 +49,7 @@ export class HomePage {
 
   ionViewDidLoad(){
     let map = this.mapboxProvider.createEmptyMap()
-    let search = this.mapboxProvider.createSearch(map, 'searchPlace')
+    let search = this.mapboxProvider.createSearch(map, 'searchPlaceHome')
 
     search.on('result', function(result){
       localStorage.setItem("lat", result.result.center[1]);
