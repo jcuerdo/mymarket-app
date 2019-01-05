@@ -55,6 +55,11 @@
   "Show only private markets" : "Ver solo mercados privados",
   "Show only public markets" : "Ver solo mercados públicos",
   "Show all markets" : "Ver todos los mercados",
-  "Filter markets" : "Filtro de mercados"
+  "Filter markets" : "Filtro de mercados",
+  "Website" : "Página web",
+  "Comments" : "Comentarios",
+  "Assistance list" : "Lista de asistentes",
+  "Info" : "Información",
+  "Assistance" : "Asistentes"
 
 }

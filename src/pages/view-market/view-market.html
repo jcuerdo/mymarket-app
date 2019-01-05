@@ -26,10 +26,22 @@
         </ion-slides>
         <ion-card-content>
           <ion-card-title>
-            <h2>{{ market.name }}</h2>
+            <h1>{{ market.name }}</h1>
           </ion-card-title>
+          <p class="privacyWrapper">
+            <span *ngIf='market.place == "INDOOR"' class="privacy private">
+              <ion-icon name="ios-pricetag-outline"></ion-icon>
+              {{ "PRIVATE MARKET" | translate }}</span>
+           <span *ngIf='market.place == "OUTDOOR"' class="privacy private">
+            <ion-icon name="ios-pricetag-outline"></ion-icon>
+            {{ "PRIVATE MARKET" | translate }}</span>
+           <span *ngIf='market.place == "PUBLIC"' class="privacy public">
+            <ion-icon name="ios-pricetag-outline"></ion-icon>
+            {{ "PUBLIC MARKET" | translate }}</span>
+          </p>
+
           <p  *ngIf='market.place == "PUBLIC" && market.googlePlaceId'>  <ion-icon name="globe"></ion-icon>
-            <a href="https://www.google.com/maps/search/?api=1&query=Google&query_place_id={{market.googlePlaceId}}">{{ "Market url" | translate }}</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Google&query_place_id={{market.googlePlaceId}}">{{ "Website" | translate }}</a>
           </p>
           <ion-icon *ngIf='market.place != "PUBLIC"' name="calendar"></ion-icon>
           <span *ngIf='market.place != "PUBLIC"'>{{market.date | date:'dd-MM-yyyy hh:mm'}}</span>
