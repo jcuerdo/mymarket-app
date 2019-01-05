@@ -28,8 +28,12 @@
           <ion-card-title>
             <h2>{{ market.name }}</h2>
           </ion-card-title>
-          <ion-icon name="calendar"></ion-icon>
-          <span>{{market.date | date:'dd-MM-yyyy hh:mm'}}</span>
+          <p  *ngIf='market.place == "PUBLIC" && market.googlePlaceId'>  <ion-icon name="globe"></ion-icon>
+            <a href="https://www.google.com/maps/search/?api=1&query=Google&query_place_id={{market.googlePlaceId}}">{{ "Market url" | translate }}</a>
+          </p>
+          <ion-icon *ngIf='market.place != "PUBLIC"' name="calendar"></ion-icon>
+          <span *ngIf='market.place != "PUBLIC"'>{{market.date | date:'dd-MM-yyyy hh:mm'}}</span>
+    
           <p>{{ market.description }} </p>
 
           <ion-item class="clickable" *ngIf='market.owner'>
@@ -55,10 +59,6 @@
              {{ "Outdoor market" | translate }}</p>
           <p *ngIf='market.place == "PUBLIC"'>  <ion-icon name="flower"></ion-icon>
               {{ "Public market" | translate }}</p>
-
-          <p  *ngIf='market.googlePlaceId'>  <ion-icon name="globe"></ion-icon>
-              <a href="https://www.google.com/maps/search/?api=1&query=Google&query_place_id={{market.googlePlaceId}}">{{ "Market url" | translate }}</a>
-              </p>
 
         </ion-card-content>
       </ion-card>

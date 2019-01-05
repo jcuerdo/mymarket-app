@@ -97,6 +97,7 @@ export class HomePage {
           market.setType(data.type)
           market.setPlace(data.place)
           market.setFlexible(data.flexible)
+          market.setGooglePlaceIdPlace(data.google_place_id)
 
           market.addPhoto(new Photo(0, 'assets/img/image.png'), 0);
           this.apiProvider.getMarketFirstPhoto(market.getId())
