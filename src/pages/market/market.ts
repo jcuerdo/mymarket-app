@@ -40,7 +40,7 @@ export class MarketPage {
         public userProvider: UserProvider,
         private mapboxProvider : MapboxProvider,
     ) {
-        this.market =  new Market();
+        this.market = new Market();
         this.market.setId(navParams.get("marketId"))
         this.market.addPhoto(new Photo(0, 'assets/img/image.png'), 0);
 

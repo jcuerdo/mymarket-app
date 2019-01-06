@@ -550,7 +550,7 @@ ion-icon[ng-reflect-disabled="true"] {
   cursor: pointer;
 }
 
-.privacy{
+.label{
 color: white !important;
 text-align: center;
 font-weight: 900 !important;
@@ -558,7 +558,7 @@ padding: 5px 10px 5px 5px;
 border-radius: 10px;
 }
 
-.privacyWrapper{
+.placeWrapper{
   margin:10px 0px !important;
 }
 
@@ -615,6 +615,11 @@ margin: 0 !important;
   margin: 0 auto;
   width:90%;
   height: 100%;
+}
+
+#completemap{
+  width:100%;
+
 }
 
 .marketPrivacy{
