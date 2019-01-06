@@ -38,6 +38,7 @@ import { ViewUserPage } from '../pages/view-user/view-user';
 import { ToastproviderProvider } from '../providers/toastprovider/toastprovider';
 import { UserProvider } from '../providers/user/user';
 import { MapboxProvider } from '../providers/mapbox/mapbox';
+import { ViewMarketModule } from '../pages/view-market/view-market.module';
 
 
 @NgModule({
@@ -52,9 +53,10 @@ import { MapboxProvider } from '../providers/mapbox/mapbox';
     MymarketsPage,
     EditmarketPage,
     ViewUserPage,
-
+    ViewMarketModule,
   ],
   imports: [
+    ViewMarketModule,
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
