@@ -1,6 +1,5 @@
 import { MymarketsPage } from './../pages/mymarkets/mymarkets';
 import { LoginPage } from './../pages/login/login';
-import { ViewMarketPage } from './../pages/view-market/view-market';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -17,7 +16,7 @@ import { ApiServiceProvider } from '../providers/api-service/api-service';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = 'markets';
 
   publicPages: Array<{title: string, component: any}>;
   privatePages: Array<{title: string, component: any}>;
@@ -84,7 +83,7 @@ export class MyApp {
       this.firebase.onNotificationOpen().subscribe( data => {
         //IF TAB SINO TOSTADA
         console.log(JSON.stringify(data))
-        this.nav.push(ViewMarketPage, { marketId: data.marketID });
+        this.nav.push('market', { marketId: data.marketID });
       });
     } catch(exception){
       console.log(exception)

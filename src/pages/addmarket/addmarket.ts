@@ -6,10 +6,10 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Market } from '../../models/market';
 import { Photo } from '../../models/photo';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
-import { ViewMarketPage } from '../view-market/view-market';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
 import { MapboxProvider } from '../../providers/mapbox/mapbox';
+import { MarketPage } from '../market/market';
 
 
 @Component({
@@ -109,7 +109,7 @@ export class AddMarketPage {
         if (this.photosToUpload <= 0) {
           loader.dismiss();
           this.navCtrl.pop();
-          this.navCtrl.push(ViewMarketPage, { marketId: this.market.getId() });
+          this.navCtrl.push(MarketPage, { marketId: this.market.getId() });
         }
       }
 

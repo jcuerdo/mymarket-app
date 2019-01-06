@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController,ModalController, ActionSheetController } from 'ionic-angular';
+import { NavController, AlertController,ModalController, ActionSheetController, IonicPage } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { AddMarketPage } from '../addmarket/addmarket';
-import { ViewMarketPage } from '../view-market/view-market';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { MarketmapPage } from '../marketmap/marketmap';
 import { LocationServiceProvider } from '../../providers/location-service/location-service';
@@ -19,6 +18,10 @@ import { MapboxProvider } from '../../providers/mapbox/mapbox';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
+})
+@IonicPage({
+  name: 'markets',
+  segment: 'markets',
 })
 export class HomePage {
   public markets = [];
@@ -131,7 +134,7 @@ export class HomePage {
 
   view(marketId) {
     console.log(marketId)
-    this.navCtrl.push(ViewMarketPage, { marketId: marketId });
+    this.navCtrl.push('market', { marketId: marketId });
   }
 
   add() {

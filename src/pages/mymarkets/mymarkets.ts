@@ -1,5 +1,4 @@
 import { EditmarketPage } from './../editmarket/editmarket';
-import { ViewMarketPage } from './../view-market/view-market';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertProvider } from './../../providers/alert/alert';
 import { ApiServiceProvider } from './../../providers/api-service/api-service';
@@ -8,6 +7,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { Market } from '../../models/market';
 import { Photo } from '../../models/photo';
+import { MarketPage } from '../market/market';
 
 /**
  * Generated class for the MymarketsPage page.
@@ -84,7 +84,7 @@ export class MymarketsPage {
   }
 
   view(marketId) {
-    this.navCtrl.push(ViewMarketPage, { marketId: marketId });
+    this.navCtrl.push(MarketPage, { marketId: marketId });
   }
 
    loadMarkets() {

@@ -4,9 +4,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 import { AddMarketPage } from '../pages/addmarket/addmarket';
-import { ViewMarketPage } from '../pages/view-market/view-market';
 import { MarketmapPage } from '../pages/marketmap/marketmap';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -38,25 +36,20 @@ import { ViewUserPage } from '../pages/view-user/view-user';
 import { ToastproviderProvider } from '../providers/toastprovider/toastprovider';
 import { UserProvider } from '../providers/user/user';
 import { MapboxProvider } from '../providers/mapbox/mapbox';
-import { ViewMarketModule } from '../pages/view-market/view-market.module';
 
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
     LoginPage,
     AddMarketPage,
-    ViewMarketPage,
     MarketmapPage,
     MyaccountPage,
     MymarketsPage,
     EditmarketPage,
     ViewUserPage,
-    ViewMarketModule,
-  ],
+    ],
   imports: [
-    ViewMarketModule,
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
@@ -72,10 +65,8 @@ import { ViewMarketModule } from '../pages/view-market/view-market.module';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
     LoginPage,
     AddMarketPage,
-    ViewMarketPage,
     MarketmapPage,
     MyaccountPage,
     MymarketsPage,
