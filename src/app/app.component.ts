@@ -53,6 +53,8 @@ export class MyApp {
         }
         this.events.subscribe('user:login', () => {
           this.pages = this.publicPages.concat(this.privatePages);
+          this.registerFirebase()
+          
         });
         this.events.subscribe('user:logout', () => {
           this.pages = this.publicPages;
@@ -68,8 +70,12 @@ export class MyApp {
     this.splashScreen.hide();
     this.generateMenuPages();
     this.translate.setDefaultLang('es');
+  });
 
-    
+
+  }
+
+  registerFirebase(){
     try {
       this.firebase.getToken().then(token => {
         console.log(token);
@@ -88,10 +94,6 @@ export class MyApp {
     } catch(exception){
       console.log(exception)
     }
-    
-  });
-
-
   }
 
 

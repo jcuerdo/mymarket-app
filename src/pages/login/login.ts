@@ -43,7 +43,7 @@ export class LoginPage {
       this.apiProvider.loginUser(this.email, this.password)
       .subscribe(res => {
           let data = res.json();  
-          console.log('Logueandose ostia')
+          console.log('Logging...')
           console.log(data)
           if (data.result) {    
              localStorage.setItem('token', data.result)
