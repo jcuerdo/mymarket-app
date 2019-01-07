@@ -4,7 +4,6 @@ import { User } from '../../models/user';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { Market } from '../../models/market';
 import { Photo } from '../../models/photo';
-import { MarketPage } from '../market/market';
 
 /**
  * Generated class for the ViewUserPage page.
@@ -61,7 +60,7 @@ export class ViewUserPage {
 
 view(marketId) {
   console.log(marketId)
-  this.navCtrl.push(MarketPage, { marketId: marketId });
+  this.navCtrl.push('market', { marketId: marketId });
 }
 
 loadMarkets(userId : number) {

@@ -6,7 +6,6 @@ import { Photo } from '../../models/photo';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { TranslateService } from '@ngx-translate/core';
 import { Camera, CameraOptions } from '@ionic-native/camera';
-import { MarketPage } from '../market/market';
 
 /**
  * Generated class for the EditmarketPage page.
@@ -91,7 +90,7 @@ export class EditmarketPage {
     if (this.photosToUpload <= 0) {
       loader.dismiss();
       this.navCtrl.pop();
-      this.navCtrl.push(MarketPage, { marketId: this.market.getId() });
+      this.navCtrl.push('market', { marketId: this.market.getId() });
     }
   }
 

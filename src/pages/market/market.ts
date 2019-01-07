@@ -20,7 +20,6 @@ import { MapboxProvider } from '../../providers/mapbox/mapbox';
     defaultHistory : ['markets']
 })
 export class MarketPage {
-
     tab : any = 'info'
     market: Market;
     map: any;
@@ -43,8 +42,6 @@ export class MarketPage {
         this.market = new Market();
         this.market.setId(navParams.get("marketId"))
         this.market.addPhoto(new Photo(0, 'assets/img/image.png'), 0);
-
-        this.loadMarket()
     }
 
     private loadMarket(){
@@ -63,16 +60,20 @@ export class MarketPage {
             this.market.setPlace(data.place)
             this.market.setFlexible(data.flexible)
             this.market.setGooglePlaceIdPlace(data.google_place_id)
-
-            this.initMap();
             this.loadPhotos();
             this.loadOwner(data.user_id);
-
+            this.initMap();
         }, (err) => {
+            this.market.setId(0)
             console.log(err)
         }
         ); 
       }
+
+      ionViewDidLoad(): void {
+        this.loadMarket()
+      }
+
 
       private loadPhotos() {
         this.apiProvider.getMarketPhotos(this.market.getId())

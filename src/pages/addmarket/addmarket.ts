@@ -9,7 +9,6 @@ import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
 import { MapboxProvider } from '../../providers/mapbox/mapbox';
-import { MarketPage } from '../market/market';
 
 
 @Component({
@@ -40,6 +39,8 @@ export class AddMarketPage {
         
     ) {
         this.market = new Market();
+        this.market.setDate(new Date().toISOString());
+        this.market.setFlexible('0');
         this.market.addPhoto(new Photo(0, 'assets/img/camera.png'), 0);
         this.market.addPhoto(new Photo(1, 'assets/img/camera.png'), 1);
         this.market.addPhoto(new Photo(2, 'assets/img/camera.png'), 2);
@@ -67,7 +68,6 @@ export class AddMarketPage {
     }
 
     saveMarket(): void {
-
         let loader = this.loading.create({
             content: this.translate.instant("Saving market information"),
         });
@@ -75,6 +75,7 @@ export class AddMarketPage {
 
             this.market.setLat(this.map.getCenter().lat);
             this.market.setLng(this.map.getCenter().lng);
+            this.market.setFlexible(this.market.getFlexible() == "1");
 
             this.apiProvider.saveMarket(this.market)
                 .subscribe(res => {
@@ -109,7 +110,7 @@ export class AddMarketPage {
         if (this.photosToUpload <= 0) {
           loader.dismiss();
           this.navCtrl.pop();
-          this.navCtrl.push(MarketPage, { marketId: this.market.getId() });
+          this.navCtrl.push('market', { marketId: this.market.getId() });
         }
       }
 

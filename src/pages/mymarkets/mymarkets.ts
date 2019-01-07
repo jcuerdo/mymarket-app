@@ -7,7 +7,6 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { Market } from '../../models/market';
 import { Photo } from '../../models/photo';
-import { MarketPage } from '../market/market';
 
 /**
  * Generated class for the MymarketsPage page.
@@ -84,10 +83,11 @@ export class MymarketsPage {
   }
 
   view(marketId) {
-    this.navCtrl.push(MarketPage, { marketId: marketId });
+    this.navCtrl.push('market', { marketId: marketId });
   }
 
    loadMarkets() {
+    this.markets = [];
     this.emptyMarkets = false;
     console.log('Trying to load my markets')
 

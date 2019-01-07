@@ -1,13 +1,29 @@
 <ion-header>
 
     <ion-navbar>
-      <ion-title>{{"Details of" | translate}} : {{market.name}}</ion-title>
+      <ion-title *ngIf="this.market.getId() > 0">{{"Details of" | translate}} : {{market.name}}</ion-title>
+      <ion-title *ngIf="this.market.getId() == 0">{{"Market not found" | translate}}</ion-title>
     </ion-navbar>
   
   </ion-header>
   
+
+  <ion-content *ngIf="this.market.getId() == 0">
+      <ion-card>
+          <ion-card-content>
+          <ion-card-title>
+              <h1>{{ "Oooops" | translate }}</h1>
+              <h2>{{ "The market you are looking for does not exist" | translate }}</h2>
+              <p>
+                <img src="assets/img/image.png">
+              </p>
+            </ion-card-title>
+          </ion-card-content>
+      </ion-card>
+  </ion-content>
   
-  <ion-content>
+  <ion-content *ngIf="this.market.getId() > 0">
+
     <div>
       <ion-segment [(ngModel)]="tab">
         <ion-segment-button value="info">{{"Info" | translate}}</ion-segment-button>
@@ -124,5 +140,5 @@
     </ion-card>
      </ion-list>
   </div>
-      <div id="map"></div>
+  <div id="map"></div>
   </ion-content>

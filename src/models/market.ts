@@ -12,7 +12,7 @@ export class Market {
     private lng: string;
 	private photos: Photo[] = [];
 	private type: string;
-	private flexible: boolean;
+	private flexible: any;
 	private place: string;
 	private googlePlaceId: string;
 
@@ -106,11 +106,11 @@ export class Market {
 		this.place = value;
 	}
 
-	public getFlexible(): boolean {
+	public getFlexible(): any {
 		return this.flexible;
 	}
 
-	public setFlexible(value: boolean) {
+	public setFlexible(value: any) {
 		this.flexible = value;
 	}
 	

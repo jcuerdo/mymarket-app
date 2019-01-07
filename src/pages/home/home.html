@@ -88,6 +88,10 @@
            <ion-icon name="card"></ion-icon>
             {{ "Mixed market free and payed items" | translate }}
          </span>
+         <span *ngIf='market.type == "SOLIDARY"' class="tag type solidary">
+            <ion-icon name="card"></ion-icon>
+             {{ "Mixed solidary" | translate }}
+          </span>
         </p>
 
         <p  *ngIf='market.place == "PUBLIC" && market.googlePlaceId'>  <ion-icon name="globe"></ion-icon>

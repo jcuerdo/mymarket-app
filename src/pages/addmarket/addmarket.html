@@ -31,7 +31,6 @@
         <ion-option value="INDOOR">{{"Indoor" | translate}}</ion-option>
         <ion-option value="OUTDOOR">{{"Outdoor" | translate}}</ion-option>
         <ion-option value="PUBLIC">{{"Public" | translate}}</ion-option>
-
       </ion-select>
     </ion-item>
 
@@ -46,6 +45,14 @@
     </ion-item>
 
     <ion-item>
+        <ion-label>{{"Availability" | translate}}</ion-label>
+        <ion-select [(ngModel)]="market.flexible" multiple="false" interface="action-sheet" cancelText='{{"Cancel" | translate}}'>
+          <ion-option value="0">{{"Specific date to visit the market" | translate}}</ion-option>
+          <ion-option value="1">{{"Permanent, people contact to schedule a visit" | translate}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+    <ion-item *ngIf='market.flexible == 0'>
       <ion-label>{{"Date" | translate}}</ion-label>
       <ion-datetime [(ngModel)]="market.date" pickerFormat="YYYY/MM/DD HH:m" displayFormat="YYYY/MM/DD HH:m"></ion-datetime>
     </ion-item>

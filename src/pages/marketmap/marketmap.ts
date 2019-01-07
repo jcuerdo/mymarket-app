@@ -1,7 +1,6 @@
 import { Component, ViewChild,ElementRef } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { MapboxProvider } from '../../providers/mapbox/mapbox';
-import { MarketPage } from '../market/market';
 
 @Component({
   selector: 'page-marketmap',
@@ -47,7 +46,7 @@ export class MarketmapPage {
 }
 
 view(marketId) {    
-  this.navCtrl.push(MarketPage, { marketId: marketId });
+  this.navCtrl.push('market', { marketId: marketId });
 }
 
 presentAlert(title : string, content: string) {
