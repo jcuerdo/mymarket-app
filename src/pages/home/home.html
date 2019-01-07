@@ -60,20 +60,35 @@
         <ion-card-title>
           <h1>{{ market.name }}</h1>
         </ion-card-title>
-        <p class="placeWrapper">
-            <span *ngIf='market.place == "INDOOR"' class="place private">
+        <p class="tagWrapper">
+            <span *ngIf='market.place == "INDOOR"' class="tag place private">
               <ion-icon name="globe"></ion-icon>
               {{ "Indor market" | translate }}
             </span>
-              <span *ngIf='market.place == "OUTDOOR"' class="place private">
+              <span *ngIf='market.place == "OUTDOOR"' class="tag place private">
             <ion-icon name="home"></ion-icon>
             {{ "Outdoor market" | translate }}
           </span>
-            <span *ngIf='market.place == "PUBLIC"' class="place public">
+            <span *ngIf='market.place == "PUBLIC"' class="tag place private">
             <ion-icon name="flower"></ion-icon>
             {{ "Public market" | translate }}
           </span>
           </p>
+
+          <p class="tagWrapper">
+          <span *ngIf='market.type == "FREE"' class="tag type free">
+            <ion-icon name="card"></ion-icon>
+            {{ "Free market" | translate }}
+          </span>
+         <span *ngIf='market.type == "PAY"' class="tag type pay">
+           <ion-icon name="card"></ion-icon>
+            {{ "Pay market" | translate }}
+         </span>
+         <span *ngIf='market.type == "MIXED"' class="tag type mixed">
+           <ion-icon name="card"></ion-icon>
+            {{ "Mixed market free and payed items" | translate }}
+         </span>
+        </p>
 
         <p  *ngIf='market.place == "PUBLIC" && market.googlePlaceId'>  <ion-icon name="globe"></ion-icon>
           <a href="https://www.google.com/maps/search/?api=1&query=Google&query_place_id={{market.googlePlaceId}}">{{ "Website" | translate }}</a>

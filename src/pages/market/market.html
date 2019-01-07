@@ -28,34 +28,34 @@
             <ion-card-title>
               <h1>{{ market.name }}</h1>
             </ion-card-title>
-            <p class="placeWrapper">
-              <span *ngIf='market.place == "INDOOR"' class="place private">
+            <p class="tagWrapper">
+              <span *ngIf='market.place == "INDOOR"' class="tag place private">
                 <ion-icon name="globe"></ion-icon>
                 {{ "Indor market" | translate }}
               </span>
-                <span *ngIf='market.place == "OUTDOOR"' class="label place private">
+                <span *ngIf='market.place == "OUTDOOR"' class="tag place private">
               <ion-icon name="home"></ion-icon>
               {{ "Outdoor market" | translate }}
             </span>
-              <span *ngIf='market.place == "PUBLIC"' class="label place private">
+              <span *ngIf='market.place == "PUBLIC"' class="tag place private">
               <ion-icon name="flower"></ion-icon>
               {{ "Public market" | translate }}
             </span>
             </p>
-  
-            <span *ngIf='market.type == "FREE"' class="label type free">
+            <p class="tagWrapper">
+            <span *ngIf='market.type == "FREE"' class="tag type free">
               <ion-icon name="card"></ion-icon>
               {{ "Free market" | translate }}
             </span>
-           <span *ngIf='market.type == "PAY"' class="label type pay">
+           <span *ngIf='market.type == "PAY"' class="tag type pay">
              <ion-icon name="card"></ion-icon>
               {{ "Pay market" | translate }}
            </span>
-           <span *ngIf='market.type == "MIXED"' class="label type mixed">
+           <span *ngIf='market.type == "MIXED"' class="tag type mixed">
              <ion-icon name="card"></ion-icon>
               {{ "Mixed market free and payed items" | translate }}
            </span>
-  
+          </p>
             <ion-icon *ngIf='!market.islexible' name="calendar"></ion-icon>
             <span *ngIf='!market.flexible'>{{market.date | date:'dd-MM-yyyy hh:mm'}}</span>
             <span *ngIf='market.flexible'>{{ "This market has not an specific date. Let a comment to plan a visit." | translate }}</span>

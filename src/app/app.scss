@@ -550,21 +550,18 @@ ion-icon[ng-reflect-disabled="true"] {
   cursor: pointer;
 }
 
-.label{
+.tag{
 color: white !important;
 text-align: center;
 font-weight: 900 !important;
 padding: 5px 10px 5px 5px;
 border-radius: 10px;
-}
-
-.placeWrapper{
-  margin:10px 0px !important;
-}
-
-.private{
 background-color: color($colors, primary);
 margin: 0 !important;
+}
+
+.tagWrapper{
+  margin:10px 0px !important;
 }
 
 .public{
