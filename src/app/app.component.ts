@@ -54,10 +54,13 @@ export class MyApp {
         this.events.subscribe('user:login', () => {
           this.pages = this.publicPages.concat(this.privatePages);
           this.registerFirebase()
+          //Guardar user en LOCALSTORAGE
           
         });
         this.events.subscribe('user:logout', () => {
           this.pages = this.publicPages;
+          //ELIMINAR user en LOCALSTORAGE
+
         });
       }
     );
@@ -71,8 +74,6 @@ export class MyApp {
     this.generateMenuPages();
     this.translate.setDefaultLang('es');
   });
-
-
   }
 
   registerFirebase(){
@@ -101,5 +102,12 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+  }
+
+  logout() {
+    localStorage.removeItem('token')
+    localStorage.removeItem('userId')
+
+    this.events.publish('user:logout')
   }
 }
