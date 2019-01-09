@@ -56,7 +56,7 @@ export class MyaccountPage {
         localStorage.setItem('userId', this.user.$id.toString())
         localStorage.setItem('userPhoto', this.user.$photo) 
         localStorage.setItem('userFullName', this.user.$fullname) 
-        this.events.publish('user:login');
+        this.events.publish('user:modified');
         console.log(res)
         this.toastProvider.presentToast("Your datas has been succesfully modified")
       }, (err) => {

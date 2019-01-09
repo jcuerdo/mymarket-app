@@ -59,7 +59,11 @@ export class MyApp {
           this.pages = this.publicPages.concat(this.privatePages);
           this.registerFirebase()
           this.user = this.getUser()
-          
+        });
+        this.events.subscribe('user:modified', () => {
+          this.pages = this.publicPages.concat(this.privatePages);
+          this.registerFirebase()
+          this.user = this.getUser()
         });
         this.events.subscribe('user:logout', () => {
           this.pages = this.publicPages;
