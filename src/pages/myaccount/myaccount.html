@@ -13,7 +13,15 @@
 <ion-content padding>
 
   <h2>{{"Details" | translate}}</h2>
-   <ion-item>
+  <ion-item>
+  <ion-avatar item-start>
+      <img (click)="uploadPhotoAlert($event)" src={{user.photo}} />
+  </ion-avatar>
+
+</ion-item>
+
+
+  <ion-item>
       <ion-label color="primary" stacked>{{"Email" | translate}}</ion-label>
       <ion-input required [(ngModel)]="user.email" type="email" placeholder=""></ion-input>
     </ion-item>
