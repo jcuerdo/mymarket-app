@@ -9,6 +9,7 @@ import { HomePage } from '../pages/home/home';
 import { MyaccountPage } from '../pages/myaccount/myaccount';
 import { Firebase } from '@ionic-native/firebase';
 import { ApiServiceProvider } from '../providers/api-service/api-service';
+import { User } from '../models/user';
 
 @Component({
   templateUrl: 'app.html'
@@ -21,6 +22,7 @@ export class MyApp {
   publicPages: Array<{title: string, component: any}>;
   privatePages: Array<{title: string, component: any}>;
   pages: Array<{title: string, component: any}>;
+  user : User = null
 
   constructor(
     public platform: Platform,
@@ -36,6 +38,8 @@ export class MyApp {
   }
 
   private generateMenuPages() {
+    this.user = this.getUser()
+
     this.translate.onDefaultLangChange.subscribe(
       res => {
         this.publicPages = [
@@ -54,13 +58,17 @@ export class MyApp {
         this.events.subscribe('user:login', () => {
           this.pages = this.publicPages.concat(this.privatePages);
           this.registerFirebase()
-          //Guardar user en LOCALSTORAGE
+          this.user = this.getUser()
           
         });
         this.events.subscribe('user:logout', () => {
           this.pages = this.publicPages;
-          //ELIMINAR user en LOCALSTORAGE
-
+          localStorage.removeItem('token')
+          localStorage.removeItem('userId')
+          localStorage.removeItem('userFullName')
+          localStorage.removeItem('userPhoto')
+          this.user = null;
+          this.pages = this.publicPages.concat({ title: this.translate.instant('Login/Register'), component: LoginPage });
         });
       }
     );
@@ -105,9 +113,19 @@ export class MyApp {
   }
 
   logout() {
-    localStorage.removeItem('token')
-    localStorage.removeItem('userId')
-
     this.events.publish('user:logout')
+
   }
+
+  getUser(){
+    if(localStorage.getItem('userId') == null){
+      return null;
+    }
+    var user = new User();
+    user.$id =  parseInt(localStorage.getItem('userId'))
+    user.$photo = localStorage.getItem('userPhoto') 
+    user.$fullname = localStorage.getItem('userFullName') 
+
+    return user;
+   }
 }

@@ -5,6 +5,7 @@ import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { HomePage } from '../home/home';
 import { AlertProvider } from '../../providers/alert/alert';
 import { TranslateService } from '@ngx-translate/core';
+import { UserProvider } from '../../providers/user/user';
 
 /**
  * Generated class for the LoginPage page.
@@ -29,7 +30,8 @@ export class LoginPage {
     public apiProvider : ApiServiceProvider,
     public alertProvier : AlertProvider,
     public translate : TranslateService,
-    public events : Events
+    public events : Events,
+    public userProvider : UserProvider
     ) {
     }
 
@@ -47,13 +49,21 @@ export class LoginPage {
           console.log(data)
           if (data.result) {    
              localStorage.setItem('token', data.result)
-             localStorage.setItem('userId', data.userId)
-          }
-          this.events.publish('user:login');
-          if(fromRegister){
-            this.navCtrl.setRoot(MyaccountPage)
-          } else{
-            this.navCtrl.setRoot(HomePage)
+             this.apiProvider.getUser().subscribe(res => {
+              let data = res.json();
+              localStorage.setItem('userId', data.result.userId)
+              localStorage.setItem('userPhoto', data.result.photo) 
+              localStorage.setItem('userFullName', data.result.fullname) 
+              this.events.publish('user:login');
+              if(fromRegister){
+                this.navCtrl.setRoot(MyaccountPage)
+              } else{
+                this.navCtrl.setRoot(HomePage)
+              }
+             }, (err) => {
+              this.alertProvier.presentAlert(this.translate.instant("Error"), this.translate.instant("Cannot get user data"))
+              console.log(err)
+             });
           }
       }, (err) => {
         this.alertProvier.presentAlert(this.translate.instant("Error"), this.translate.instant("Invald email or/and password"))

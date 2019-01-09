@@ -9,6 +9,7 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class UserProvider {
+
   public getCurrentUserId() {
     return localStorage.getItem('userId');
   }

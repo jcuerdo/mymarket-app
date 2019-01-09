@@ -8,6 +8,7 @@ export class User {
 	private photo: string;
 	private description: string;
     private role: string;
+    private token: string;
 
     /**
      * Getter $id
@@ -23,6 +24,14 @@ export class User {
      */
 	public get $email(): string {
 		return this.email;
+    }
+    
+    /**
+     * Getter $token
+     * @return {string}
+     */
+	public get $token(): string {
+		return this.token;
 	}
 
     /**
@@ -79,6 +88,14 @@ export class User {
      */
 	public set $email(value: string) {
 		this.email = value;
+    }
+    
+        /**
+     * Setter $token
+     * @param {string} value
+     */
+	public set $token(value: string) {
+		this.token = value;
 	}
 
     /**
