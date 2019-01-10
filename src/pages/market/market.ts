@@ -9,6 +9,7 @@ import { User } from '../../models/user';
 import { ViewUserPage } from '../view-user/view-user';
 import { UserProvider } from '../../providers/user/user';
 import { MapboxProvider } from '../../providers/mapbox/mapbox';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 @Component({
     selector: 'page-market',
@@ -38,6 +39,7 @@ export class MarketPage {
         public alertProvider: AlertProvider,
         public userProvider: UserProvider,
         private mapboxProvider : MapboxProvider,
+        private socialSharing: SocialSharing,
     ) {
         this.market = new Market();
         this.market.setId(navParams.get("marketId"))
@@ -182,6 +184,30 @@ export class MarketPage {
             },
             err => {}
         );
+    }
+
+    shareViaFacebook(){
+        this.socialSharing.shareViaFacebook('Message', 'PHOTO', 'URL').then(() => {
+            console.log('SUCCESS')
+        }).catch((err) => {
+            console.log(err)
+          });
+    }
+
+    shareViaTwitter(){
+        this.socialSharing.shareViaTwitter('Message', 'PHOTO', 'URL').then(() => {
+            console.log('SUCCESS')
+          }).catch((err) => {
+            console.log(err)
+          });
+    }
+
+    shareViaWhatsApp(){
+        this.socialSharing.shareViaWhatsApp('Message', 'PHOTO', 'URL').then(() => {
+            console.log('SUCCESS')
+          }).catch((err) => {
+            console.log(err)
+          });
     }
 
 }

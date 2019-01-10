@@ -36,6 +36,7 @@ import { ViewUserPage } from '../pages/view-user/view-user';
 import { ToastproviderProvider } from '../providers/toastprovider/toastprovider';
 import { UserProvider } from '../providers/user/user';
 import { MapboxProvider } from '../providers/mapbox/mapbox';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 
 @NgModule({
@@ -91,6 +92,7 @@ import { MapboxProvider } from '../providers/mapbox/mapbox';
     ToastproviderProvider,
     UserProvider,
     MapboxProvider,
+    SocialSharing
   ]
 })
 export class AppModule {}

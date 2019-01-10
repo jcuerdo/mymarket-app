@@ -31,7 +31,6 @@
         </button>
     </ion-grid>
   </div>
-
   <ion-list>
     <div class="emptyLocation" *ngIf="!positionIsLoaded()">
       <h3>{{'Location unavailable' | translate }} </h3>
@@ -108,7 +107,6 @@
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
-
   <ion-fab right bottom>
     <button (click)="add()" ion-fab color="primary">
       <ion-icon name="add"></ion-icon>

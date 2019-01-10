@@ -89,6 +89,9 @@
     <plugin name="cordova-plugin-firebase" spec="^2.0.5" />
     <allow-navigation href="http://192.168.1.131:8100" />
     <plugin name="cordova-plugin-request-location-accuracy" spec="^2.2.3" />
+    <plugin name="cordova-plugin-x-socialsharing" spec="4.3.18">
+        <variable name="ANDROID_SUPPORT_V4_VERSION" value="24.1.1+" />
+    </plugin>
     <engine name="ios" spec="^4.5.5" />
     <engine name="browser" spec="5.0.4" />
     <engine name="android" spec="^7.1.4" />
