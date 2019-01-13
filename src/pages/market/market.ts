@@ -205,8 +205,12 @@ export class MarketPage {
           });
     }
 
-    getMarketUrl(){
-        return `http://mymarketathome.com:8100/%23/market/${this.market.getId()}`
+    getBaseUrl(){
+        return `http://mymarketathome.com:8100`
+    }
+
+    getMarketUrl(separator = "#"){
+        return `${this.getBaseUrl()}/${separator}/market/${this.market.getId()}`
     }
     getSharingText(){
         return this.translateService.instant('Look at this market at mymarketathome.com');
@@ -217,7 +221,7 @@ export class MarketPage {
     }
 
     getTwitterUrl(){
-        return `https://twitter.com/share?url=${this.getMarketUrl()}&text=${this.getSharingText()}&hashtags=${this.getSharingTags()}`
+        return `https://twitter.com/share?url=${this.getMarketUrl("%23")}&text=${this.getSharingText()}&hashtags=${this.getSharingTags()}`
     }
 
     getFacebookUrl(){
@@ -228,11 +232,8 @@ export class MarketPage {
         return `https://plus.google.com/share?url=${this.getMarketUrl()}`
     }
 
-    getEmailUrl(){
-        return `"mailto:?Subject=${this.getSharingText()}&amp;Body=${this.getSharingText()} - ${this.getMarketUrl()}"`
-    }
-
     openPopUp(url){
+        console.log(url);
         var newwindow=window.open(url,'name','height=400,width=400');
         if (window.focus) {
             newwindow.focus()

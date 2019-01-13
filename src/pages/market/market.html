@@ -35,8 +35,10 @@
       <ion-list *ngIf="tab=='info'" ngSelected="selected">
         <ion-card>
           <ion-slides zoom="true" pager="true" zoom="true">
-            <ion-slide *ngFor="let photo of this.market.photos" class="marketImage">
-              <img src='{{photo.getContent()}}' />
+            <ion-slide *ngFor="let photo of this.market.photos">
+              <div class="marketImage">
+                <img src='{{photo.getContent()}}' />
+              </div>
             </ion-slide>
           </ion-slides>
           <ion-card-content>

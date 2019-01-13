@@ -10,6 +10,9 @@ import { MyaccountPage } from '../pages/myaccount/myaccount';
 import { Firebase } from '@ionic-native/firebase';
 import { ApiServiceProvider } from '../providers/api-service/api-service';
 import { User } from '../models/user';
+import { Deeplinks } from '@ionic-native/deeplinks';
+import { MarketPage } from '../pages/market/market';
+
 
 @Component({
   templateUrl: 'app.html'
@@ -31,7 +34,8 @@ export class MyApp {
     public translate: TranslateService,
     public events: Events,
     public firebase: Firebase,
-    public apiProvider: ApiServiceProvider
+    public apiProvider: ApiServiceProvider,
+    public deepLinks: Deeplinks,
   ) {
     this.translate = translate;
     this.initializeApp();
@@ -84,8 +88,21 @@ export class MyApp {
     this.statusBar.styleDefault();
     this.splashScreen.hide();
     this.generateMenuPages();
+    this.registerRoutes();
     this.translate.setDefaultLang('es');
   });
+  }
+
+  registerRoutes(){
+    this.deepLinks.route({
+      'market/:marketId': MarketPage,
+    }).subscribe((match) => {
+      console.log(match);
+      this.nav.push('market', { marketId: match.$args.marketId });
+    },
+    (nomatch) => {
+      console.log(nomatch);
+    });
   }
 
   registerFirebase(){

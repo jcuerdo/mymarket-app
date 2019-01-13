@@ -3,8 +3,12 @@ page-home {
 }
 
 .marketImage{
-     height: 250px;
-     overflow: hidden; 
+    height: 300px;
+    overflow: hidden; 
+}
+
+.marketImage img{
+    margin:0 auto;
 }
 
 .searchLocation{
