@@ -31,7 +31,6 @@
         <ion-segment-button (click)="loadAssistance()" value="assistance">{{"Assistance" | translate}}</ion-segment-button>
       </ion-segment>
     </div>
-    
     <div [ngSwitch]="tab" >
       <ion-list *ngIf="tab=='info'" ngSelected="selected">
         <ion-card>
@@ -141,12 +140,16 @@
      </ion-list>
   </div>
   <div id="map"></div>
-  <ion-fab right middle>
+  <ion-fab *ngIf="this.platform.is('android') || this.platform.is('ios')" right middle>
+      <button (click)="share()" ion-fab color="primary"><ion-icon name="share"></ion-icon></button>
+  </ion-fab>
+
+  <ion-fab *ngIf="!this.platform.is('android') && !this.platform.is('ios')" right middle>
       <button ion-fab color="primary"><ion-icon name="share"></ion-icon></button>
-      <ion-fab-list side="center">
-        <button (click)="shareViaFacebook()" ion-fab><ion-icon name="logo-facebook"></ion-icon></button>
-        <button (click)="shareViaTwitter()" ion-fab><ion-icon name="logo-twitter"></ion-icon></button>
-        <button (click)="shareViaWhatsApp()" ion-fab><ion-icon name="logo-whatsapp"></ion-icon></button>
+      <ion-fab-list side="left">
+        <button (click)='this.openPopUp(this.getFacebookUrl())' ion-fab><ion-icon name="logo-facebook"></ion-icon></button>
+        <button (click)='this.openPopUp(this.getTwitterUrl())' ion-fab><ion-icon name="logo-twitter"></ion-icon></button>
+        <button (click)='this.openPopUp(this.getGooglePlusUrl())' ion-fab><ion-icon name="logo-googleplus"></ion-icon></button>
       </ion-fab-list>
     </ion-fab>
   </ion-content>

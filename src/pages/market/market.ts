@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, NavParams, LoadingController, ModalController, IonicPage } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ModalController, IonicPage, Platform } from 'ionic-angular';
 import { Market } from '../../models/market';
 import { Http } from '@angular/http';
 import { Photo } from '../../models/photo';
@@ -10,6 +10,8 @@ import { ViewUserPage } from '../view-user/view-user';
 import { UserProvider } from '../../providers/user/user';
 import { MapboxProvider } from '../../providers/mapbox/mapbox';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { TranslateService } from '@ngx-translate/core';
+
 
 @Component({
     selector: 'page-market',
@@ -27,6 +29,7 @@ export class MarketPage {
     comments : any[]
     assistances : any[]
     commentContent : string
+
     @ViewChild('map') mapElement: ElementRef;
 
     constructor(
@@ -40,6 +43,9 @@ export class MarketPage {
         public userProvider: UserProvider,
         private mapboxProvider : MapboxProvider,
         private socialSharing: SocialSharing,
+        private translateService: TranslateService,
+        public platform : Platform,
+
     ) {
         this.market = new Market();
         this.market.setId(navParams.get("marketId"))
@@ -186,28 +192,52 @@ export class MarketPage {
         );
     }
 
-    shareViaFacebook(){
-        this.socialSharing.shareViaFacebook('Message', 'PHOTO', 'URL').then(() => {
+    share(){
+        this.socialSharing.share(
+            this.market.getName(), 
+            this.getSharingText(), 
+            this.market.getPhotos()[0].getContent(), 
+            this.getMarketUrl()
+            ).then(() => {
             console.log('SUCCESS')
         }).catch((err) => {
             console.log(err)
           });
     }
 
-    shareViaTwitter(){
-        this.socialSharing.shareViaTwitter('Message', 'PHOTO', 'URL').then(() => {
-            console.log('SUCCESS')
-          }).catch((err) => {
-            console.log(err)
-          });
+    getMarketUrl(){
+        return `http://mymarketathome.com:8100/%23/market/${this.market.getId()}`
+    }
+    getSharingText(){
+        return this.translateService.instant('Look at this market at mymarketathome.com');
     }
 
-    shareViaWhatsApp(){
-        this.socialSharing.shareViaWhatsApp('Message', 'PHOTO', 'URL').then(() => {
-            console.log('SUCCESS')
-          }).catch((err) => {
-            console.log(err)
-          });
+    getSharingTags(){
+        return 'mymarketathome'
     }
 
-}
+    getTwitterUrl(){
+        return `https://twitter.com/share?url=${this.getMarketUrl()}&text=${this.getSharingText()}&hashtags=${this.getSharingTags()}`
+    }
+
+    getFacebookUrl(){
+        return `http://www.facebook.com/sharer.php?u=${this.getMarketUrl()}`
+    }
+
+    getGooglePlusUrl(){
+        return `https://plus.google.com/share?url=${this.getMarketUrl()}`
+    }
+
+    getEmailUrl(){
+        return `"mailto:?Subject=${this.getSharingText()}&amp;Body=${this.getSharingText()} - ${this.getMarketUrl()}"`
+    }
+
+    openPopUp(url){
+        var newwindow=window.open(url,'name','height=400,width=400');
+        if (window.focus) {
+            newwindow.focus()
+        }
+            return false;
+        }
+    }
+
